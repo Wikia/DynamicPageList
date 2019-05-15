@@ -3,27 +3,27 @@
  * DynamicPageList3
  * DPL Config Class
  *
- * @author		IlyaHaykinson, Unendlich, Dangerville, Algorithmix, Theaitetos, Alexia E. Smith
- * @license		GPL-2.0-or-later
- * @package		DynamicPageList3
- *
+ * @package DynamicPageList3
+ * @author  IlyaHaykinson, Unendlich, Dangerville, Algorithmix, Theaitetos, Alexia E. Smith
+ * @license GPL-2.0-or-later
  **/
+
 namespace DPL;
 
 class Config {
 	/**
 	 * Configuration Settings
 	 *
-	 * @var		array
+	 * @var array
 	 */
 	static private $settings = [];
 
 	/**
 	 * Initialize the static object with settings.
 	 *
-	 * @access	public
-	 * @param	array	Settings to initialize for DPL.
-	 * @return	void
+	 * @param  array	Settings to initialize for DPL.
+	 *
+	 * @return void
 	 */
 	public static function init($settings = false) {
 		if ($settings === false) {
@@ -42,9 +42,9 @@ class Config {
 	/**
 	 * Return a single setting.
 	 *
-	 * @access	public
-	 * @param	string	Setting Key
-	 * @return	mixed	The setting's actual setting or null if it does not exist.
+	 * @param  string	Setting Key
+	 *
+	 * @return mixed	The setting's actual setting or null if it does not exist.
 	 */
 	public static function getSetting($setting) {
 		return (array_key_exists($setting, self::$settings) ? self::$settings[$setting] : null);
@@ -53,8 +53,7 @@ class Config {
 	/**
 	 * Return a all settings.
 	 *
-	 * @access	public
-	 * @return	array	All settings
+	 * @return array	All settings
 	 */
 	public static function getAllSettings() {
 		return self::$settings;
@@ -63,10 +62,10 @@ class Config {
 	/**
 	 * Set a single setting.
 	 *
-	 * @access	public
-	 * @param	string	Setting Key
-	 * @param	mixed	[Optional] Appropriate value for the setting key.
-	 * @return	void
+	 * @param  string	Setting Key
+	 * @param  mixed	[Optional] Appropriate value for the setting key.
+	 *
+	 * @return void
 	 */
 	public static function setSetting($setting, $value = null) {
 		if (empty($setting) || !is_string($setting)) {

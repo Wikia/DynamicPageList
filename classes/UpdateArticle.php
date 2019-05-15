@@ -3,9 +3,8 @@
  * DynamicPageList3
  * DPL UpdateArticle Class
  *
- * @license		GPL-2.0-or-later
- * @package		DynamicPageList3
- *
+ * @license GPL-2.0-or-later
+ * @package DynamicPageList3
  **/
 
 namespace DPL;
@@ -602,7 +601,7 @@ class UpdateArticle {
 
 		$titleX = \Title::newFromText($title);
 		if ($exec) {
-			# Check permissions
+			// Check permissions
 			$permission_errors = $titleX->getUserPermissionsErrors('delete', $wgUser);
 			if (count($permission_errors) > 0) {
 				$wgOut->showPermissionsErrorPage($permission_errors);

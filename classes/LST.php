@@ -6,10 +6,9 @@
  *
  * @link http://www.mediawiki.org/wiki/Extension:Labeled_Section_Transclusion Documentation
  *
- *
- * @author Steve Sanbeg
+ * @author    Steve Sanbeg
  * @copyright Copyright © 2006, Steve Sanbeg
- * @license GPL-2.0-or-later
+ * @license   GPL-2.0-or-later
  *
  *
  * This copy was made to avoid version conflicts between the two extensions.
@@ -24,20 +23,22 @@
  * Thanks to Steve for his great work!
  * -- Algorithmix
  */
+
 namespace DPL;
 
 use DPL\Lister\Lister;
 
 class LST {
-	##############################################################
-	# To do transclusion from an extension, we need to interact with the parser
-	# at a low level. This is the general transclusion functionality
-	##############################################################
-
+	//
+	// To do transclusion from an extension, we need to interact with the parser
+	// at a low level. This is the general transclusion functionality
+	//
 	/**
 	 * Register what we're working on in the parser, so we don't fall into a trap.
-	 * @param $parser Parser
-	 * @param $part1
+	 *
+	 * @param  $parser Parser
+	 * @param  $part1
+	 *
 	 * @return bool
 	 */
 	public static function open($parser, $part1) {
@@ -53,8 +54,10 @@ class LST {
 
 	/**
 	 * Finish processing the function.
-	 * @param $parser Parser
-	 * @param $part1
+	 *
+	 * @param  $parser Parser
+	 * @param  $part1
+	 *
 	 * @return bool
 	 */
 	public static function close($parser, $part1) {
@@ -82,7 +85,7 @@ class LST {
 
 		if (self::open($parser, $part1)) {
 
-			//Handle recursion here, so we can break cycles.
+			// Handle recursion here, so we can break cycles.
 			if ($recursionCheck == false) {
 				$text = $parser->preprocess($text, $parser->getTitle(), $parser->mOptions);
 				self::close($parser, $part1);
@@ -101,17 +104,18 @@ class LST {
 		}
 	}
 
-	##############################################################
-	# And now, the labeled section transclusion
-	##############################################################
+	//
+	// And now, the labeled section transclusion
+	//
 
 	/**
 	 * Parser tag hook for <section>.
 	 * The section markers aren't paired, so we only need to remove them.
 	 *
-	 * @param string $in
-	 * @param array $assocArgs
-	 * @param Parser $parser
+	 * @param  string $in
+	 * @param  array  $assocArgs
+	 * @param  Parser $parser
+	 *
 	 * @return string HTML output
 	 */
 	private static function noop($in, $assocArgs = [], $parser = null) {
@@ -141,7 +145,7 @@ class LST {
 		} else {
 			$to_sec = preg_quote($to_sec, '/');
 		}
-		$ws = "(?:\s+[^>]+)?"; //was like $ws="\s*"
+		$ws = "(?:\s+[^>]+)?"; // was like $ws="\s*"
 		return "/<section$ws\s+(?i:begin)=['\"]?" . "($sec)" . "['\"]?$ws\/?>(.*?)\n?<section$ws\s+(?:[^>]+\s+)?(?i:end)=" . "['\"]?\\1['\"]?" . "$ws\/?>/s";
 	}
 
@@ -151,9 +155,10 @@ class LST {
 	 * Count skipped headings, so parser (as of r18218) can skip them, to
 	 * prevent wrong heading links (see bug 6563).
 	 *
-	 * @param string $text
-	 * @param int $limit Cutoff point in the text to stop searching
-	 * @return int Number of matches
+	 * @param   string $text
+	 * @param   int    $limit Cutoff point in the text to stop searching
+	 *
+	 * @return  int Number of matches
 	 * @private
 	 */
 	private static function countHeadings($text, $limit) {
@@ -184,7 +189,7 @@ class LST {
 			$text = $parser->fetchTemplate($title);
 		}
 
-		//if article doesn't exist, return a red link.
+		// if article doesn't exist, return a red link.
 		if ($text == false) {
 			$text = "[[" . $title->getPrefixedText() . "]]";
 			return false;
@@ -223,9 +228,11 @@ class LST {
 	 * ... it is balanced in terms of braces, brackets and tags
 	 * ... it is cut at a word boundary (white space) if possible
 	 * ... can be used as content of a wikitable field without spoiling the whole surrounding wikitext structure
+	 *
 	 * @param  $lim     limit of character count for the result
 	 * @param  $text    the wikitext to be truncated
 	 * @param  $link    an optional link which will be appended to the text if it was truncatedt
+	 *
 	 * @return the truncated text;
 	 *         note that the returned text may be longer than the limit if this is necessary
 	 *         to return something at all. We do not want to return an empty string if the input is not empty
@@ -343,7 +350,7 @@ class LST {
 		return self::extractHeadingFromText($parser, $page, $title, $text, $sec, $to, $sectionHeading, $recursionCheck, $maxLength, $link, $trim, $skipPattern);
 	}
 
-	//section inclusion - include all matching sections (return array)
+	// section inclusion - include all matching sections (return array)
 	public static function extractHeadingFromText($parser, $page, $title, $text, $sec = '', $to = '', &$sectionHeading, $recursionCheck = true, $maxLength = -1, $cLink = 'default', $trim = false, $skipPattern = []) {
 		$continueSearch = true;
 		$n              = 0;
@@ -364,8 +371,8 @@ class LST {
 			$isPlain = false;
 		}
 		do {
-			//Generate a regex to match the === classical heading section(s) === we're
-			//interested in.
+			// Generate a regex to match the === classical heading section(s) === we're
+			// interested in.
 			$headLine = '';
 			if ($sec == '') {
 				$begin_off = 0;
@@ -413,7 +420,7 @@ class LST {
 				unset($end_off);
 			}
 			if ($to != '') {
-				//if $to is supplied, try and match it.  If we don't match, just ignore it.
+				// if $to is supplied, try and match it.  If we don't match, just ignore it.
 				if ($isPlain) {
 					$pat = '^(={1,6})\s*' . preg_quote($to, '/') . '\s*\1\s*$';
 				} else {
@@ -462,8 +469,8 @@ class LST {
 
 			if (isset($m[0][0])) {
 				$sectionHeading[$n] = $headLine;
-				//$sectionHeading[$n]=preg_replace("/^=+\s*/","",$m[0][0]);
-				//$sectionHeading[$n]=preg_replace("/\s*=+\s*$/","",$sectionHeading[$n]);
+				// $sectionHeading[$n]=preg_replace("/^=+\s*/","",$m[0][0]);
+				// $sectionHeading[$n]=preg_replace("/\s*=+\s*$/","",$sectionHeading[$n]);
 			} else {
 				// $sectionHeading[$n] = '';
 				$sectionHeading[0] = $headLine;

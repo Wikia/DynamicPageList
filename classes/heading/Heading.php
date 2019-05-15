@@ -3,10 +3,10 @@
  * DynamicPageList3
  * DPL List Class
  *
- * @license		GPL-2.0-or-later
- * @package		DynamicPageList3
- *
+ * @license GPL-2.0-or-later
+ * @package DynamicPageList3
  **/
+
 namespace DPL\Heading;
 
 use DPL\Article;
@@ -17,7 +17,7 @@ class Heading {
 	/**
 	 * Listing style for this class.
 	 *
-	 * @var		constant
+	 * @var constant
 	 */
 	public $style = null;
 
@@ -25,14 +25,14 @@ class Heading {
 	 * List(Section) Start
 	 * Use %s for attribute placement.  Example: <div%s>
 	 *
-	 * @var		string
+	 * @var string
 	 */
 	public $listStart = '';
 
 	/**
 	 * List(Section) End
 	 *
-	 * @var		string
+	 * @var string
 	 */
 	public $listEnd = '';
 
@@ -40,51 +40,51 @@ class Heading {
 	 * Item Start
 	 * Use %s for attribute placement.  Example: <div%s>
 	 *
-	 * @var		string
+	 * @var string
 	 */
 	public $itemStart = '';
 
 	/**
 	 * Item End
 	 *
-	 * @var		string
+	 * @var string
 	 */
 	public $itemEnd = '';
 
 	/**
 	 * Extra list HTML attributes.
 	 *
-	 * @var		array
+	 * @var array
 	 */
 	public $listAttributes = '';
 
 	/**
 	 * Extra item HTML attributes.
 	 *
-	 * @var		array
+	 * @var array
 	 */
 	public $itemAttributes = '';
 
 	/**
 	 * If the article count per heading should be shown.
 	 *
-	 * @var		boolean
+	 * @var boolean
 	 */
 	protected $showHeadingCount = false;
 
 	/**
 	 * \DPL\Parameters
 	 *
-	 * @var		object
+	 * @var object
 	 */
 	protected $parameters = null;
 
 	/**
 	 * Main Constructor
 	 *
-	 * @access	public
-	 * @param	object	\DPL\Parameters
-	 * @return	void
+	 * @param  object	\DPL\Parameters
+	 *
+	 * @return void
 	 */
 	public function __construct(Parameters $parameters) {
 		$this->setListAttributes($parameters->getParameter('hlistattr'));
@@ -96,11 +96,11 @@ class Heading {
 	/**
 	 * Get a new List subclass based on user selection.
 	 *
-	 * @access	public
-	 * @param	string	Heading style.
-	 * @param	object	\DPL\Parameters
-	 * @param	object	MediaWiki \Parser
-	 * @return	mixed	Heading subclass or null for a bad style.
+	 * @param  string	Heading style.
+	 * @param  object	\DPL\Parameters
+	 * @param  object	MediaWiki \Parser
+	 *
+	 * @return mixed	Heading subclass or null for a bad style.
 	 */
 	public static function newFromStyle($style, \DPL\Parameters $parameters) {
 		$style = strtolower($style);
@@ -135,8 +135,7 @@ class Heading {
 	/**
 	 * Get the \DPL\Parameters object this object was constructed with.
 	 *
-	 * @access	public
-	 * @return	object	\DPL\Parameters
+	 * @return object	\DPL\Parameters
 	 */
 	public function getParameters() {
 		return $this->parameters;
@@ -145,9 +144,9 @@ class Heading {
 	/**
 	 * Set extra list attributes.
 	 *
-	 * @access	public
-	 * @param	string	Tag soup attributes, example: this="that" thing="no"
-	 * @return	void
+	 * @param  string	Tag soup attributes, example: this="that" thing="no"
+	 *
+	 * @return void
 	 */
 	public function setListAttributes($attributes) {
 		$this->listAttributes = \Sanitizer::fixTagAttributes($attributes, 'ul');
@@ -156,9 +155,9 @@ class Heading {
 	/**
 	 * Set extra item attributes.
 	 *
-	 * @access	public
-	 * @param	string	Tag soup attributes, example: this="that" thing="no"
-	 * @return	void
+	 * @param  string	Tag soup attributes, example: this="that" thing="no"
+	 *
+	 * @return void
 	 */
 	public function setItemAttributes($attributes) {
 		$this->itemAttributes = \Sanitizer::fixTagAttributes($attributes, 'li');
@@ -167,9 +166,9 @@ class Heading {
 	/**
 	 * Set if the article count per heading should be shown.
 	 *
-	 * @access	public
-	 * @param	boolean	[Optional] Show Heading Count
-	 * @return	void
+	 * @param  boolean	[Optional] Show Heading Count
+	 *
+	 * @return void
 	 */
 	public function setShowHeadingCount($show = false) {
 		$this->showHeadingCount = boolval($show);
@@ -178,8 +177,7 @@ class Heading {
 	/**
 	 * Return the list style.
 	 *
-	 * @access	public
-	 * @return	integer	List style constant.
+	 * @return integer	List style constant.
 	 */
 	public function getStyle() {
 		return $this->style;
@@ -188,10 +186,10 @@ class Heading {
 	/**
 	 * Format a list of articles into all lists with headings as needed.
 	 *
-	 * @access	public
-	 * @param	array	List of \DPL\Article
-	 * @param	object	List of \DPL\Lister\Lister
-	 * @return	string	Formatted list.
+	 * @param  array	List of \DPL\Article
+	 * @param  object	List of \DPL\Lister\Lister
+	 *
+	 * @return string	Formatted list.
 	 */
 	public function format($articles, Lister $lister) {
 		$columns = $this->getParameters()->getParameter('columns');
@@ -331,7 +329,7 @@ class Heading {
 			} while (true);
 			$output .= "\n|}\n";
 		} else {
-			//Even though the headingmode is not none there were no headings, but still results.  Output them anyway.
+			// Even though the headingmode is not none there were no headings, but still results.  Output them anyway.
 			$output .= $lister->formatList($articles, 0, count($articles));
 		}
 
@@ -341,13 +339,13 @@ class Heading {
 	/**
 	 * Format a heading group.
 	 *
-	 * @access	public
-	 * @param	integer	Article start index for this heading.
-	 * @param	integer	Article count for this heading.
-	 * @param	string	Heading link/text display.
-	 * @param	array	List of \DPL\Article.
-	 * @param	object	List of \DPL\Lister\Lister
-	 * @return	string	Heading HTML
+	 * @param  integer	Article start index for this heading.
+	 * @param  integer	Article count for this heading.
+	 * @param  string	Heading link/text display.
+	 * @param  array	List of \DPL\Article.
+	 * @param  object	List of \DPL\Lister\Lister
+	 *
+	 * @return string	Heading HTML
 	 */
 	public function formatItem($headingStart, $headingCount, $headingLink, $articles, Lister $lister) {
 		$item = '';
@@ -365,8 +363,7 @@ class Heading {
 	/**
 	 * Return $this->listStart with attributes replaced.
 	 *
-	 * @access	public
-	 * @return	string	List Start
+	 * @return string	List Start
 	 */
 	public function getListStart() {
 		return sprintf($this->listStart, $this->listAttributes);
@@ -375,8 +372,7 @@ class Heading {
 	/**
 	 * Return $this->itemStart with attributes replaced.
 	 *
-	 * @access	public
-	 * @return	string	Item Start
+	 * @return string	Item Start
 	 */
 	public function getItemStart() {
 		return sprintf($this->itemStart, $this->itemAttributes);
@@ -385,8 +381,7 @@ class Heading {
 	/**
 	 * Return $this->itemEnd with attributes replaced.
 	 *
-	 * @access	public
-	 * @return	string	Item End
+	 * @return string	Item End
 	 */
 	public function getItemEnd() {
 		return $this->itemEnd;
@@ -395,9 +390,9 @@ class Heading {
 	/**
 	 * Get the article count message appropriate for this list.
 	 *
-	 * @access	public
-	 * @param	integer	Count
-	 * @return	string	Message
+	 * @param  integer	Count
+	 *
+	 * @return string	Message
 	 */
 	protected function articleCountMessage($count) {
 		$orderMethods = $this->getParameters()->getParameter('ordermethods');

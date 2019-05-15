@@ -3,9 +3,8 @@
  * DynamicPageList3
  * DPL CategoryList Class
  *
- * @license		GPL-2.0-or-later
- * @package		DynamicPageList3
- *
+ * @license GPL-2.0-or-later
+ * @package DynamicPageList3
  **/
 
 namespace DPL\Lister;
@@ -17,18 +16,18 @@ class CategoryList extends Lister {
 	/**
 	 * Listing style for this class.
 	 *
-	 * @var		constant
+	 * @var constant
 	 */
 	public $style = parent::LIST_CATEGORY;
 
 	/**
 	 * Format the list of articles.
 	 *
-	 * @access	public
-	 * @param	array	List of \DPL\Article
-	 * @param	integer	Start position of the array to process.
-	 * @param	integer	Total objects from the array to process.
-	 * @return	string	Formatted list.
+	 * @param  array	List of \DPL\Article
+	 * @param  integer	Start position of the array to process.
+	 * @param  integer	Total objects from the array to process.
+	 *
+	 * @return string	Formatted list.
 	 */
 	public function formatList($articles, $start, $count) {
 		$filteredCount = 0;
@@ -52,10 +51,10 @@ class CategoryList extends Lister {
 	/**
 	 * Format a single item.
 	 *
-	 * @access	public
-	 * @param	object	DPL\Article
-	 * @param	string	[Optional] Page text to include.
-	 * @return	string	Item HTML
+	 * @param  object	DPL\Article
+	 * @param  string	[Optional] Page text to include.
+	 *
+	 * @return string	Item HTML
 	 */
 	public function formatItem(Article $article, $pageText = null) {
 		return '';

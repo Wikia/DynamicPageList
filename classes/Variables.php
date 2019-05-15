@@ -3,25 +3,25 @@
  * DynamicPageList3
  * DPL Variables Class
  *
- * @author		IlyaHaykinson, Unendlich, Dangerville, Algorithmix, Theaitetos, Alexia E. Smith
- * @license		GPL-2.0-or-later
- * @package		DynamicPageList3
- *
+ * @package DynamicPageList3
+ * @author  IlyaHaykinson, Unendlich, Dangerville, Algorithmix, Theaitetos, Alexia E. Smith
+ * @license GPL-2.0-or-later
  **/
+
 namespace DPL;
 
 class Variables {
 	/**
 	 * Memory storage for variables.
 	 *
-	 * @var		array
+	 * @var array
 	 */
 	static public $memoryVar = [];
 
 	/**
 	 * Memory storage for arrays of variables.
 	 *
-	 * @var		array
+	 * @var array
 	 */
 	static public $memoryArray = [];
 

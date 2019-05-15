@@ -3,9 +3,8 @@
  * DynamicPageList3
  * DPL DefinitionHeading Class
  *
- * @license		GPL-2.0-or-later
- * @package		DynamicPageList3
- *
+ * @license GPL-2.0-or-later
+ * @package DynamicPageList3
  **/
 
 namespace DPL\Heading;
@@ -17,14 +16,14 @@ class DefinitionHeading extends Heading {
 	 * Heading List Start
 	 * Use %s for attribute placement.  Example: <div%s>
 	 *
-	 * @var		string
+	 * @var string
 	 */
 	public $headListStart = '<dt>';
 
 	/**
 	 * Heading List End
 	 *
-	 * @var		string
+	 * @var string
 	 */
 	public $headListEnd = '</dt>';
 
@@ -32,55 +31,55 @@ class DefinitionHeading extends Heading {
 	 * Heading List Start
 	 * Use %s for attribute placement.  Example: <div%s>
 	 *
-	 * @var		string
+	 * @var string
 	 */
 	public $headItemStart = '';
 
 	/**
 	 * Heading List End
 	 *
-	 * @var		string
+	 * @var string
 	 */
 	public $headItemEnd = '';
 
 	/**
 	 * List(Section) Start
 	 *
-	 * @var		string
+	 * @var string
 	 */
 	public $listStart = '<dl%s>';
 
 	/**
 	 * List(Section) End
 	 *
-	 * @var		string
+	 * @var string
 	 */
 	public $listEnd = '</dl>';
 
 	/**
 	 * Item Start
 	 *
-	 * @var		string
+	 * @var string
 	 */
 	public $itemStart = '<dd%s>';
 
 	/**
 	 * Item End
 	 *
-	 * @var		string
+	 * @var string
 	 */
 	public $itemEnd = '</dd>';
 
 	/**
 	 * Format a heading group.
 	 *
-	 * @access	public
-	 * @param	integer	Article start index for this heading.
-	 * @param	integer	Article count for this heading.
-	 * @param	string	Heading link/text display.
-	 * @param	array	List of \DPL\Article.
-	 * @param	object	List of \DPL\Lister\Lister
-	 * @return	string	Heading HTML
+	 * @param  integer	Article start index for this heading.
+	 * @param  integer	Article count for this heading.
+	 * @param  string	Heading link/text display.
+	 * @param  array	List of \DPL\Article.
+	 * @param  object	List of \DPL\Lister\Lister
+	 *
+	 * @return string	Heading HTML
 	 */
 	public function formatItem($headingStart, $headingCount, $headingLink, $articles, Lister $lister) {
 		$item = '';

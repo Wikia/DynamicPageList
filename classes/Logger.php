@@ -3,26 +3,25 @@
  * DynamicPageList3
  * DPL Logger Class
  *
- * @author		IlyaHaykinson, Unendlich, Dangerville, Algorithmix, Theaitetos, Alexia E. Smith
- * @license		GPL-2.0-or-later
- * @package		DynamicPageList3
- *
+ * @package DynamicPageList3
+ * @author  IlyaHaykinson, Unendlich, Dangerville, Algorithmix, Theaitetos, Alexia E. Smith
+ * @license GPL-2.0-or-later
  **/
+
 namespace DPL;
 
 class Logger {
 	/**
 	 * Buffer of debug messages.
 	 *
-	 * @var		array
+	 * @var array
 	 */
 	private $buffer = [];
 
 	/**
 	 * Function Documentation
 	 *
-	 * @access	public
-	 * @return	void
+	 * @return void
 	 */
 	public function addMessage($errorId) {
 		$args = func_get_args();
@@ -33,9 +32,9 @@ class Logger {
 	/**
 	 * Return the buffer of messages.
 	 *
-	 * @access	public
-	 * @param	boolean	[Optional] Clear the message buffer.
-	 * @return	array	Messages in the order added.
+	 * @param  boolean	[Optional] Clear the message buffer.
+	 *
+	 * @return array	Messages in the order added.
 	 */
 	public function getMessages($clearBuffer = true) {
 		$buffer = $this->buffer;
@@ -49,9 +48,9 @@ class Logger {
 	 * Get a message, with optional parameters
 	 * Parameters from user input must be escaped for HTML *before* passing to this function
 	 *
-	 * @access	public
-	 * @param	integer	Message ID
-	 * @return	string
+	 * @param  integer	Message ID
+	 *
+	 * @return string
 	 */
 	public function msg() {
 		$args = func_get_args();

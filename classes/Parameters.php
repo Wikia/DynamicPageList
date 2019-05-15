@@ -3,47 +3,46 @@
  * DynamicPageList3
  * DPL Variables Class
  *
- * @author		IlyaHaykinson, Unendlich, Dangerville, Algorithmix, Theaitetos, Alexia E. Smith
- * @license		GPL-2.0-or-later
- * @package		DynamicPageList3
- *
+ * @package DynamicPageList3
+ * @author  IlyaHaykinson, Unendlich, Dangerville, Algorithmix, Theaitetos, Alexia E. Smith
+ * @license GPL-2.0-or-later
  **/
+
 namespace DPL;
 
 class Parameters extends ParametersData {
 	/**
 	 * Set parameter options.
 	 *
-	 * @var		array
+	 * @var array
 	 */
 	private $parameterOptions = [];
 
 	/**
 	 * Selection Criteria Found
 	 *
-	 * @var		boolean
+	 * @var boolean
 	 */
 	private $selectionCriteriaFound = false;
 
 	/**
 	 * Open References Conflict
 	 *
-	 * @var		boolean
+	 * @var boolean
 	 */
 	private $openReferencesConflict = false;
 
 	/**
 	 * Parameters that have already been processed.
 	 *
-	 * @var		array
+	 * @var array
 	 */
 	private $parametersProcessed = [];
 
 	/**
 	 * Main Constructor
 	 *
-	 * @access	public
-	 * @return	void
+	 * @return void
 	 */
 	public function __construct() {
 		parent::__construct();
@@ -53,10 +52,10 @@ class Parameters extends ParametersData {
 	/**
 	 * Handle simple parameter functions.
 	 *
-	 * @access	public
-	 * @param	string	Function(Parameter) Called
-	 * @param	string	Function Arguments
-	 * @return	boolean	Successful
+	 * @param  string	Function(Parameter) Called
+	 * @param  string	Function Arguments
+	 *
+	 * @return boolean	Successful
 	 */
 	public function __call($parameter, $arguments) {
 		$parameterData = $this->getData($parameter);
@@ -65,7 +64,7 @@ class Parameters extends ParametersData {
 			return false;
 		}
 
-		//Check permission to use this parameter.
+		// Check permission to use this parameter.
 		if (array_key_exists('permission', $parameterData)) {
 			global $wgUser;
 			if (!$wgUser->isAllowed($parameterData['permission'])) {
@@ -74,7 +73,7 @@ class Parameters extends ParametersData {
 			}
 		}
 
-		//Subvert to the real function if it exists.  This keeps code elsewhere clean from needed to check if it exists first.
+		// Subvert to the real function if it exists.  This keeps code elsewhere clean from needed to check if it exists first.
 		$function = "_" . $parameter;
 		$this->parametersProcessed[$parameter] = true;
 		if (method_exists($this, $function)) {
@@ -83,10 +82,10 @@ class Parameters extends ParametersData {
 		$option = $arguments[0];
 		$parameter = strtolower($parameter);
 
-		//Assume by default that these simple parameter options should not failed, but if they do we will set $success to false below.
+		// Assume by default that these simple parameter options should not failed, but if they do we will set $success to false below.
 		$success = true;
 		if ($parameterData !== false) {
-			//If a parameter specifies options then enforce them.
+			// If a parameter specifies options then enforce them.
 			if (array_key_exists('values', $parameterData) && is_array($parameterData['values']) === true && !in_array(strtolower($option), $parameterData['values'])) {
 				$success = false;
 			} else {
@@ -95,12 +94,12 @@ class Parameters extends ParametersData {
 				}
 			}
 
-			//Strip <html> tag.
+			// Strip <html> tag.
 			if (array_key_exists('strip_html', $parameterData) && $parameterData['strip_html'] === true) {
 				$option = $this->stripHtmlTags($option);
 			}
 
-			//Simple integer intval().
+			// Simple integer intval().
 			if (array_key_exists('integer', $parameterData) && $parameterData['integer'] === true) {
 				if (!is_numeric($option)) {
 					if ($parameterData['default'] !== null) {
@@ -113,7 +112,7 @@ class Parameters extends ParametersData {
 				}
 			}
 
-			//Booleans
+			// Booleans
 			if (array_key_exists('boolean', $parameterData) && $parameterData['boolean'] === true) {
 				$option = $this->filterBoolean($option);
 				if ($option === null) {
@@ -121,7 +120,7 @@ class Parameters extends ParametersData {
 				}
 			}
 
-			//Timestamps
+			// Timestamps
 			if (array_key_exists('timestamp', $parameterData) && $parameterData['timestamp'] === true) {
 				$option = strtolower($option);
 				switch ($option) {
@@ -143,7 +142,7 @@ class Parameters extends ParametersData {
 				}
 			}
 
-			//List of Pages
+			// List of Pages
 			if (array_key_exists('page_name_list', $parameterData) && $parameterData['page_name_list'] === true) {
 				$pageGroups = $this->getParameter($parameter);
 				if (!is_array($pageGroups)) {
@@ -158,10 +157,10 @@ class Parameters extends ParametersData {
 				}
 			}
 
-			//Regex Pattern Matching
+			// Regex Pattern Matching
 			if (array_key_exists('pattern', $parameterData)) {
 				if (preg_match($parameterData['pattern'], $option, $matches)) {
-					//Nuke the total pattern match off the beginning of the array.
+					// Nuke the total pattern match off the beginning of the array.
 					array_shift($matches);
 					$option = $matches;
 				} else {
@@ -169,21 +168,21 @@ class Parameters extends ParametersData {
 				}
 			}
 
-			//Database Key Formatting
+			// Database Key Formatting
 			if (array_key_exists('db_format', $parameterData) && $parameterData['db_format'] === true) {
 				$option = str_replace(' ', '_', $option);
 			}
 
-			//If none of the above checks marked this as a failure then set it.
+			// If none of the above checks marked this as a failure then set it.
 			if ($success === true) {
 				$this->setParameter($parameter, $option);
 
-				//Set that criteria was found for a selection.
+				// Set that criteria was found for a selection.
 				if (array_key_exists('set_criteria_found', $parameterData) && $parameterData['set_criteria_found'] === true) {
 					$this->setSelectionCriteriaFound(true);
 				}
 
-				//Set open references conflict possibility.
+				// Set open references conflict possibility.
 				if (array_key_exists('open_ref_conflict', $parameterData) && $parameterData['open_ref_conflict'] === true) {
 					$this->setOpenReferencesConflict(true);
 				}
@@ -196,16 +195,16 @@ class Parameters extends ParametersData {
 	 * Sort cleaned parameter arrays by priority.
 	 * Users can not be told to put the parameters into a specific order each time.  Some parameters are dependent on each other coming in a certain order due to some procedural legacy issues.
 	 *
-	 * @access	public
-	 * @param	array	Unsorted Parameters
-	 * @return	array	Sorted Parameters
+	 * @param  array	Unsorted Parameters
+	 *
+	 * @return array	Sorted Parameters
 	 */
 	public static function sortByPriority($parameters) {
 		if (!is_array($parameters)) {
 			throw new \MWException(__METHOD__ . ': A non-array was passed.');
 		}
-		//'category' to get category headings first for ordermethod.
-		//'include'/'includepage' to make sure section labels are ready for 'table'.
+		// 'category' to get category headings first for ordermethod.
+		// 'include'/'includepage' to make sure section labels are ready for 'table'.
 		$priority = [
 			'distinct'			=> 1,
 			'openreferences'	=> 2,
@@ -234,9 +233,9 @@ class Parameters extends ParametersData {
 	/**
 	 * Set Selection Criteria Found
 	 *
-	 * @access	public
-	 * @param	boolean	Is Found?
-	 * @return	void
+	 * @param  boolean	Is Found?
+	 *
+	 * @return void
 	 */
 	private function setSelectionCriteriaFound($found = true) {
 		if (!is_bool($found)) {
@@ -248,8 +247,7 @@ class Parameters extends ParametersData {
 	/**
 	 * Get Selection Criteria Found
 	 *
-	 * @access	public
-	 * @return	boolean	Is Conflict?
+	 * @return boolean	Is Conflict?
 	 */
 	public function isSelectionCriteriaFound() {
 		return $this->selectionCriteriaFound;
@@ -258,9 +256,9 @@ class Parameters extends ParametersData {
 	/**
 	 * Set Open References Conflict - See 'openreferences' parameter.
 	 *
-	 * @access	public
-	 * @param	boolean	References Conflict?
-	 * @return	void
+	 * @param  boolean	References Conflict?
+	 *
+	 * @return void
 	 */
 	private function setOpenReferencesConflict($conflict = true) {
 		if (!is_bool($conflict)) {
@@ -272,8 +270,7 @@ class Parameters extends ParametersData {
 	/**
 	 * Get Open References Conflict - See 'openreferences' parameter.
 	 *
-	 * @access	public
-	 * @return	boolean	Is Conflict?
+	 * @return boolean	Is Conflict?
 	 */
 	public function isOpenReferencesConflict() {
 		return $this->openReferencesConflict;
@@ -282,8 +279,7 @@ class Parameters extends ParametersData {
 	/**
 	 * Set default parameters based on ParametersData.
 	 *
-	 * @access	private
-	 * @return	void
+	 * @return void
 	 */
 	private function setDefaults() {
 		$this->setParameter('defaulttemplatesuffix', '.default');
@@ -302,10 +298,10 @@ class Parameters extends ParametersData {
 	/**
 	 * Set a parameter's option.
 	 *
-	 * @access	public
-	 * @param	string	Parameter to set
-	 * @param	mixed	Option to set
-	 * @return	void
+	 * @param  string	Parameter to set
+	 * @param  mixed	Option to set
+	 *
+	 * @return void
 	 */
 	public function setParameter($parameter, $option) {
 		$this->parameterOptions[$parameter] = $option;
@@ -314,9 +310,9 @@ class Parameters extends ParametersData {
 	/**
 	 * Get a parameter's option.
 	 *
-	 * @access	public
-	 * @param	string	Parameter to get
-	 * @return	mixed	Option for specified parameter.
+	 * @param  string	Parameter to get
+	 *
+	 * @return mixed	Option for specified parameter.
 	 */
 	public function getParameter($parameter) {
 		return array_key_exists($parameter, $this->parameterOptions) ? $this->parameterOptions[$parameter] : null;
@@ -325,8 +321,7 @@ class Parameters extends ParametersData {
 	/**
 	 * Get all parameters.
 	 *
-	 * @access	public
-	 * @return	array	Parameter => Options
+	 * @return array	Parameter => Options
 	 */
 	public function getAllParameters() {
 		return self::sortByPriority($this->parameterOptions);
@@ -335,9 +330,9 @@ class Parameters extends ParametersData {
 	/**
 	 * Filter a standard boolean like value into an actual boolean.
 	 *
-	 * @access	public
-	 * @param	mixed	Integer or string to evaluated through filter_var().
-	 * @return	bool
+	 * @param  mixed	Integer or string to evaluated through filter_var().
+	 *
+	 * @return bool
 	 */
 	public function filterBoolean($boolean) {
 		return filter_var($boolean, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
@@ -346,9 +341,9 @@ class Parameters extends ParametersData {
 	/**
 	 * Strip <html> tags.
 	 *
-	 * @access	private
-	 * @param	string	Dirty Text
-	 * @return	string	Clean Text
+	 * @param  string	Dirty Text
+	 *
+	 * @return string	Clean Text
 	 */
 	private function stripHtmlTags($text) {
 		$text = preg_replace("#<.*?html.*?>#is", "", $text);
@@ -359,17 +354,17 @@ class Parameters extends ParametersData {
 	/**
 	 * Get a list of valid page names.
 	 *
-	 * @access	private
-	 * @param	string	Raw Text of Pages
-	 * @param	boolean	[Optional] Each Title MUST Exist
-	 * @return	mixed	List of page titles or false on error.
+	 * @param  string	Raw Text of Pages
+	 * @param  boolean	[Optional] Each Title MUST Exist
+	 *
+	 * @return mixed	List of page titles or false on error.
 	 */
 	private function getPageNameList($text, $mustExist = true) {
 		$list = [];
 		$pages = explode('|', trim($text));
 		foreach ($pages as $page) {
 			$page = trim($page);
-			$page = rtrim($page, '\\'); //This was fixed from the original code, but I am not sure what its intended purpose was.
+			$page = rtrim($page, '\\'); // This was fixed from the original code, but I am not sure what its intended purpose was.
 			if (empty($page)) {
 				continue;
 			}
@@ -390,10 +385,10 @@ class Parameters extends ParametersData {
 	/**
 	 * Check if a regular expression is valid.
 	 *
-	 * @access	private
-	 * @param	mixed	Regular Expression(s) in an array or a single expression in a string.
-	 * @param	boolean	Is this a database REGEXP?
-	 * @return	boolean
+	 * @param  mixed	Regular Expression(s) in an array or a single expression in a string.
+	 * @param  boolean	Is this a database REGEXP?
+	 *
+	 * @return boolean
 	 */
 	private function isRegexValid($regexes, $forDb = false) {
 		if (!is_array($regexes)) {
@@ -407,7 +402,7 @@ class Parameters extends ParametersData {
 			if ($forDb) {
 				$regex = '#' . str_replace('#', '\#', $regex) . '#';
 			}
-			//Purposely silencing the errors here since we are testing if preg_match would throw an error due to a bad regex from user input.
+			// Purposely silencing the errors here since we are testing if preg_match would throw an error due to a bad regex from user input.
 			if (@preg_match($regex, null) === false) {
 				return false;
 			}
@@ -419,9 +414,9 @@ class Parameters extends ParametersData {
 	/**
 	 * Clean and test 'category' parameter.
 	 *
-	 * @access	public
-	 * @param	string	Options passed to parameter.
-	 * @return	boolean	Success
+	 * @param  string	Options passed to parameter.
+	 *
+	 * @return boolean	Success
 	 */
 	public function _category($option) {
 		$option = trim($option);
@@ -441,7 +436,7 @@ class Parameters extends ParametersData {
 			$option = ltrim($option, '-');
 		}
 
-		//We expand html entities because they contain an '& 'which would be interpreted as an AND condition
+		// We expand html entities because they contain an '& 'which would be interpreted as an AND condition
 		$option = html_entity_decode($option, ENT_QUOTES);
 		if (strpos($option, '|') !== false) {
 			$parameters = explode('|', $option);
@@ -468,7 +463,7 @@ class Parameters extends ParametersData {
 					foreach ($subCategories as $subCategory) {
 						$title = \Title::newFromText($subCategory);
 						if (!is_null($title)) {
-							//The * helper is just like listing "Category1|SubCategory1".  This gets hard coded here for this purpose.
+							// The * helper is just like listing "Category1|SubCategory1".  This gets hard coded here for this purpose.
 							$categories['OR'][] = $title->getDbKey();
 						}
 					}
@@ -482,7 +477,7 @@ class Parameters extends ParametersData {
 		}
 		if (!empty($categories)) {
 			$data = $this->getParameter('category');
-			//Do a bunch of data integrity checks to avoid E_NOTICE.
+			// Do a bunch of data integrity checks to avoid E_NOTICE.
 			if (!is_array($data)) {
 				$data = [];
 			}
@@ -511,9 +506,9 @@ class Parameters extends ParametersData {
 	/**
 	 * Clean and test 'categoryregexp' parameter.
 	 *
-	 * @access	public
-	 * @param	string	Options passed to parameter.
-	 * @return	boolean	Success
+	 * @param  string	Options passed to parameter.
+	 *
+	 * @return boolean	Success
 	 */
 	public function _categoryregexp($option) {
 		if (!$this->isRegexValid($option, true)) {
@@ -521,8 +516,8 @@ class Parameters extends ParametersData {
 		}
 
 		$data = $this->getParameter('category');
-		//REGEXP input only supports AND operator.
-		$data['REGEXP']['AND'][] = [$option]; //Wrapped in an array since the category Query handler expects an array.
+		// REGEXP input only supports AND operator.
+		$data['REGEXP']['AND'][] = [$option]; // Wrapped in an array since the category Query handler expects an array.
 		$this->setParameter('category', $data);
 		$this->setOpenReferencesConflict(true);
 		return true;
@@ -531,9 +526,9 @@ class Parameters extends ParametersData {
 	/**
 	 * Clean and test 'categorymatch' parameter.
 	 *
-	 * @access	public
-	 * @param	string	Options passed to parameter.
-	 * @return	boolean	Success
+	 * @param  string	Options passed to parameter.
+	 *
+	 * @return boolean	Success
 	 */
 	public function _categorymatch($option) {
 		if (strpos($option, '|') !== false) {
@@ -558,9 +553,9 @@ class Parameters extends ParametersData {
 	/**
 	 * Clean and test 'notcategory' parameter.
 	 *
-	 * @access	public
-	 * @param	string	Options passed to parameter.
-	 * @return	boolean	Success
+	 * @param  string	Options passed to parameter.
+	 *
+	 * @return boolean	Success
 	 */
 	public function _notcategory($option) {
 		$title = \Title::newFromText($option);
@@ -577,9 +572,9 @@ class Parameters extends ParametersData {
 	/**
 	 * Clean and test 'notcategoryregexp' parameter.
 	 *
-	 * @access	public
-	 * @param	string	Options passed to parameter.
-	 * @return	boolean	Success
+	 * @param  string	Options passed to parameter.
+	 *
+	 * @return boolean	Success
 	 */
 	public function _notcategoryregexp($option) {
 		if (!$this->isRegexValid($option, true)) {
@@ -596,9 +591,9 @@ class Parameters extends ParametersData {
 	/**
 	 * Clean and test 'notcategorymatch' parameter.
 	 *
-	 * @access	public
-	 * @param	string	Options passed to parameter.
-	 * @return	boolean	Success
+	 * @param  string	Options passed to parameter.
+	 *
+	 * @return boolean	Success
 	 */
 	public function _notcategorymatch($option) {
 		$data = $this->getParameter('notcategory');
@@ -615,9 +610,9 @@ class Parameters extends ParametersData {
 	/**
 	 * Clean and test 'count' parameter.
 	 *
-	 * @access	public
-	 * @param	string	Options passed to parameter.
-	 * @return	boolean	Success
+	 * @param  string	Options passed to parameter.
+	 *
+	 * @return boolean	Success
 	 */
 	public function _count($option) {
 		if (!Config::getSetting('allowUnlimitedResults') && $option <= Config::getSetting('maxResultCount') && $option > 0) {
@@ -630,9 +625,9 @@ class Parameters extends ParametersData {
 	/**
 	 * Clean and test 'namespace' parameter.
 	 *
-	 * @access	public
-	 * @param	string	Option passed to parameter.
-	 * @return	boolean	Success
+	 * @param  string	Option passed to parameter.
+	 *
+	 * @return boolean	Success
 	 */
 	public function _namespace($option) {
 		global $wgContLang;
@@ -641,7 +636,7 @@ class Parameters extends ParametersData {
 			$parameter = trim($parameter);
 			$namespaceId = $wgContLang->getNsIndex($parameter);
 			if ($namespaceId === false || (is_array(Config::getSetting('allowedNamespaces')) && !in_array($parameter, Config::getSetting('allowedNamespaces')))) {
-				//Let the user know this namespace is not allowed or does not exist.
+				// Let the user know this namespace is not allowed or does not exist.
 				return false;
 			}
 			$data = $this->getParameter('namespace');
@@ -656,9 +651,9 @@ class Parameters extends ParametersData {
 	/**
 	 * Clean and test 'notnamespace' parameter.
 	 *
-	 * @access	public
-	 * @param	string	Options passed to parameter.
-	 * @return	boolean	Success
+	 * @param  string	Options passed to parameter.
+	 *
+	 * @return boolean	Success
 	 */
 	public function _notnamespace($option) {
 		global $wgContLang;
@@ -667,7 +662,7 @@ class Parameters extends ParametersData {
 			$parameter = trim($parameter);
 			$namespaceId = $wgContLang->getNsIndex($parameter);
 			if ($namespaceId === false) {
-				//Let the user know this namespace is not allowed or does not exist.
+				// Let the user know this namespace is not allowed or does not exist.
 				return false;
 			}
 			$data = $this->getParameter('notnamespace');
@@ -682,9 +677,9 @@ class Parameters extends ParametersData {
 	/**
 	 * Clean and test 'openreferences' parameter.
 	 *
-	 * @access	public
-	 * @param	string	Options passed to parameter.
-	 * @return	boolean	Success
+	 * @param  string	Options passed to parameter.
+	 *
+	 * @return boolean	Success
 	 */
 	public function _openreferences($option) {
 		$option = $this->filterBoolean($option);
@@ -692,7 +687,7 @@ class Parameters extends ParametersData {
 			return false;
 		}
 
-		//Force 'ordermethod' back to none.
+		// Force 'ordermethod' back to none.
 		$this->setParameter('ordermethod', ['none']);
 		$this->setParameter('openreferences', $option);
 
@@ -702,9 +697,9 @@ class Parameters extends ParametersData {
 	/**
 	 * Clean and test 'ordermethod' parameter.
 	 *
-	 * @access	public
-	 * @param	string	Options passed to parameter.
-	 * @return	boolean	Success
+	 * @param  string	Options passed to parameter.
+	 *
+	 * @return boolean	Success
 	 */
 	public function _ordermethod($option) {
 		$methods = explode(',', $option);
@@ -726,13 +721,13 @@ class Parameters extends ParametersData {
 	/**
 	 * Clean and test 'mode' parameter.
 	 *
-	 * @access	public
-	 * @param	string	Options passed to parameter.
-	 * @return	boolean	Success
+	 * @param  string	Options passed to parameter.
+	 *
+	 * @return boolean	Success
 	 */
 	public function _mode($option) {
 		if (in_array($option, $this->getData('mode')['values'])) {
-			//'none' mode is implemented as a specific submode of 'inline' with <br/> as inline text
+			// 'none' mode is implemented as a specific submode of 'inline' with <br/> as inline text
 			if ($option == 'none') {
 				$this->setParameter('mode', 'inline');
 				$this->setParameter('inlinetext', '<br/>');
@@ -752,9 +747,9 @@ class Parameters extends ParametersData {
 	/**
 	 * Clean and test 'distinct' parameter.
 	 *
-	 * @access	public
-	 * @param	string	Options passed to parameter.
-	 * @return	boolean	Success
+	 * @param  string	Options passed to parameter.
+	 *
+	 * @return boolean	Success
 	 */
 	public function _distinct($option) {
 		$boolean = $this->filterBoolean($option);
@@ -771,9 +766,9 @@ class Parameters extends ParametersData {
 	/**
 	 * Clean and test 'ordercollation' parameter.
 	 *
-	 * @access	public
-	 * @param	string	Options passed to parameter.
-	 * @return	boolean	Success
+	 * @param  string	Options passed to parameter.
+	 *
+	 * @return boolean	Success
 	 */
 	public function _ordercollation($option) {
 		if ($option == 'bridge') {
@@ -789,8 +784,7 @@ class Parameters extends ParametersData {
 	/**
 	 * Short cut to _format();
 	 *
-	 * @access	public
-	 * @return	mixed
+	 * @return mixed
 	 */
 	public function _listseparators() {
 		return call_user_func_array([$this, '_format'], func_get_args());
@@ -799,16 +793,16 @@ class Parameters extends ParametersData {
 	/**
 	 * Clean and test 'format' parameter.
 	 *
-	 * @access	public
-	 * @param	string	Options passed to parameter.
-	 * @return	boolean	Success
+	 * @param  string	Options passed to parameter.
+	 *
+	 * @return boolean	Success
 	 */
 	public function _format($option) {
-		//Parsing of wikitext will happen at the end of the output phase.  Replace '\n' in the input by linefeed because wiki syntax depends on linefeeds.
+		// Parsing of wikitext will happen at the end of the output phase.  Replace '\n' in the input by linefeed because wiki syntax depends on linefeeds.
 		$option = $this->stripHtmlTags($option);
 		$option = Parse::replaceNewLines($option);
 		$this->setParameter('listseparators', explode(',', $option, 4));
-		//Set the 'mode' parameter to userformat automatically.
+		// Set the 'mode' parameter to userformat automatically.
 		$this->setParameter('mode', 'userformat');
 		$this->setParameter('inlinetext', '');
 		return true;
@@ -817,9 +811,9 @@ class Parameters extends ParametersData {
 	/**
 	 * Clean and test 'title' parameter.
 	 *
-	 * @access	public
-	 * @param	string	Options passed to parameter.
-	 * @return	boolean	Success
+	 * @param  string	Options passed to parameter.
+	 *
+	 * @return boolean	Success
 	 */
 	public function _title($option) {
 		$title = \Title::newFromText($option);
@@ -844,9 +838,9 @@ class Parameters extends ParametersData {
 	/**
 	 * Clean and test 'titleregexp' parameter.
 	 *
-	 * @access	public
-	 * @param	string	Options passed to parameter.
-	 * @return	boolean	Success
+	 * @param  string	Options passed to parameter.
+	 *
+	 * @return boolean	Success
 	 */
 	public function _titleregexp($option) {
 		$data = $this->getParameter('title');
@@ -868,9 +862,9 @@ class Parameters extends ParametersData {
 	/**
 	 * Clean and test 'titlematch' parameter.
 	 *
-	 * @access	public
-	 * @param	string	Options passed to parameter.
-	 * @return	boolean	Success
+	 * @param  string	Options passed to parameter.
+	 *
+	 * @return boolean	Success
 	 */
 	public function _titlematch($option) {
 		$data = $this->getParameter('title');
@@ -887,9 +881,9 @@ class Parameters extends ParametersData {
 	/**
 	 * Clean and test 'nottitleregexp' parameter.
 	 *
-	 * @access	public
-	 * @param	string	Options passed to parameter.
-	 * @return	boolean	Success
+	 * @param  string	Options passed to parameter.
+	 *
+	 * @return boolean	Success
 	 */
 	public function _nottitleregexp($option) {
 		$data = $this->getParameter('nottitle');
@@ -911,9 +905,9 @@ class Parameters extends ParametersData {
 	/**
 	 * Clean and test 'nottitlematch' parameter.
 	 *
-	 * @access	public
-	 * @param	string	Options passed to parameter.
-	 * @return	boolean	Success
+	 * @param  string	Options passed to parameter.
+	 *
+	 * @return boolean	Success
 	 */
 	public function _nottitlematch($option) {
 		$data = $this->getParameter('nottitle');
@@ -930,18 +924,18 @@ class Parameters extends ParametersData {
 	/**
 	 * Clean and test 'scroll' parameter.
 	 *
-	 * @access	public
-	 * @param	string	Options passed to parameter.
-	 * @return	boolean	Success
+	 * @param  string	Options passed to parameter.
+	 *
+	 * @return boolean	Success
 	 */
 	public function _scroll($option) {
 		$option = $this->filterBoolean($option);
 		$this->setParameter('scroll', $option);
-		//If scrolling is active we adjust the values for certain other parameters based on URL arguments
+		// If scrolling is active we adjust the values for certain other parameters based on URL arguments
 		if ($option === true) {
 			global $wgRequest;
 
-			//The 'findTitle' option has argument over the 'fromTitle' argument.
+			// The 'findTitle' option has argument over the 'fromTitle' argument.
 			$titlegt = $wgRequest->getVal('DPL_findTitle', '');
 			if (!empty($titlegt)) {
 				$titlegt = '=_' . ucfirst($titlegt);
@@ -951,30 +945,30 @@ class Parameters extends ParametersData {
 			}
 			$this->setParameter('titlegt', str_replace(' ', '_', $titlegt));
 
-			//Lets get the 'toTitle' argument.
+			// Lets get the 'toTitle' argument.
 			$titlelt = $wgRequest->getVal('DPL_toTitle', '');
 			$titlelt = ucfirst($titlelt);
 			$this->setParameter('titlelt', str_replace(' ', '_', $titlelt));
 
-			//Make sure the 'scrollDir' arugment is captured.  This is mainly used for the Variables extension and in the header/footer replacements.
+			// Make sure the 'scrollDir' arugment is captured.  This is mainly used for the Variables extension and in the header/footer replacements.
 			$this->setParameter('scrolldir', $wgRequest->getVal('DPL_scrollDir', ''));
 
-			//Also set count limit from URL if not otherwise set.
+			// Also set count limit from URL if not otherwise set.
 			$this->_count($wgRequest->getInt('DPL_count'));
 		}
-		//We do not return false since they could have just left it out.  Who knows why they put the parameter in the list in the first place.
+		// We do not return false since they could have just left it out.  Who knows why they put the parameter in the list in the first place.
 		return true;
 	}
 
 	/**
 	 * Clean and test 'replaceintitle' parameter.
 	 *
-	 * @access	public
-	 * @param	string	Options passed to parameter.
-	 * @return	boolean	Success
+	 * @param  string	Options passed to parameter.
+	 *
+	 * @return boolean	Success
 	 */
 	public function _replaceintitle($option) {
-		//We offer a possibility to replace some part of the title
+		// We offer a possibility to replace some part of the title
 		$replaceInTitle = explode(',', $option, 2);
 		if (isset($replaceInTitle[1])) {
 			$replaceInTitle[1] = $this->stripHtmlTags($replaceInTitle[1]);
@@ -988,9 +982,9 @@ class Parameters extends ParametersData {
 	/**
 	 * Clean and test 'debug' parameter.
 	 *
-	 * @access	public
-	 * @param	string	Options passed to parameter.
-	 * @return	boolean	Success
+	 * @param  string	Options passed to parameter.
+	 *
+	 * @return boolean	Success
 	 */
 	public function _debug($option) {
 		if (in_array($option, $this->getData('debug')['values'])) {
@@ -1005,8 +999,7 @@ class Parameters extends ParametersData {
 	/**
 	 * Short cut to _include();
 	 *
-	 * @access	public
-	 * @return	mixed
+	 * @return mixed
 	 */
 	public function _includepage() {
 		return call_user_func_array([$this, '_include'], func_get_args());
@@ -1015,9 +1008,9 @@ class Parameters extends ParametersData {
 	/**
 	 * Clean and test 'include' parameter.
 	 *
-	 * @access	public
-	 * @param	string	Options passed to parameter.
-	 * @return	boolean	Success
+	 * @param  string	Options passed to parameter.
+	 *
+	 * @return boolean	Success
 	 */
 	public function _include($option) {
 		if (!empty($option)) {
@@ -1032,9 +1025,9 @@ class Parameters extends ParametersData {
 	/**
 	 * Clean and test 'includematch' parameter.
 	 *
-	 * @access	public
-	 * @param	string	Options passed to parameter.
-	 * @return	boolean	Success
+	 * @param  string	Options passed to parameter.
+	 *
+	 * @return boolean	Success
 	 */
 	public function _includematch($option) {
 		$regexes = explode(',', $option);
@@ -1050,9 +1043,9 @@ class Parameters extends ParametersData {
 	/**
 	 * Clean and test 'includematchparsed' parameter.
 	 *
-	 * @access	public
-	 * @param	string	Options passed to parameter.
-	 * @return	boolean	Success
+	 * @param  string	Options passed to parameter.
+	 *
+	 * @return boolean	Success
 	 */
 	public function _includematchparsed($option) {
 		$regexes = explode(',', $option);
@@ -1069,9 +1062,9 @@ class Parameters extends ParametersData {
 	/**
 	 * Clean and test 'includenotmatch' parameter.
 	 *
-	 * @access	public
-	 * @param	string	Options passed to parameter.
-	 * @return	boolean	Success
+	 * @param  string	Options passed to parameter.
+	 *
+	 * @return boolean	Success
 	 */
 	public function _includenotmatch($option) {
 		$regexes = explode(',', $option);
@@ -1087,9 +1080,9 @@ class Parameters extends ParametersData {
 	/**
 	 * Clean and test 'includenotmatchparsed' parameter.
 	 *
-	 * @access	public
-	 * @param	string	Options passed to parameter.
-	 * @return	boolean	Success
+	 * @param  string	Options passed to parameter.
+	 *
+	 * @return boolean	Success
 	 */
 	public function _includenotmatchparsed($option) {
 		$regexes = explode(',', $option);
@@ -1106,12 +1099,12 @@ class Parameters extends ParametersData {
 	/**
 	 * Clean and test 'secseparators' parameter.
 	 *
-	 * @access	public
-	 * @param	string	Options passed to parameter.
-	 * @return	boolean	Success
+	 * @param  string	Options passed to parameter.
+	 *
+	 * @return boolean	Success
 	 */
 	public function _secseparators($option) {
-		//We replace '\n' by newline to support wiki syntax within the section separators
+		// We replace '\n' by newline to support wiki syntax within the section separators
 		$this->setParameter('secseparators', explode(',', Parse::replaceNewLines($option)));
 		return true;
 	}
@@ -1119,12 +1112,12 @@ class Parameters extends ParametersData {
 	/**
 	 * Clean and test 'multisecseparators' parameter.
 	 *
-	 * @access	public
-	 * @param	string	Options passed to parameter.
-	 * @return	boolean	Success
+	 * @param  string	Options passed to parameter.
+	 *
+	 * @return boolean	Success
 	 */
 	public function _multisecseparators($option) {
-		//We replace '\n' by newline to support wiki syntax within the section separators
+		// We replace '\n' by newline to support wiki syntax within the section separators
 		$this->setParameter('multisecseparators', explode(',', Parse::replaceNewLines($option)));
 		return true;
 	}
@@ -1132,9 +1125,9 @@ class Parameters extends ParametersData {
 	/**
 	 * Clean and test 'table' parameter.
 	 *
-	 * @access	public
-	 * @param	string	Options passed to parameter.
-	 * @return	boolean	Success
+	 * @param  string	Options passed to parameter.
+	 *
+	 * @return boolean	Success
 	 */
 	public function _table($option) {
 		$this->setParameter('defaulttemplatesuffix', '');
@@ -1165,7 +1158,7 @@ class Parameters extends ParametersData {
 			$listSeparators[2] = '';
 		}
 		$listSeparators[3] = "\n|}";
-		//Overwrite 'listseparators'.
+		// Overwrite 'listseparators'.
 		$this->setParameter('listseparators', $listSeparators);
 
 		$sectionLabels = (array)$this->getParameter('seclabels');
@@ -1173,7 +1166,7 @@ class Parameters extends ParametersData {
 		$multiSectionSeparators = $this->getParameter('multisecseparators');
 		for ($i = 0; $i < count($sectionLabels); $i++) {
 			if ($i == 0) {
-				$sectionSeparators[0]		= "\n|-\n|" . $withHLink; //."\n";
+				$sectionSeparators[0]		= "\n|-\n|" . $withHLink; // ."\n";
 				$sectionSeparators[1]		= '';
 				$multiSectionSeparators[0]	= "\n|-\n|" . $withHLink; // ."\n";
 			} else {
@@ -1189,7 +1182,7 @@ class Parameters extends ParametersData {
 				}
 			}
 		}
-		//Overwrite 'secseparators' and 'multisecseparators'.
+		// Overwrite 'secseparators' and 'multisecseparators'.
 		$this->setParameter('secseparators', $sectionSeparators);
 		$this->setParameter('multisecseparators', $multiSectionSeparators);
 
@@ -1200,9 +1193,9 @@ class Parameters extends ParametersData {
 	/**
 	 * Clean and test 'tablerow' parameter.
 	 *
-	 * @access	public
-	 * @param	string	Options passed to parameter.
-	 * @return	boolean	Success
+	 * @param  string	Options passed to parameter.
+	 *
+	 * @return boolean	Success
 	 */
 	public function _tablerow($option) {
 		$option = Parse::replaceNewLines(trim($option));
@@ -1218,12 +1211,12 @@ class Parameters extends ParametersData {
 	 * Clean and test 'allowcachedresults' parameter.
 	 * This function is necessary for the custom 'yes+warn' option that sets 'warncachedresults'.
 	 *
-	 * @access	public
-	 * @param	string	Options passed to parameter.
-	 * @return	boolean	Success
+	 * @param  string	Options passed to parameter.
+	 *
+	 * @return boolean	Success
 	 */
 	public function _allowcachedresults($option) {
-		//If execAndExit was previously set (i.e. if it is not empty) we will ignore all cache settings which are placed AFTER the execandexit statement thus we make sure that the cache will only become invalid if the query is really executed.
+		// If execAndExit was previously set (i.e. if it is not empty) we will ignore all cache settings which are placed AFTER the execandexit statement thus we make sure that the cache will only become invalid if the query is really executed.
 		if ($this->getParameter('execandexit') === null) {
 			if ($option === 'yes+warn') {
 				$this->setParameter('allowcachedresults', true);
@@ -1245,9 +1238,9 @@ class Parameters extends ParametersData {
 	/**
 	 * Clean and test 'fixcategory' parameter.
 	 *
-	 * @access	public
-	 * @param	string	Options passed to parameter.
-	 * @return	boolean	Success
+	 * @param  string	Options passed to parameter.
+	 *
+	 * @return boolean	Success
 	 */
 	public function _fixcategory($option) {
 		\DynamicPageListHooks::fixCategory($option);
@@ -1257,9 +1250,9 @@ class Parameters extends ParametersData {
 	/**
 	 * Clean and test 'reset' parameter.
 	 *
-	 * @access	public
-	 * @param	string	Options passed to parameter.
-	 * @return	boolean	Success
+	 * @param  string	Options passed to parameter.
+	 *
+	 * @return boolean	Success
 	 */
 	public function _reset($option) {
 		$arguments = explode(',', $option);
@@ -1295,9 +1288,9 @@ class Parameters extends ParametersData {
 	/**
 	 * Clean and test 'eliminate' parameter.
 	 *
-	 * @access	public
-	 * @param	string	Options passed to parameter.
-	 * @return	boolean	Success
+	 * @param  string	Options passed to parameter.
+	 *
+	 * @return boolean	Success
 	 */
 	public function _eliminate($option) {
 		$arguments = explode(',', $option);

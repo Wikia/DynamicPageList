@@ -3,9 +3,8 @@
  * DynamicPageList3
  * DPL SubPageList Class
  *
- * @license		GPL-2.0-or-later
- * @package		DynamicPageList3
- *
+ * @license GPL-2.0-or-later
+ * @package DynamicPageList3
  **/
 
 namespace DPL\Lister;
@@ -14,46 +13,46 @@ class SubPageList extends UnorderedList {
 	/**
 	 * Listing style for this class.
 	 *
-	 * @var		constant
+	 * @var constant
 	 */
 	public $style = parent::LIST_UNORDERED;
 
 	/**
 	 * List(Section) Start
 	 *
-	 * @var		string
+	 * @var string
 	 */
 	public $listStart = '<ul%s>';
 
 	/**
 	 * List(Section) End
 	 *
-	 * @var		string
+	 * @var string
 	 */
 	public $listEnd = '</ul>';
 
 	/**
 	 * Item Start
 	 *
-	 * @var		string
+	 * @var string
 	 */
 	public $itemStart = '<li%s>';
 
 	/**
 	 * Item End
 	 *
-	 * @var		string
+	 * @var string
 	 */
 	public $itemEnd = '</li>';
 
 	/**
 	 * Format a list of articles into a singular list.
 	 *
-	 * @access	public
-	 * @param	array	List of \DPL\Article
-	 * @param	integer	Start position of the array to process.
-	 * @param	integer	Total objects from the array to process.
-	 * @return	string	Formatted list.
+	 * @param  array	List of \DPL\Article
+	 * @param  integer	Start position of the array to process.
+	 * @param  integer	Total objects from the array to process.
+	 *
+	 * @return string	Formatted list.
 	 */
 	public function formatList($articles, $start, $count) {
 		$filteredCount = 0;
@@ -84,11 +83,11 @@ class SubPageList extends UnorderedList {
 	/**
 	 * Nest items down to the proper level.
 	 *
-	 * @access	private
-	 * @param	array	Part levels to nest down to.
-	 * @param	array	Items holder to nest the item into.
-	 * @param	string	Formatted Item
-	 * @return	array	Nest Items
+	 * @param  array	Part levels to nest down to.
+	 * @param  array	Items holder to nest the item into.
+	 * @param  string	Formatted Item
+	 *
+	 * @return array	Nest Items
 	 */
 	private function nestItem(&$parts, $items, $item) {
 		$firstPart = reset($parts);
@@ -108,9 +107,9 @@ class SubPageList extends UnorderedList {
 	/**
 	 * Join together items after being processed by formatItem().
 	 *
-	 * @access	protected
-	 * @param	array	Items as formatted by formatItem().
-	 * @return	string	Imploded items.
+	 * @param  array	Items as formatted by formatItem().
+	 *
+	 * @return string	Imploded items.
 	 */
 	protected function implodeItems($items) {
 		$list = '';

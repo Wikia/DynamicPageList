@@ -3,28 +3,31 @@
  *
  * @file
  * @ingroup Extensions
- * @link		http://www.mediawiki.org/wiki/Extension:DynamicPageList_(third-party)	Documentation
- * @author		n:en:User:IlyaHaykinson
- * @author		n:en:User:Amgine
- * @author		w:de:Benutzer:Unendlich
- * @author		m:User:Dangerman <cyril.dangerville@gmail.com>
- * @author		m:User:Algorithmix <gero.scholz@gmx.de>
- * @license		GPL-2.0-or-later
- *
+ * @link    http://www.mediawiki.org/wiki/Extension:DynamicPageList_(third-party)	Documentation
+ * @author  n:en:User:IlyaHaykinson
+ * @author  n:en:User:Amgine
+ * @author  w:de:Benutzer:Unendlich
+ * @author  m:User:Dangerman <cyril.dangerville@gmail.com>
+ * @author  m:User:Algorithmix <gero.scholz@gmx.de>
+ * @license GPL-2.0-or-later
  */
 
 class DynamicPageListHooks {
 	// FATAL
-	const FATAL_WRONGNS = 1001;	// $1: 'namespace' or 'notnamespace'
-															// $2: wrong parameter given by user
-															// $3: list of possible titles of namespaces (except pseudo-namespaces: Media, Special)
+	//  $1: 'namespace' or 'notnamespace'
+	// $2: wrong parameter given by user
+	// $3: list of possible titles of namespaces (except pseudo-namespaces: Media, Special)
+	const FATAL_WRONGNS = 1001;
 
-	const FATAL_WRONGLINKSTO = 1002;	// $1: linksto'
-															// $2: the wrong parameter given by user
+	//  $1: linksto'
+	// $2: the wrong parameter given by user
+	const FATAL_WRONGLINKSTO = 1002;
 
-	const FATAL_TOOMANYCATS = 1003;	// $1: max number of categories that can be included
+	//  $1: max number of categories that can be included
+	const FATAL_TOOMANYCATS = 1003;
 
-	const FATAL_TOOFEWCATS = 1004;	// $1: min number of categories that have to be included
+	//  $1: min number of categories that have to be included
+	const FATAL_TOOFEWCATS = 1004;
 
 	const FATAL_NOSELECTION = 1005;
 
@@ -34,10 +37,12 @@ class DynamicPageListHooks {
 
 	const FATAL_MORETHAN1TYPEOFDATE = 1008;
 
-	const FATAL_WRONGORDERMETHOD = 1009;	// $1: param=val that is possible only with $1 as last 'ordermethod' parameter
-															// $2: last 'ordermethod' parameter required for $0
+	//  $1: param=val that is possible only with $1 as last 'ordermethod' parameter
+	// $2: last 'ordermethod' parameter required for $0
+	const FATAL_WRONGORDERMETHOD = 1009;
 
-	const FATAL_DOMINANTSECTIONRANGE = 1010;	// $1: the number of arguments in includepage
+	//  $1: the number of arguments in includepage
+	const FATAL_DOMINANTSECTIONRANGE = 1010;
 
 	const FATAL_OPENREFERENCES = 1012;
 
@@ -51,63 +56,69 @@ class DynamicPageListHooks {
 
 	// WARN
 
-	const WARN_UNKNOWNPARAM = 2013;	// $1: unknown parameter given by user
-															// $2: list of DPL available parameters separated by ', '
+	//  $1: unknown parameter given by user
+	// $2: list of DPL available parameters separated by ', '
+	const WARN_UNKNOWNPARAM = 2013;
 
-	const WARN_PARAMNOOPTION = 2022;	// $1: Parameter given by user
+	//  $1: Parameter given by user
+	const WARN_PARAMNOOPTION = 2022;
 
-	const WARN_WRONGPARAM = 2014;	// $3: list of valid param values separated by ' | '
+	//  $3: list of valid param values separated by ' | '
+	const WARN_WRONGPARAM = 2014;
 
-	const WARN_WRONGPARAM_INT = 2015;	// $1: param name
-															// $2: wrong param value given by user
-															// $3: default param value used instead by program
+	//  $1: param name
+	// $2: wrong param value given by user
+	// $3: default param value used instead by program
+	const WARN_WRONGPARAM_INT = 2015;
 
 	const WARN_NORESULTS = 2016;
 
 	const WARN_CATOUTPUTBUTWRONGPARAMS = 2017;
 
-	const WARN_HEADINGBUTSIMPLEORDERMETHOD = 2018;	// $1: 'headingmode' value given by user
-															// $2: value used instead by program (which means no heading)
+	//  $1: 'headingmode' value given by user
+	// $2: value used instead by program (which means no heading)
+	const WARN_HEADINGBUTSIMPLEORDERMETHOD = 2018;
 
-	const WARN_DEBUGPARAMNOTFIRST = 2019;	// $1: 'log' value
+	//  $1: 'log' value
+	const WARN_DEBUGPARAMNOTFIRST = 2019;
 
-	const WARN_TRANSCLUSIONLOOP = 2020;	// $1: title of page that creates an infinite transclusion loop
+	//  $1: title of page that creates an infinite transclusion loop
+	const WARN_TRANSCLUSIONLOOP = 2020;
 
 	// INFO
 
 	// DEBUG
-
-	const DEBUG_QUERY = 3021;	// $1: SQL query executed to generate the dynamic page list
+	// $1: SQL query executed to generate the dynamic page list
+	const DEBUG_QUERY = 3021;
 
 	// TRACE
-															// Output formatting
-															// $1: number of articles
-
+	// Output formatting
+	// $1: number of articles
 	static public $fixedCategories = [];
 
-	public static $createdLinks; // the links created by DPL are collected here;
-								 // they can be removed during the final ouput
-								 // phase of the MediaWiki parser
+	// the links created by DPL are collected here;
+	// they can be removed during the final ouput
+	// phase of the MediaWiki parser
+	public static $createdLinks;
 
 	/**
 	 * DPL acting like Extension:Intersection
 	 *
-	 * @var		boolean
+	 * @var boolean
 	 */
 	static private $likeIntersection = false;
 
 	/**
 	 * Debugging Level
 	 *
-	 * @var		integer
+	 * @var integer
 	 */
 	static private $debugLevel = 0;
 
 	/**
 	 * Handle special on extension registration bits.
 	 *
-	 * @access	public
-	 * @return	void
+	 * @return void
 	 */
 	public static function onRegistration() {
 		if (!defined('DPL_VERSION')) {
@@ -118,14 +129,14 @@ class DynamicPageListHooks {
 	/**
 	 * Sets up this extension's parser functions.
 	 *
-	 * @access	public
-	 * @param	object	Parser object passed as a reference.
-	 * @return	boolean	true
+	 * @param  object	Parser object passed as a reference.
+	 *
+	 * @return boolean	true
 	 */
 	public static function onParserFirstCallInit(Parser &$parser) {
 		self::init();
 
-		//DPL offers the same functionality as Intersection.  So we register the <DynamicPageList> tag in case LabeledSection Extension is not installed so that the section markers are removed.
+		// DPL offers the same functionality as Intersection.  So we register the <DynamicPageList> tag in case LabeledSection Extension is not installed so that the section markers are removed.
 		if (\DPL\Config::getSetting('handleSectionTag')) {
 			$parser->setHook('section',			[__CLASS__, 'dplTag']);
 		}
@@ -145,9 +156,9 @@ class DynamicPageListHooks {
 	/**
 	 * Sets up this extension's parser functions for migration from Intersection.
 	 *
-	 * @access	public
-	 * @param	object	Parser object passed as a reference.
-	 * @return	boolean	true
+	 * @param  object	Parser object passed as a reference.
+	 *
+	 * @return boolean	true
 	 */
 	public static function setupMigration(Parser &$parser) {
 		$parser->setHook('Intersection', [__CLASS__, 'intersectionTag']);
@@ -160,8 +171,7 @@ class DynamicPageListHooks {
 	/**
 	 * Common initializer for usage from parser entry points.
 	 *
-	 * @access	private
-	 * @return	void
+	 * @return void
 	 */
 	private static function init() {
 		\DPL\Config::init();
@@ -181,9 +191,9 @@ class DynamicPageListHooks {
 	/**
 	 * Set to behave like intersection.
 	 *
-	 * @access	private
-	 * @param	boolean	Behave Like Intersection
-	 * @return	void
+	 * @param  boolean	Behave Like Intersection
+	 *
+	 * @return void
 	 */
 	private static function setLikeIntersection($mode = false) {
 		self::$likeIntersection = $mode;
@@ -192,8 +202,7 @@ class DynamicPageListHooks {
 	/**
 	 * Is like intersection?
 	 *
-	 * @access	public
-	 * @return	boolean	Behaving Like Intersection
+	 * @return boolean	Behaving Like Intersection
 	 */
 	public static function isLikeIntersection() {
 		return (bool)self::$likeIntersection;
@@ -202,12 +211,12 @@ class DynamicPageListHooks {
 	/**
 	 * Tag <section> entry point.
 	 *
-	 * @access	public
-	 * @param	string	Raw User Input
-	 * @param	array	Arguments on the tag.
-	 * @param	object	Parser object.
-	 * @param	object	PPFrame object.
-	 * @return	string	HTML
+	 * @param  string	Raw User Input
+	 * @param  array	Arguments on the tag.
+	 * @param  object	Parser object.
+	 * @param  object	PPFrame object.
+	 *
+	 * @return string	HTML
 	 */
 	public static function intersectionTag($input, array $args, Parser $parser, PPFrame $frame) {
 		self::setLikeIntersection(true);
@@ -217,12 +226,12 @@ class DynamicPageListHooks {
 	/**
 	 * Tag <dpl> entry point.
 	 *
-	 * @access	public
-	 * @param	string	Raw User Input
-	 * @param	array	Arguments on the tag.
-	 * @param	object	Parser object.
-	 * @param	object	PPFrame object.
-	 * @return	string	HTML
+	 * @param  string	Raw User Input
+	 * @param  array	Arguments on the tag.
+	 * @param  object	Parser object.
+	 * @param  object	PPFrame object.
+	 *
+	 * @return string	HTML
 	 */
 	public static function dplTag($input, array $args, Parser $parser, PPFrame $frame) {
 		self::setLikeIntersection(false);
@@ -232,12 +241,12 @@ class DynamicPageListHooks {
 	/**
 	 * The callback function wrapper for converting the input text to HTML output
 	 *
-	 * @access	public
-	 * @param	string	Raw User Input
-	 * @param	array	Arguments on the tag.(While not used, it is left here for future compatibility.)
-	 * @param	object	Parser object.
-	 * @param	object	PPFrame object.
-	 * @return	string	HTML
+	 * @param  string	Raw User Input
+	 * @param  array	Arguments on the tag.(While not used, it is left here for future compatibility.)
+	 * @param  object	Parser object.
+	 * @param  object	PPFrame object.
+	 *
+	 * @return string	HTML
 	 */
 	private static function executeTag($input, array $args, Parser $parser, PPFrame $frame) {
 		// entry point for user tag <dpl>  or  <DynamicPageList>
@@ -276,9 +285,9 @@ class DynamicPageListHooks {
 	/**
 	 * The #dpl parser tag entry point.
 	 *
-	 * @access	public
-	 * @param	object	Parser object passed as a reference.
-	 * @return	string	Wiki Text
+	 * @param  object	Parser object passed as a reference.
+	 *
+	 * @return string	Wiki Text
 	 */
 	public static function dplParserFunction(&$parser) {
 		self::setLikeIntersection(false);
@@ -312,9 +321,9 @@ class DynamicPageListHooks {
 	 * The #dplnum parser tag entry point.
 	 * From the old documentation: "Tries to guess a number that is buried in the text.  Uses a set of heuristic rules which may work or not.  The idea is to extract the number so that it can be used as a sorting value in the column of a DPL table output."
 	 *
-	 * @access	public
-	 * @param	object	Parser object passed as a reference.
-	 * @return	string	Wiki Text
+	 * @param  object	Parser object passed as a reference.
+	 *
+	 * @return string	Wiki Text
 	 */
 	public static function dplNumParserFunction(&$parser, $text = '') {
 		$num = str_replace('&#160;', ' ', $text);
@@ -365,10 +374,10 @@ class DynamicPageListHooks {
 		if ($text == '' || $pat == '') {
 			return '';
 		}
-		# convert \n to a real newline character
+		// convert \n to a real newline character
 		$repl = str_replace('\n', "\n", $repl);
 
-		# replace
+		// replace
 		if (!self::isRegexp($pat)) {
 			$pat = '`' . str_replace('`', '\`', $pat) . '`';
 		}
@@ -469,7 +478,7 @@ class DynamicPageListHooks {
 	}
 
 	private static function dumpParsedRefs($parser, $label) {
-		//if (!preg_match("/Query Q/",$parser->getTitle()->getText())) return '';
+		// if (!preg_match("/Query Q/",$parser->getTitle()->getText())) return '';
 		echo '<pre>parser mLinks: ';
 		ob_start();
 		$parserOutput = $parser->getOutput();
@@ -487,7 +496,7 @@ class DynamicPageListHooks {
 		echo '</pre>';
 	}
 
-	//remove section markers in case the LabeledSectionTransclusion extension is not installed.
+	// remove section markers in case the LabeledSectionTransclusion extension is not installed.
 	public static function removeSectionMarkers($in, $assocArgs = [], $parser = null) {
 		return '';
 	}
@@ -501,9 +510,9 @@ class DynamicPageListHooks {
 	/**
 	 * Set Debugging Level
 	 *
-	 * @access	public
-	 * @param	integer	Debug Level
-	 * @return	void
+	 * @param  integer	Debug Level
+	 *
+	 * @return void
 	 */
 	public static function setDebugLevel($level) {
 		self::$debugLevel = intval($level);
@@ -512,8 +521,7 @@ class DynamicPageListHooks {
 	/**
 	 * Return Debugging Level
 	 *
-	 * @access	public
-	 * @return	void
+	 * @return void
 	 */
 	public static function getDebugLevel() {
 		return self::$debugLevel;
@@ -590,7 +598,7 @@ class DynamicPageListHooks {
 			// $text .= self::dumpParsedRefs($parser,"after final eliminate".$parser->getTitle()->getText());
 		}
 
-		//self::$createdLinks=array(
+		// self::$createdLinks=array(
 		//		  'resetLinks'=> false, 'resetTemplates' => false,
 		//		  'resetCategories' => false, 'resetImages' => false, 'resetdone' => false );
 		return true;
@@ -599,9 +607,9 @@ class DynamicPageListHooks {
 	/**
 	 * Setups and Modifies Database Information
 	 *
-	 * @access	public
-	 * @param	object	[Optional] DatabaseUpdater Object
-	 * @return	boolean	true
+	 * @param  object	[Optional] DatabaseUpdater Object
+	 *
+	 * @return boolean	true
 	 */
 	public static function onLoadExtensionSchemaUpdates(DatabaseUpdater $updater = null) {
 		$extDir = __DIR__;

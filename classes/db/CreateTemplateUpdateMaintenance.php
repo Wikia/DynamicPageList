@@ -3,9 +3,8 @@
  * DynamicPageList3
  * CreateTemplateUpdateMaintenance
  *
- * @license		GPL-2.0-or-later
- * @package		DynamicPageList3
- *
+ * @license GPL-2.0-or-later
+ * @package DynamicPageList3
  **/
 
 namespace DPL\DB;
@@ -22,11 +21,10 @@ class CreateTemplateUpdateMaintenance extends LoggedUpdateMaintenance {
 	/**
 	 * Handle inserting DPL's necessary template for content inclusion.
 	 *
-	 * @access	protected
-	 * @return	void
+	 * @return void
 	 */
 	protected function doDBUpdates() {
-		//Make sure page "Template:Extension DPL" exists
+		// Make sure page "Template:Extension DPL" exists
 		$title = Title::newFromText('Template:Extension DPL');
 
 		if (!$title->exists()) {
@@ -43,8 +41,7 @@ class CreateTemplateUpdateMaintenance extends LoggedUpdateMaintenance {
 	/**
 	 * Get the unique update key for this logged update.
 	 *
-	 * @access	protected
-	 * @return	string	Unique Key
+	 * @return string	Unique Key
 	 */
 	protected function getUpdateKey() {
 		return 'dynamic-page-list-create-template';

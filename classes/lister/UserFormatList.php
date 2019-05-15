@@ -3,9 +3,8 @@
  * DynamicPageList3
  * DPL UserFormatList Class
  *
- * @license		GPL-2.0-or-later
- * @package		DynamicPageList3
- *
+ * @license GPL-2.0-or-later
+ * @package DynamicPageList3
  **/
 
 namespace DPL\Lister;
@@ -16,24 +15,24 @@ class UserFormatList extends Lister {
 	/**
 	 * Listing style for this class.
 	 *
-	 * @var		constant
+	 * @var constant
 	 */
 	public $style = parent::LIST_USERFORMAT;
 
 	/**
 	 * Inline item text separator.
 	 *
-	 * @var		string
+	 * @var string
 	 */
 	protected $textSeparator = '';
 
 	/**
 	 * Main Constructor
 	 *
-	 * @access	public
-	 * @param	object	\DPL\Parameters
-	 * @param	object	MediaWiki \Parser
-	 * @return	void
+	 * @param  object	\DPL\Parameters
+	 * @param  object	MediaWiki \Parser
+	 *
+	 * @return void
 	 */
 	public function __construct(\DPL\Parameters $parameters, \Parser $parser) {
 		parent::__construct($parameters, $parser);
@@ -56,11 +55,11 @@ class UserFormatList extends Lister {
 	/**
 	 * Format the list of articles.
 	 *
-	 * @access	public
-	 * @param	array	List of \DPL\Article
-	 * @param	integer	Start position of the array to process.
-	 * @param	integer	Total objects from the array to process.
-	 * @return	string	Formatted list.
+	 * @param  array	List of \DPL\Article
+	 * @param  integer	Start position of the array to process.
+	 * @param  integer	Total objects from the array to process.
+	 *
+	 * @return string	Formatted list.
 	 */
 	public function formatList($articles, $start, $count) {
 		$filteredCount = 0;
@@ -88,7 +87,7 @@ class UserFormatList extends Lister {
 		// if requested we sort the table by the contents of a given column
 		$sortColumn	= $this->getTableSortColumn();
 		if ($sortColumn != 0) {
-			$rowsKey	= [];
+			$rowsKey = [];
 			foreach ($items as $index => $item) {
 				$item = trim($item);
 				if (strpos($item, '|-') === 0) {
@@ -132,16 +131,16 @@ class UserFormatList extends Lister {
 	/**
 	 * Format a single item.
 	 *
-	 * @access	public
-	 * @param	object	DPL\Article
-	 * @param	string	[Optional] Page text to include.
-	 * @return	string	Item HTML
+	 * @param  object	DPL\Article
+	 * @param  string	[Optional] Page text to include.
+	 *
+	 * @return string	Item HTML
 	 */
 	public function formatItem(Article $article, $pageText = null) {
 		$item = '';
 
 		if ($pageText !== null) {
-			//Include parsed/processed wiki markup content after each item before the closing tag.
+			// Include parsed/processed wiki markup content after each item before the closing tag.
 			$item .= $pageText;
 		}
 
@@ -155,8 +154,7 @@ class UserFormatList extends Lister {
 	/**
 	 * Return $this->itemStart with attributes replaced.
 	 *
-	 * @access	public
-	 * @return	string	Item Start
+	 * @return string	Item Start
 	 */
 	public function getItemStart() {
 		return $this->replaceTagCount($this->itemStart, $this->getRowCount());
@@ -165,8 +163,7 @@ class UserFormatList extends Lister {
 	/**
 	 * Return $this->itemEnd with attributes replaced.
 	 *
-	 * @access	public
-	 * @return	string	Item End
+	 * @return string	Item End
 	 */
 	public function getItemEnd() {
 		return $this->replaceTagCount($this->itemEnd, $this->getRowCount());
@@ -175,9 +172,9 @@ class UserFormatList extends Lister {
 	/**
 	 * Join together items after being processed by formatItem().
 	 *
-	 * @access	public
-	 * @param	array	Items as formatted by formatItem().
-	 * @return	string	Imploded items.
+	 * @param  array	Items as formatted by formatItem().
+	 *
+	 * @return string	Imploded items.
 	 */
 	protected function implodeItems($items) {
 		return implode($this->textSeparator, $items);

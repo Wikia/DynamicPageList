@@ -3,10 +3,9 @@
  * DynamicPageList3
  * Magic Words
  *
- * @author		Alexia E. Smith
- * @license		GPL-2.0-or-later
- * @package		DynamicPageList3
- *
+ * @package DynamicPageList3
+ * @author  Alexia E. Smith
+ * @license GPL-2.0-or-later
 **/
 
 $magicWords = [];

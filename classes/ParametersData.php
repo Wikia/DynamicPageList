@@ -3,11 +3,11 @@
  * DynamicPageList3
  * DPL ParametersData Class
  *
- * @author		IlyaHaykinson, Unendlich, Dangerville, Algorithmix, Theaitetos, Alexia E. Smith
- * @license		GPL-2.0-or-later
- * @package		DynamicPageList3
- *
+ * @package DynamicPageList3
+ * @author  IlyaHaykinson, Unendlich, Dangerville, Algorithmix, Theaitetos, Alexia E. Smith
+ * @license GPL-2.0-or-later
  **/
+
 namespace DPL;
 
 class ParametersData {
@@ -15,14 +15,14 @@ class ParametersData {
 	 * Parameter Richness
 	 * The level of parameters that is accesible for the user.
 	 *
-	 * @var		integer
+	 * @var integer
 	 */
 	private $parameterRichness = 0;
 
 	/**
 	 * List of all the valid parameters that can be used per level of functional richness.
 	 *
-	 * @var		array
+	 * @var array
 	 */
 	static private $parametersForRichnessLevel = [
 		0 => [
@@ -161,7 +161,7 @@ class ParametersData {
 	 * A 'values' key is the set of possible values.
 	 * For some options (e.g. 'namespace'), possible values are not yet defined, but will be if necessary (for debugging).
 	 *
-	 * @var		array
+	 * @var array
 	 */
 	private $data = [
 		'addauthor' => [
@@ -242,6 +242,7 @@ class ParametersData {
 		 * If '+' prefixes the list of categories (e.g. category=+ Cat1 | Cat 2 ...), only these categories can be used as headings in the DPL. See	 'headingmode' param.
 		 * If '-' prefixes the list of categories (e.g. category=- Cat1 | Cat 2 ...), these categories will not appear as headings in the DPL. See	'headingmode' param.
 		 * Magic words allowed.
+		 *
 		 * @todo define 'category' options (retrieve list of categories from 'categorylinks' table?)
 		 */
 		'category' => [
@@ -359,7 +360,7 @@ class ParametersData {
 			'open_ref_conflict'	=> true
 		],
 
-		//Include the lowercase variants of header tiers for ease of use.
+		// Include the lowercase variants of header tiers for ease of use.
 		'headingmode' => [
 			'default'	=> 'none',
 			'values'	=> [
@@ -375,7 +376,7 @@ class ParametersData {
 				'h4',
 				'h5',
 				'h6',
-				//'header',
+				// 'header',
 				'definition',
 				'none',
 				'ordered',
@@ -396,6 +397,7 @@ class ParametersData {
 		/**
 		 * Attributes for HTML list items (headings) at the heading level, depending on 'headingmode' (e.g. 'li' for ordered/unordered)
 		 * Not yet applicable to 'headingmode=none | definition | H2 | H3 | H4'.
+		 *
 		 * @todo Make 'hitemattr' param applicable to  'none', 'definition', 'H2', 'H3', 'H4' headingmodes.
 		 * Example: hitemattr= class="topmenuli" style="color: red;"
 		 */
@@ -406,6 +408,7 @@ class ParametersData {
 		/**
 		 * Attributes for the HTML list element at the heading/top level, depending on 'headingmode' (e.g. 'ol' for ordered, 'ul' for unordered, 'dl' for definition)
 		 * Not yet applicable to 'headingmode=none'.
+		 *
 		 * @todo Make 'hlistattr' param applicable to  headingmode=none.
 		 * Example: hlistattr= class="topmenul" id="dmenu"
 		 */
@@ -493,6 +496,7 @@ class ParametersData {
 		/**
 		 * Attributes for HTML list items, depending on 'mode' ('li' for ordered/unordered, 'span' for others).
 		 * Not applicable to 'mode=category'.
+		 *
 		 * @todo Make 'itemattr' param applicable to 'mode=category'.
 		 * Example: itemattr= class="submenuli" style="color: red;"
 		 */
@@ -734,6 +738,7 @@ class ParametersData {
 		 * notcategory = Cat2
 		 * ...
 		 * Means pages can be NEITHER in category Cat1 NOR in Cat2 NOR...
+		 *
 		 * @todo define 'notcategory' options (retrieve list of categories from 'categorylinks' table?)
 		 */
 		'notcategory' => [
@@ -822,6 +827,7 @@ class ParametersData {
 		],
 		/**
 		 * 'ordermethod=param1,param2' means ordered by param1 first, then by param2.
+		 *
 		 * @todo: add 'ordermethod=category,categoryadd' (for each category CAT, pages ordered by date when page was added to CAT).
 		 */
 		'ordermethod' => [
@@ -1113,8 +1119,7 @@ class ParametersData {
 	/**
 	 * Main Constructor
 	 *
-	 * @access	public
-	 * @return	void
+	 * @return void
 	 */
 	public function __construct() {
 		$this->setRichness(Config::getSetting('functionalRichness'));
@@ -1153,9 +1158,9 @@ class ParametersData {
 	/**
 	 * Return if the parameter exists.
 	 *
-	 * @access	public
-	 * @param	string	Parameter name.
-	 * @return	boolean	Exists
+	 * @param  string	Parameter name.
+	 *
+	 * @return boolean	Exists
 	 */
 	public function exists($parameter) {
 		return array_key_exists($parameter, $this->data);
@@ -1164,9 +1169,9 @@ class ParametersData {
 	/**
 	 * Return data for the supplied parameter.
 	 *
-	 * @access	public
-	 * @param	string	Parameter name.
-	 * @return	mixed	Parameter array or false if it does not exist.
+	 * @param  string	Parameter name.
+	 *
+	 * @return mixed	Parameter array or false if it does not exist.
 	 */
 	public function getData($parameter) {
 		if (array_key_exists($parameter, $this->data)) {
@@ -1179,9 +1184,9 @@ class ParametersData {
 	/**
 	 * Sets the current parameter richness.
 	 *
-	 * @access	public
-	 * @param	integer	Integer level.
-	 * @return	void
+	 * @param  integer	Integer level.
+	 *
+	 * @return void
 	 */
 	public function setRichness($level) {
 		$this->parameterRichness = intval($level);
@@ -1190,8 +1195,7 @@ class ParametersData {
 	/**
 	 * Returns the current parameter richness.
 	 *
-	 * @access	public
-	 * @return	integer
+	 * @return integer
 	 */
 	public function getRichness() {
 		return $this->parameterRichness;
@@ -1200,9 +1204,9 @@ class ParametersData {
 	/**
 	 * Tests if the function is valid for the current functional richness level.
 	 *
-	 * @access	public
-	 * @param	string	Function to test.
-	 * @return	boolean	Valid for this functional richness level.
+	 * @param  string	Function to test.
+	 *
+	 * @return boolean	Valid for this functional richness level.
 	 */
 	public function testRichness($function) {
 		$valid = false;
@@ -1218,9 +1222,9 @@ class ParametersData {
 	/**
 	 * Returns all parameters for the current richness level or limited to the optional maximum richness.
 	 *
-	 * @access	public
-	 * @param	integer	[Optional] Maximum richness level
-	 * @return	array	The functional richness parameters list.
+	 * @param  integer	[Optional] Maximum richness level
+	 *
+	 * @return array	The functional richness parameters list.
 	 */
 	public function getParametersForRichness($level = null) {
 		if ($level === null) {
@@ -1239,9 +1243,9 @@ class ParametersData {
 	/**
 	 * Return the default value for the parameter.
 	 *
-	 * @access	public
-	 * @param	string	Parameter Name
-	 * @return	mixed
+	 * @param  string	Parameter Name
+	 *
+	 * @return mixed
 	 */
 	public function getDefault($parameter) {
 		if (array_key_exists($parameter, $this->data)) {
@@ -1256,9 +1260,9 @@ class ParametersData {
 	/**
 	 * Return the acceptable values for the parameter.
 	 *
-	 * @access	public
-	 * @param	string	Parameter Name
-	 * @return	mixed	Array of allowed values or false that the parameter allows any.
+	 * @param  string	Parameter Name
+	 *
+	 * @return mixed	Array of allowed values or false that the parameter allows any.
 	 */
 	public function getValues($parameter) {
 		if (array_key_exists($parameter, $this->data)) {
@@ -1273,9 +1277,9 @@ class ParametersData {
 	/**
 	 * Does the parameter set that criteria for selection was found?
 	 *
-	 * @access	public
-	 * @param	string	Parameter Name
-	 * @return	bool
+	 * @param  string	Parameter Name
+	 *
+	 * @return bool
 	 */
 	public function setsCriteriaFound($parameter) {
 		if (array_key_exists($parameter, $this->data)) {
@@ -1290,9 +1294,9 @@ class ParametersData {
 	/**
 	 * Does the parameter cause an open reference conflict?
 	 *
-	 * @access	public
-	 * @param	string	Parameter Name
-	 * @return	bool
+	 * @param  string	Parameter Name
+	 *
+	 * @return bool
 	 */
 	public function isOpenReferenceConflict($parameter) {
 		if (array_key_exists($parameter, $this->data)) {
@@ -1307,9 +1311,9 @@ class ParametersData {
 	/**
 	 * Should this parameter preserve the case of the user supplied input?
 	 *
-	 * @access	public
-	 * @param	string	Parameter Name
-	 * @return	bool
+	 * @param  string	Parameter Name
+	 *
+	 * @return bool
 	 */
 	public function shouldPreserveCase($parameter) {
 		if (array_key_exists($parameter, $this->data)) {
@@ -1324,9 +1328,9 @@ class ParametersData {
 	/**
 	 * Does this parameter take a list of page names?
 	 *
-	 * @access	public
-	 * @param	string	Parameter Name
-	 * @return	bool
+	 * @param  string	Parameter Name
+	 *
+	 * @return bool
 	 */
 	public function isPageNameList($parameter) {
 		if (array_key_exists($parameter, $this->data)) {
@@ -1341,9 +1345,9 @@ class ParametersData {
 	/**
 	 * Is the parameter supposed to be parsed as a boolean?
 	 *
-	 * @access	public
-	 * @param	string	Parameter Name
-	 * @return	bool
+	 * @param  string	Parameter Name
+	 *
+	 * @return bool
 	 */
 	public function isBoolean($parameter) {
 		if (array_key_exists($parameter, $this->data)) {
@@ -1358,9 +1362,9 @@ class ParametersData {
 	/**
 	 * Is the parameter supposed to be parsed as a Mediawiki timestamp?
 	 *
-	 * @access	public
-	 * @param	string	Parameter Name
-	 * @return	bool
+	 * @param  string	Parameter Name
+	 *
+	 * @return bool
 	 */
 	public function isTimestamp($parameter) {
 		if (array_key_exists($parameter, $this->data)) {

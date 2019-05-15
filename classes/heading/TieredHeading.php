@@ -3,9 +3,8 @@
  * DynamicPageList3
  * DPL TieredHeading Class
  *
- * @license		GPL-2.0-or-later
- * @package		DynamicPageList3
- *
+ * @license GPL-2.0-or-later
+ * @package DynamicPageList3
  **/
 
 namespace DPL\Heading;
@@ -17,44 +16,44 @@ class TieredHeading extends Heading {
 	/**
 	 * List(Section) Start
 	 *
-	 * @var		string
+	 * @var string
 	 */
 	public $listStart = '<div%s>';
 
 	/**
 	 * List(Section) End
 	 *
-	 * @var		string
+	 * @var string
 	 */
 	public $listEnd = '</div>';
 
 	/**
 	 * Item Start
 	 *
-	 * @var		string
+	 * @var string
 	 */
 	public $itemStart = '<h%2$s%1$s>';
 
 	/**
 	 * Item End
 	 *
-	 * @var		string
+	 * @var string
 	 */
 	public $itemEnd = '</h%2$s>';
 
 	/**
 	 * Tier Level
 	 *
-	 * @var		string
+	 * @var string
 	 */
 	private $tierLevel = 'eader';
 
 	/**
 	 * Main Constructor
 	 *
-	 * @access	public
-	 * @param	object	\DPL\Parameters
-	 * @return	void
+	 * @param  object	\DPL\Parameters
+	 *
+	 * @return void
 	 */
 	public function __construct(Parameters $parameters) {
 		parent::__construct($parameters);
@@ -64,13 +63,13 @@ class TieredHeading extends Heading {
 	/**
 	 * Format a heading group.
 	 *
-	 * @access	public
-	 * @param	integer	Article start index for this heading.
-	 * @param	integer	Article count for this heading.
-	 * @param	string	Heading link/text display.
-	 * @param	array	List of \DPL\Article.
-	 * @param	object	List of \DPL\Lister\Lister
-	 * @return	string	Heading HTML
+	 * @param  integer	Article start index for this heading.
+	 * @param  integer	Article count for this heading.
+	 * @param  string	Heading link/text display.
+	 * @param  array	List of \DPL\Article.
+	 * @param  object	List of \DPL\Lister\Lister
+	 *
+	 * @return string	Heading HTML
 	 */
 	public function formatItem($headingStart, $headingCount, $headingLink, $articles, Lister $lister) {
 		$item = '';
@@ -88,8 +87,7 @@ class TieredHeading extends Heading {
 	/**
 	 * Return $this->listStart with attributes replaced.
 	 *
-	 * @access	public
-	 * @return	string	List Start
+	 * @return string	List Start
 	 */
 	public function getListStart() {
 		return sprintf($this->listStart, $this->listAttributes);
@@ -98,8 +96,7 @@ class TieredHeading extends Heading {
 	/**
 	 * Return $this->itemStart with attributes replaced.
 	 *
-	 * @access	public
-	 * @return	string	Item Start
+	 * @return string	Item Start
 	 */
 	public function getItemStart() {
 		return sprintf($this->itemStart, $this->itemAttributes, $this->tierLevel);
@@ -108,8 +105,7 @@ class TieredHeading extends Heading {
 	/**
 	 * Return $this->itemEnd with attributes replaced.
 	 *
-	 * @access	public
-	 * @return	string	Item End
+	 * @return string	Item End
 	 */
 	public function getItemEnd() {
 		return sprintf($this->itemEnd, $this->itemAttributes, $this->tierLevel);
