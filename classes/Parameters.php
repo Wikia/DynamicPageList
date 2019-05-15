@@ -10,6 +10,8 @@
  **/
 namespace DPL;
 
+use MediaWiki\MediaWikiServices;
+
 class Parameters extends ParametersData {
 	/**
 	 * Set parameter options.
@@ -635,11 +637,12 @@ class Parameters extends ParametersData {
 	 * @return	boolean	Success
 	 */
 	public function _namespace($option) {
-		global $wgContLang;
+		$contentLanguage = MediaWikiServices::getInstance()->getContentLanguage();
+
 		$extraParams = explode('|', $option);
 		foreach ($extraParams as $parameter) {
 			$parameter = trim($parameter);
-			$namespaceId = $wgContLang->getNsIndex($parameter);
+			$namespaceId = $contentLanguage->getNsIndex($parameter);
 			if ($namespaceId === false || (is_array(Config::getSetting('allowedNamespaces')) && !in_array($parameter, Config::getSetting('allowedNamespaces')))) {
 				//Let the user know this namespace is not allowed or does not exist.
 				return false;
@@ -661,11 +664,12 @@ class Parameters extends ParametersData {
 	 * @return	boolean	Success
 	 */
 	public function _notnamespace($option) {
-		global $wgContLang;
+		$contentLanguage = MediaWikiServices::getInstance()->getContentLanguage();
+
 		$extraParams = explode('|', $option);
 		foreach ($extraParams as $parameter) {
 			$parameter = trim($parameter);
-			$namespaceId = $wgContLang->getNsIndex($parameter);
+			$namespaceId = $contentLanguage->getNsIndex($parameter);
 			if ($namespaceId === false) {
 				//Let the user know this namespace is not allowed or does not exist.
 				return false;

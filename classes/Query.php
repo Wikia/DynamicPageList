@@ -10,6 +10,8 @@
  **/
 namespace DPL;
 
+use MediaWiki\MediaWikiServices;
+
 class Query {
 	/**
 	 * Parameters Object
@@ -1635,14 +1637,13 @@ class Query {
 	 * @return	void
 	 */
 	private function _ordermethod($option) {
-		global $wgContLang;
-
 		if ($this->parameters->getParameter('goal') == 'categories') {
 			//No order methods for returning categories.
 			return true;
 		}
 
-		$namespaces = $wgContLang->getNamespaces();
+		$contentLanguage = MediaWikiServices::getInstance()->getContentLanguage();
+		$namespaces = $contentLanguage->getNamespaces();
 		//$aStrictNs = array_slice((array) Config::getSetting('allowedNamespaces'), 1, count(Config::getSetting('allowedNamespaces')), true);
 		$namespaces = array_slice($namespaces, 3, count($namespaces), true);
 		$_namespaceIdToText = "CASE {$this->tableNames['page']}.page_namespace";

@@ -10,6 +10,9 @@
 **/
 namespace DPL;
 
+use Collation;
+use MediaWiki\MediaWikiServices;
+
 class Article {
 	/**
 	 * Title
@@ -204,7 +207,10 @@ class Article {
 	 * @return	object	\DPL\Article Object
 	 */
 	public static function newFromRow($row, Parameters $parameters, \Title $title, $pageNamespace, $pageTitle) {
-		global $wgLang, $wgContLang;
+		global $wgLang;
+
+		$contentLanguage = MediaWikiServices::getInstance()->getContentLanguage();
+		$collation = Collation::singleton();
 
 		$article = new Article($title, $pageNamespace);
 
@@ -231,9 +237,9 @@ class Article {
 
 		//get first char used for category-style output
 		if (isset($row['sortkey'])) {
-			$article->mStartChar = $wgContLang->convert($wgContLang->firstChar($row['sortkey']));
+			$article->mStartChar = $contentLanguage->convert($collation->getFirstLetter($row['sortkey']));
 		} else {
-			$article->mStartChar = $wgContLang->convert($wgContLang->firstChar($pageTitle));
+			$article->mStartChar = $contentLanguage->convert($collation->getFirstLetter($pageTitle));
 		}
 
 		$article->mID = intval($row['page_id']);
