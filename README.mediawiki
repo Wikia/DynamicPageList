@@ -13,20 +13,20 @@
 |hook1       = ParserFirstCallInit
 |description = '''Create lists''' of other articles based on their ''category, namespace, title, references'' or ''template usage'' and '''include contents''' or arguments of template calls of those articles into your page.  
 |license     = GPL-2.0+
-|example     = [http://help.gamepedia.com/DPL:Manual DPL:Manual - Gamepedia Help Wiki]
+|example     = [https://help.gamepedia.com/DPL:Manual DPL:Manual - Gamepedia Help Wiki]
 }}
 
 :{{note}} ''This is a continuation and fork of [[Extension:DynamicPageList (third-party)|DynamicPageList (third-party)]].  It is a fully reworked object oriented code base, significant code and database speed improvements, and is fully backwards compatible with previous versions.''
 
-The '''DynamicPageList3''' extension is a reporting tool for MediaWiki, listing category members and intersections with various formats and details. For full documentation, see the [http://help.gamepedia.com/DPL:Manual manual].
+The '''DynamicPageList3''' extension is a reporting tool for MediaWiki, listing category members and intersections with various formats and details. For full documentation, see the [https://help.gamepedia.com/DPL:Manual manual].
 
 When invoked with a basic set of selection parameters DPL displays a list of pages in one or more categories.  Selections may also be based on factors such as author, namespace, date, name pattern, usage of templates, or references to other articles.  Output takes a variety of forms, some of which incorporate elements of selected articles.
 
 This extension is invoked with the parser function <code>{{#dpl: .... }}</code> or parser tag <code><DPL></code>.  A [[Extension:DynamicPageList (Wikimedia)|Wikimedia]]-compatible implementation of certain features can be invoked with <code>&lt;DynamicPageList&gt;</code>.
 
-Complex look ups can result in computationally expensive database queries.  However, by default all output is cached for a period of one hour to reduce the need to rerun the query every page load.  The [http://help.gamepedia.com/DPL:Parameters:_Other_Parameters#cacheperiod DPL:Parameters: Other Parameters] manual page contains information on parameters that can be used to disable the cache and allow instant updates.
+Complex look ups can result in computationally expensive database queries.  However, by default all output is cached for a period of one hour to reduce the need to rerun the query every page load.  The [https://help.gamepedia.com/DPL:Parameters:_Other_Parameters#allowcachedresults DPL:Parameters: Other Parameters] manual page contains information on parameters that can be used to disable the cache and allow instant updates.
 
-;Manual and Complete Documentation: [http://help.gamepedia.com/DPL:Manual Documentation at Gamepedia Help Wiki]
+;Manual and Complete Documentation: [https://help.gamepedia.com/DPL:Manual Documentation at Gamepedia Help Wiki]
 ;Source Code: [https://gitlab.com/hydrawiki/extensions/DynamicPageList Source code at Gitlab]
 ;Bugs and Feature Requests: [https://gitlab.com/hydrawiki/extensions/DynamicPageList/issues Issues at Gitlab]
 ;Licensing: DynamicPageList3 is released under [https://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2].
@@ -41,7 +41,7 @@ Complex look ups can result in computationally expensive database queries.  Howe
 }}
 
 == Configuration ==
-These are DPL's configuration settings and along with their default values.  To change them make sure they are defined before including the extension on the wiki.  More configuration information is available on the '''[http://help.gamepedia.com/DPL:Source_and_Installation#Configuration Source and Installation]''' manual page.
+These are DPL's configuration settings and along with their default values.  To change them make sure they are defined before including the extension on the wiki.  More configuration information is available on the '''[https://help.gamepedia.com/DPL:Source_and_Installation#Configuration Source and Installation]''' manual page.
 
 '''Note:''' In release 3.0.4 the configuration variable name was changed from <code>$dplSettings</code> to <code>$wgDplSettings</code>.  This was to faciliate compatibility with Mediawiki 1.25's extension registration change.
 
@@ -96,10 +96,10 @@ DynamicPageList has many features which are unlocked based on the maximum functi
 ===Extended DPL Functionality===
 Extended DPL is invoked by using the parser function <code>{{#dpl: .... }}</code>, or the parser extension tag <code><DPL> .... </DPL></code>.
 
-:''See: [http://help.gamepedia.com/DPL:General_Usage_and_Invocation_Syntax Manual - '''General Usage and Invocation Syntax'''] and [http://help.gamepedia.com/DPL:Parameters:_Criteria_for_Page_Selection DPL:Parameters: '''Criteria for Page Selection''']''
+:''See: [https://help.gamepedia.com/DPL:General_Usage_and_Invocation_Syntax Manual - '''General Usage and Invocation Syntax'''] and [https://help.gamepedia.com/DPL:Parameters:_Criteria_for_Page_Selection DPL:Parameters: '''Criteria for Page Selection''']''
 
 === Backwards Compatibility ===
-Functionality compatible with Wikimedia's DPL extension can be invoked with <code>&lt;DynamicPageList&gt; .... &lt;/DynamicPageList&gt;</code>.  Further information can be found on the [http://help.gamepedia.com/DPL:Compatibility Compatibility manual page].
+Functionality compatible with Wikimedia's DPL extension can be invoked with <code>&lt;DynamicPageList&gt; .... &lt;/DynamicPageList&gt;</code>.  Further information can be found on the [https://help.gamepedia.com/DPL:Compatibility Compatibility manual page].
 
 ==Usage Philosophy and Overview==
 With the assumption there are some articles written about ''countries'' those articles will typically have three things in common:
@@ -175,7 +175,7 @@ DPL's code execution and database access is typically fast for typical category 
 
 ==See Also==
 ===Further Reading===
-DPL can do much more than we can explain here. A complete '''[http://help.gamepedia.com/DPL:Manual manual]''' is available with full parameter documentation.
+DPL can do much more than we can explain here. A complete '''[https://help.gamepedia.com/DPL:Manual manual]''' is available with full parameter documentation.
 
 [[Category:Category extensions{{#translation:}}]]
 [[Category:List extensions{{#translation:}}]]
