@@ -60,7 +60,7 @@ class SubPageList extends UnorderedList {
 		$items = [];
 		for ($i = $start; $i < $start + $count; $i++) {
 			$article = $articles[$i];
-			if (empty($article) || empty($article->mTitle)) {
+			if (empty($article) || empty($article->getTitle())) {
 				continue;
 			}
 
@@ -73,7 +73,7 @@ class SubPageList extends UnorderedList {
 
 			$this->rowCount = $filteredCount++;
 
-			$parts = explode('/', $article->mTitle);
+			$parts = explode('/', $article->getTitle()->getPrefixedText());
 			$item = $this->formatItem($article, $pageText);
 			$items = $this->nestItem($parts, $items, $item);
 		}

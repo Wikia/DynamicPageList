@@ -132,15 +132,15 @@ class Parse {
 		Article::resetHeadings();
 
 		//Check that we are not in an infinite transclusion loop
-		if (isset($this->parser->mTemplatePath[$this->parser->mTitle->getPrefixedText()])) {
-			$this->logger->addMessage(\DynamicPageListHooks::WARN_TRANSCLUSIONLOOP, $this->parser->mTitle->getPrefixedText());
+		if (isset($this->parser->mTemplatePath[$this->parser->getTitle()->getPrefixedText()])) {
+			$this->logger->addMessage(\DynamicPageListHooks::WARN_TRANSCLUSIONLOOP, $this->parser->getTitle()->getPrefixedText());
 			return $this->getFullOutput();
 		}
 
 		//Check if DPL shall only be executed from protected pages.
-		if (Config::getSetting('runFromProtectedPagesOnly') === true && !$this->parser->mTitle->isProtected('edit')) {
+		if (Config::getSetting('runFromProtectedPagesOnly') === true && !$this->parser->getTitle()->isProtected('edit')) {
 			//Ideally we would like to allow using a DPL query if the query istelf is coded on a template page which is protected. Then there would be no need for the article to be protected.  However, how can one find out from which wiki source an extension has been invoked???
-			$this->logger->addMessage(\DynamicPageListHooks::FATAL_NOTPROTECTED, $this->parser->mTitle->getPrefixedText());
+			$this->logger->addMessage(\DynamicPageListHooks::FATAL_NOTPROTECTED, $this->parser->getTitle()->getPrefixedText());
 			return $this->getFullOutput();
 		}
 
@@ -292,10 +292,10 @@ class Parse {
 
 		//Replace %LASTTITLE% / %LASTNAMESPACE% by the last title found in header and footer
 		if (($n = count($articles)) > 0) {
-			$firstNamespaceFound = str_replace(' ', '_', $articles[0]->mTitle->getNamespace());
-			$firstTitleFound     = str_replace(' ', '_', $articles[0]->mTitle->getText());
-			$lastNamespaceFound  = str_replace(' ', '_', $articles[$n - 1]->mTitle->getNamespace());
-			$lastTitleFound      = str_replace(' ', '_', $articles[$n - 1]->mTitle->getText());
+			$firstNamespaceFound = str_replace(' ', '_', $articles[0]->getTitle()->getNamespace());
+			$firstTitleFound     = str_replace(' ', '_', $articles[0]->getTitle()->getText());
+			$lastNamespaceFound  = str_replace(' ', '_', $articles[$n - 1]->getTitle()->getNamespace());
+			$lastTitleFound      = str_replace(' ', '_', $articles[$n - 1]->getTitle()->getText());
 		}
 		$this->setVariable('FIRSTNAMESPACE', $firstNamespaceFound);
 		$this->setVariable('FIRSTTITLE', $firstTitleFound);
@@ -880,7 +880,7 @@ class Parse {
 		global $wgHooks;
 
 		$localParser = new \Parser();
-		$parserOutput = $localParser->parse($output, $this->parser->mTitle, $this->parser->mOptions);
+		$parserOutput = $localParser->parse($output, $this->parser->getTitle(), $this->parser->mOptions);
 
 		if (!is_array($reset)) {
 			$reset = [];
@@ -964,7 +964,7 @@ class Parse {
 	private function cardSuitSort($articles) {
 		$sortKeys = [];
 		foreach ($articles as $key => $article) {
-			$title  = preg_replace('/.*:/', '', $article->mTitle);
+			$title  = preg_replace('/.*:/', '', $article->getTitle()->getPrefixedText());
 			$tokens  = preg_split('/ - */', $title);
 			$newKey = '';
 			foreach ($tokens as $token) {

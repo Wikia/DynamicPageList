@@ -8,7 +8,10 @@
  * @package		DynamicPageList3
  *
 **/
+
 namespace DPL;
+
+use Title;
 
 class Article {
 	/**
@@ -21,7 +24,7 @@ class Article {
 	/**
 	 * Namespace ID
 	 *
-	 * @var		string
+	 * @var		integer
 	 */
 	public $mNamespace = -1;
 
@@ -187,8 +190,8 @@ class Article {
 	 * @param	integer	Namespace
 	 * @return	void
 	 */
-	public function __construct($title, $namespace) {
-		$this->mTitle     = $title;
+	public function __construct(Title $title, int $namespace) {
+		$this->mTitle = $title;
 		$this->mNamespace = $namespace;
 	}
 
@@ -203,7 +206,7 @@ class Article {
 	 * @param	string	Page Title as Selected from Query
 	 * @return	object	\DPL\Article Object
 	 */
-	public static function newFromRow($row, Parameters $parameters, \Title $title, $pageNamespace, $pageTitle) {
+	public static function newFromRow(array $row, Parameters $parameters, Title $title, int $pageNamespace, string $pageTitle) {
 		global $wgLang, $wgContLang;
 
 		$article = new Article($title, $pageNamespace);
@@ -388,5 +391,15 @@ class Article {
 			return $wgLang->timeanddate($article->mDate, true);
 		}
 		return null;
+	}
+
+	/**
+	 * Return the Title object on this Article.
+	 *
+	 * @access public
+	 * @return Title MediaWiki Title Object.
+	 */
+	public function getTitle() {
+		return $this->mTitle;
 	}
 }

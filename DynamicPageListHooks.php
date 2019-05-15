@@ -249,24 +249,25 @@ class DynamicPageListHooks {
 		}
 		$text = $parse->parse($input, $parser, $reset, $eliminate, true);
 
+		$parserOutput = $parser->getOutput();
 		if (isset($reset['templates']) && $reset['templates']) {	// we can remove the templates by save/restore
-			$saveTemplates = $parser->mOutput->mTemplates;
+			$saveTemplates = $parserOutput->getTemplates();
 		}
 		if (isset($reset['categories']) && $reset['categories']) {	// we can remove the categories by save/restore
-			$saveCategories = $parser->mOutput->mCategories;
+			$saveCategories = $parserOutput->getCategories();
 		}
 		if (isset($reset['images']) && $reset['images']) {	// we can remove the images by save/restore
-			$saveImages = $parser->mOutput->mImages;
+			$saveImages = $parserOutput->getImages();
 		}
 		$parsedDPL = $parser->recursiveTagParse($text);
 		if (isset($reset['templates']) && $reset['templates']) {
-			$parser->mOutput->mTemplates = $saveTemplates;
+			$parserOutput->mTemplates = $saveTemplates;
 		}
 		if (isset($reset['categories']) && $reset['categories']) {
-			$parser->mOutput->mCategories = $saveCategories;
+			$parserOutput->mCategories = $saveCategories;
 		}
 		if (isset($reset['images']) && $reset['images']) {
-			$parser->mOutput->mImages = $saveImages;
+			$parserOutput->mImages = $saveImages;
 		}
 
 		return $parsedDPL;
@@ -468,17 +469,18 @@ class DynamicPageListHooks {
 	}
 
 	private static function dumpParsedRefs($parser, $label) {
-		//if (!preg_match("/Query Q/",$parser->mTitle->getText())) return '';
+		//if (!preg_match("/Query Q/",$parser->getTitle()->getText())) return '';
 		echo '<pre>parser mLinks: ';
 		ob_start();
-		var_dump($parser->mOutput->mLinks);
+		$parserOutput = $parser->getOutput();
+		var_dump($parserOutput->mLinks);
 		$a = ob_get_contents();
 		ob_end_clean();
 		echo htmlspecialchars($a, ENT_QUOTES);
 		echo '</pre>';
 		echo '<pre>parser mTemplates: ';
 		ob_start();
-		var_dump($parser->mOutput->mTemplates);
+		var_dump($parserOutput->mTemplates);
 		$a = ob_get_contents();
 		ob_end_clean();
 		echo htmlspecialchars($a, ENT_QUOTES);
@@ -521,23 +523,24 @@ class DynamicPageListHooks {
 	public static function endReset(&$parser, $text) {
 		if (!self::$createdLinks['resetdone']) {
 			self::$createdLinks['resetdone'] = true;
-			foreach ($parser->mOutput->mCategories as $key => $val) {
+			$parserOutput = $parser->getOutput();
+			foreach ($parserOutput->mCategories as $key => $val) {
 				if (array_key_exists($key, self::$fixedCategories)) {
 					self::$fixedCategories[$key] = $val;
 				}
 			}
 			// $text .= self::dumpParsedRefs($parser,"before final reset");
 			if (self::$createdLinks['resetLinks']) {
-				$parser->mOutput->mLinks = [];
+				$parserOutput->mLinks = [];
 			}
 			if (self::$createdLinks['resetCategories']) {
-				$parser->mOutput->mCategories = self::$fixedCategories;
+				$parserOutput->mCategories = self::$fixedCategories;
 			}
 			if (self::$createdLinks['resetTemplates']) {
-				$parser->mOutput->mTemplates = [];
+				$parserOutput->mTemplates = [];
 			}
 			if (self::$createdLinks['resetImages']) {
-				$parser->mOutput->mImages = [];
+				$parserOutput->mImages = [];
 			}
 			// $text .= self::dumpParsedRefs($parser,"after final reset");
 			self::$fixedCategories = [];
@@ -547,43 +550,44 @@ class DynamicPageListHooks {
 
 	public static function endEliminate(&$parser, &$text) {
 		// called during the final output phase; removes links created by DPL
+		$parserOutput = $parser->getOutput();
 		if (isset(self::$createdLinks)) {
 			// self::dumpParsedRefs($parser,"before final eliminate");
 			if (array_key_exists(0, self::$createdLinks)) {
-				foreach ($parser->mOutput->getLinks() as $nsp => $link) {
+				foreach ($parserOutput->getLinks() as $nsp => $link) {
 					if (!array_key_exists($nsp, self::$createdLinks[0])) {
 						continue;
 					}
 					// echo ("<pre> elim: created Links [$nsp] = ". count(DynamicPageListHooks::$createdLinks[0][$nsp])."</pre>\n");
-					// echo ("<pre> elim: parser  Links [$nsp] = ". count($parser->mOutput->mLinks[$nsp])			 ."</pre>\n");
-					$parser->mOutput->mLinks[$nsp] = array_diff_assoc($parser->mOutput->mLinks[$nsp], self::$createdLinks[0][$nsp]);
-					// echo ("<pre> elim: parser  Links [$nsp] nachher = ". count($parser->mOutput->mLinks[$nsp])	  ."</pre>\n");
-					if (count($parser->mOutput->mLinks[$nsp]) == 0) {
-						unset($parser->mOutput->mLinks[$nsp]);
+					// echo ("<pre> elim: parser  Links [$nsp] = ". count($parserOutput->mLinks[$nsp])			 ."</pre>\n");
+					$parserOutput->mLinks[$nsp] = array_diff_assoc($parserOutput->mLinks[$nsp], self::$createdLinks[0][$nsp]);
+					// echo ("<pre> elim: parser  Links [$nsp] nachher = ". count($parserOutput->mLinks[$nsp])	  ."</pre>\n");
+					if (count($parserOutput->mLinks[$nsp]) == 0) {
+						unset($parserOutput->mLinks[$nsp]);
 					}
 				}
 			}
 			if (isset(self::$createdLinks) && array_key_exists(1, self::$createdLinks)) {
-				foreach ($parser->mOutput->mTemplates as $nsp => $tpl) {
+				foreach ($parserOutput->mTemplates as $nsp => $tpl) {
 					if (!array_key_exists($nsp, self::$createdLinks[1])) {
 						continue;
 					}
 					// echo ("<pre> elim: created Tpls [$nsp] = ". count(DynamicPageListHooks::$createdLinks[1][$nsp])."</pre>\n");
-					// echo ("<pre> elim: parser  Tpls [$nsp] = ". count($parser->mOutput->mTemplates[$nsp])			."</pre>\n");
-					$parser->mOutput->mTemplates[$nsp] = array_diff_assoc($parser->mOutput->mTemplates[$nsp], self::$createdLinks[1][$nsp]);
-					// echo ("<pre> elim: parser  Tpls [$nsp] nachher = ". count($parser->mOutput->mTemplates[$nsp])	 ."</pre>\n");
-					if (count($parser->mOutput->mTemplates[$nsp]) == 0) {
-						unset($parser->mOutput->mTemplates[$nsp]);
+					// echo ("<pre> elim: parser  Tpls [$nsp] = ". count($parserOutput->mTemplates[$nsp])			."</pre>\n");
+					$parserOutput->mTemplates[$nsp] = array_diff_assoc($parserOutput->mTemplates[$nsp], self::$createdLinks[1][$nsp]);
+					// echo ("<pre> elim: parser  Tpls [$nsp] nachher = ". count($parserOutput->mTemplates[$nsp])	 ."</pre>\n");
+					if (count($parserOutput->mTemplates[$nsp]) == 0) {
+						unset($parserOutput->mTemplates[$nsp]);
 					}
 				}
 			}
 			if (isset(self::$createdLinks) && array_key_exists(2, self::$createdLinks)) {
-				$parser->mOutput->mCategories = array_diff_assoc($parser->mOutput->mCategories, self::$createdLinks[2]);
+				$parserOutput->mCategories = array_diff_assoc($parserOutput->getCategories(), self::$createdLinks[2]);
 			}
 			if (isset(self::$createdLinks) && array_key_exists(3, self::$createdLinks)) {
-				$parser->mOutput->mImages = array_diff_assoc($parser->mOutput->mImages, self::$createdLinks[3]);
+				$parserOutput->mImages = array_diff_assoc($parserOutput->getImages(), self::$createdLinks[3]);
 			}
-			// $text .= self::dumpParsedRefs($parser,"after final eliminate".$parser->mTitle->getText());
+			// $text .= self::dumpParsedRefs($parser,"after final eliminate".$parser->getTitle()->getText());
 		}
 
 		//self::$createdLinks=array(

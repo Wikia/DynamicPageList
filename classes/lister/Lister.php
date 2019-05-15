@@ -616,7 +616,7 @@ class Lister {
 		$items = [];
 		for ($i = $start; $i < $start + $count; $i++) {
 			$article = $articles[$i];
-			if (empty($article) || empty($article->mTitle)) {
+			if (empty($article) || empty($article->getTitle())) {
 				continue;
 			}
 
@@ -654,7 +654,7 @@ class Lister {
 		if ($date !== null) {
 			$item .= $date . ' ';
 			if ($article->mRevision !== null) {
-				$item .= '[{{fullurl:' . $article->mTitle . '|oldid=' . $article->mRevision . '}} ' . htmlspecialchars($article->mTitle) . ']';
+				$item .= '[{{fullurl:' . $article->getTitle()->getPrefixedText() . '|oldid=' . $article->mRevision . '}} ' . htmlspecialchars($article->getTitle()->getPrefixedText()) . ']';
 			} else {
 				$item .= $article->mLink;
 			}
@@ -771,7 +771,7 @@ class Lister {
 	 * @param	array	Items as formatted by formatItem().
 	 * @return	string	Imploded items.
 	 */
-	protected function implodeItems($items) {
+	protected function implodeItems(array $items) {
 		return implode('', $items);
 	}
 
@@ -783,7 +783,7 @@ class Lister {
 	 * @param	object	\DPL\Article
 	 * @return	string	Text with replacements performed.
 	 */
-	protected function replaceTagParameters($tag, Article $article) {
+	protected function replaceTagParameters(string $tag, Article $article) {
 		global $wgContLang;
 
 		$namespaces = $wgContLang->getNamespaces();
@@ -794,7 +794,7 @@ class Lister {
 
 		$imageUrl = $this->parseImageUrlWithPath($article);
 
-		$pagename = $article->mTitle->getPrefixedText();
+		$pagename = $article->getTitle()->getPrefixedText();
 		if ($this->getEscapeLinks() && ($article->mNamespace == NS_CATEGORY || $article->mNamespace == NS_FILE)) {
 			// links to categories or images need an additional ":"
 			$pagename = ':' . $pagename;
@@ -807,7 +807,7 @@ class Lister {
 		$tag = str_replace('%EXTERNALLINK%', $article->mExternalLink, $tag);
 		$tag = str_replace('%EDITSUMMARY%', $article->mComment, $tag);
 
-		$title = $article->mTitle->getText();
+		$title = $article->getTitle()->getText();
 		$replaceInTitle = $this->getParameters()->getParameter('replaceintitle');
 		if (is_array($replaceInTitle) && count($replaceInTitle) === 2) {
 			$title = preg_replace($replaceInTitle[0], $replaceInTitle[1], $title);
@@ -905,7 +905,7 @@ class Lister {
 					}
 				}
 				$pieces[$key] = str_replace('%IMAGE%', $this->parseImageUrlWithPath($val), $pieces[$key]);
-				$pieces[$key] = str_replace('%PAGE%', $article->mTitle->getPrefixedText(), $pieces[$key]);
+				$pieces[$key] = str_replace('%PAGE%', $article->getTitle()->getPrefixedText(), $pieces[$key]);
 
 				$pieces[$key] = $this->replaceTagCategory($pieces[$key], $article);
 			}
@@ -942,7 +942,7 @@ class Lister {
 				}
 			}
 			$result = str_replace('%%', $arg, substr($tableFormat["$s.$argNr"], $n + 1));
-			$result = str_replace('%PAGE%', $article->mTitle->getPrefixedText(), $result);
+			$result = str_replace('%PAGE%', $article->getTitle()->getPrefixedText(), $result);
 			$result = str_replace('%IMAGE%', $this->parseImageUrlWithPath($arg), $result); //@TODO: This just blindly passes the argument through hoping it is an image.  --Alexia
 			$result = $this->cutAt($maxLength, $result);
 			if (strlen($result) > 0 && $result[0] == '-') {
@@ -991,12 +991,12 @@ class Lister {
 		if ($article instanceof \DPL\Article) {
 			if ($article->mNamespace == NS_FILE) {
 				// calculate URL for existing images
-				// $img = Image::newFromName($article->mTitle->getText());
-				$img = wfFindFile(\Title::makeTitle(NS_FILE, $article->mTitle->getText()));
+				// $img = Image::newFromName($article->getTitle()->getText());
+				$img = wfFindFile(\Title::makeTitle(NS_FILE, $article->getTitle()->getText()));
 				if ($img && $img->exists()) {
 					$imageUrl = $img->getURL();
 				} else {
-					$fileTitle = \Title::makeTitleSafe(NS_FILE, $article->mTitle->getDBKey());
+					$fileTitle = \Title::makeTitleSafe(NS_FILE, $article->getTitle()->getDBKey());
 					$imageUrl = \RepoGroup::singleton()->getLocalRepo()->newFile($fileTitle)->getPath();
 				}
 			}
@@ -1025,7 +1025,7 @@ class Lister {
 	public function transcludePage(Article $article, &$filteredCount) {
 		$matchFailed = false;
 		if (empty($this->pageTextMatch) || $this->pageTextMatch[0] == '*') { // include whole article
-			$title = $article->mTitle->getPrefixedText();
+			$title = $article->getTitle()->getPrefixedText();
 			if ($this->getStyle() == self::LIST_USERFORMAT) {
 				$pageText = '';
 			} else {
@@ -1135,7 +1135,7 @@ class Lister {
 				} elseif ($sSecLabel[0] == '#' || $sSecLabel[0] == '@') {
 					$sectionHeading[0] = substr($sSecLabel, 1);
 					// Uses LST::includeHeading() from LabeledSectionTransclusion extension to include headings from the page
-					$secPieces = LST::includeHeading($this->parser, $article->mTitle->getPrefixedText(), substr($sSecLabel, 1), '', $sectionHeading, false, $maxLength, $cutLink, $this->getTrimIncluded(), $skipPattern);
+					$secPieces = LST::includeHeading($this->parser, $article->getTitle()->getPrefixedText(), substr($sSecLabel, 1), '', $sectionHeading, false, $maxLength, $cutLink, $this->getTrimIncluded(), $skipPattern);
 					if ($mustMatch != '' || $mustNotMatch != '') {
 						$secPiecesTmp = $secPieces;
 						$offset       = 0;
@@ -1199,7 +1199,7 @@ class Lister {
 					}
 				} else {
 					// Uses LST::includeSection() from LabeledSectionTransclusion extension to include labeled sections from the page
-					$secPieces    = LST::includeSection($this->parser, $article->mTitle->getPrefixedText(), $sSecLabel, '', false, $this->getTrimIncluded(), $skipPattern);
+					$secPieces    = LST::includeSection($this->parser, $article->getTitle()->getPrefixedText(), $sSecLabel, '', false, $this->getTrimIncluded(), $skipPattern);
 					$secPiece[$s] = implode(isset($this->multiSectionSeparators[$s]) ? $this->replaceTagCount($this->multiSectionSeparators[$s], $filteredCount) : '', $secPieces);
 					if ($this->getDominantSectionCount() >= 0 && $s == $this->getDominantSectionCount() && count($secPieces) > 1) {
 						$dominantPieces = $secPieces;

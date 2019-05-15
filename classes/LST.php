@@ -84,7 +84,7 @@ class LST {
 
 			//Handle recursion here, so we can break cycles.
 			if ($recursionCheck == false) {
-				$text = $parser->preprocess($text, $parser->mTitle, $parser->mOptions);
+				$text = $parser->preprocess($text, $parser->getTitle(), $parser->mOptions);
 				self::close($parser, $part1);
 			}
 
@@ -495,7 +495,7 @@ class LST {
 	// and do NOT match the condition "$mustNotMatch" (if specified)
 	// we use a callback function to format retrieved parameters, accessible via $lister->formatTemplateArg()
 	public static function includeTemplate($parser, Lister $lister, $dplNr, $article, $template1 = '', $template2 = '', $defaultTemplate, $mustMatch, $mustNotMatch, $matchParsed, $catlist) {
-		$page  = $article->mTitle->getPrefixedText();
+		$page  = $article->getTitle()->getPrefixedText();
 		$date  = $article->myDate;
 		$user  = $article->mUserLink;
 		$title = \Title::newFromText($page);
@@ -570,7 +570,7 @@ class LST {
 				}
 			} else {
 				// put a red link into the output
-				$output[0] = $parser->preprocess('{{' . $defaultTemplate . '|%PAGE%=' . $page . '|%TITLE%=' . $title->getText() . '|%DATE%=' . $date . '|%USER%=' . $user . '}}', $parser->mTitle, $parser->mOptions);
+				$output[0] = $parser->preprocess('{{' . $defaultTemplate . '|%PAGE%=' . $page . '|%TITLE%=' . $title->getText() . '|%DATE%=' . $date . '|%USER%=' . $user . '}}', $parser->getTitle(), $parser->mOptions);
 			}
 			unset($title);
 			return $output;
@@ -610,7 +610,7 @@ class LST {
 								$argChain .= "|%CATLIST%=$catlist";
 							}
 							$argChain .= '|%DATE%=' . $date . '|%USER%=' . $user . '|%ARGS%=' . str_replace('|', '§', preg_replace('/[}]+/', '}', preg_replace('/[{]+/', '{', substr($invocation, strlen($template2) + 2)))) . '}}';
-							$output[++$n] = $parser->preprocess($argChain, $parser->mTitle, $parser->mOptions);
+							$output[++$n] = $parser->preprocess($argChain, $parser->getTitle(), $parser->mOptions);
 						}
 						break;
 					}

@@ -53,11 +53,11 @@ class GalleryList extends Lister {
 	 *
 	 * @access	public
 	 * @param	object	DPL\Article
-	 * @param	string	[Optional] Page text to include.include.
+	 * @param	string	[Optional] Page text to include.
 	 * @return	string	Item HTML
 	 */
 	public function formatItem(Article $article, $pageText = null) {
-		$item = $article->mTitle;
+		$item = $article->getTitle()->getPrefixedText();
 
 		if ($pageText !== null) {
 			//Include parsed/processed wiki markup content after each item before the closing tag.

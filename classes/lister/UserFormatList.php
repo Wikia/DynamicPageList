@@ -67,7 +67,7 @@ class UserFormatList extends Lister {
 		$items = [];
 		for ($i = $start; $i < $start + $count; $i++) {
 			$article = $articles[$i];
-			if (empty($article) || empty($article->mTitle)) {
+			if (empty($article) || empty($article->getTitle())) {
 				continue;
 			}
 
