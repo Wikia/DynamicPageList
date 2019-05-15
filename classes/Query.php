@@ -147,7 +147,7 @@ class Query {
 	/**
 	 * Main Constructor
 	 *
-	 * @param  object	Parameters
+	 * @param object	Parameters
 	 *
 	 * @return void
 	 */
@@ -162,7 +162,7 @@ class Query {
 	/**
 	 * Start a query build.
 	 *
-	 * @param  boolean	Calculate Found Rows
+	 * @param boolean	Calculate Found Rows
 	 *
 	 * @return mixed	Mediawiki Result Object or False
 	 */
@@ -368,8 +368,8 @@ class Query {
 	/**
 	 * Add a table to the output.
 	 *
-	 * @param  string	Raw Table Name - Will be ran through tableName().
-	 * @param  string	Table Alias
+	 * @param string	Raw Table Name - Will be ran through tableName().
+	 * @param string	Table Alias
 	 *
 	 * @return boolean	Success - Added, false if the table alias already exists.
 	 */
@@ -392,7 +392,7 @@ class Query {
 	 * Add a where clause to the output.
 	 * Where clauses get imploded together with AND at the end.	 Any custom where clauses should be preformed before placed into here.
 	 *
-	 * @param  string	Where clause
+	 * @param string	Where clause
 	 *
 	 * @return boolean	Success
 	 */
@@ -414,7 +414,7 @@ class Query {
 	/**
 	 * Add a where clause to the output that uses NOT IN or !=.
 	 *
-	 * @param  array	Field => Value(s)
+	 * @param array	Field => Value(s)
 	 *
 	 * @return boolean	Success
 	 */
@@ -438,7 +438,7 @@ class Query {
 	 * Add a field to select.
 	 * Will ignore duplicate values if the exact same alias and exact same field are passed.
 	 *
-	 * @param  array	Array of fields with the array key being the field alias.  Leave the array key as a numeric index to not specify an alias.
+	 * @param array	Array of fields with the array key being the field alias.  Leave the array key as a numeric index to not specify an alias.
 	 *
 	 * @return boolean	Success
 	 */
@@ -468,7 +468,7 @@ class Query {
 	/**
 	 * Add a GROUP BY clause to the output.
 	 *
-	 * @param  string	Group By Clause
+	 * @param string	Group By Clause
 	 *
 	 * @return boolean	Success
 	 */
@@ -483,7 +483,7 @@ class Query {
 	/**
 	 * Add a ORDER BY clause to the output.
 	 *
-	 * @param  string	Order By Clause
+	 * @param string	Order By Clause
 	 *
 	 * @return boolean	Success
 	 */
@@ -498,8 +498,8 @@ class Query {
 	/**
 	 * Add a JOIN clause to the output.
 	 *
-	 * @param  string	Table Alias
-	 * @param  array	Join Conditions in the format of the join type to the on where condition.  Example: ['JOIN TYPE' => 'this = that']
+	 * @param string	Table Alias
+	 * @param array	Join Conditions in the format of the join type to the on where condition.  Example: ['JOIN TYPE' => 'this = that']
 	 *
 	 * @return boolean	Success
 	 */
@@ -517,7 +517,7 @@ class Query {
 	/**
 	 * Set the limit.
 	 *
-	 * @param  mixed	Integer limit or false to unset.
+	 * @param mixed	Integer limit or false to unset.
 	 *
 	 * @return boolean	Success
 	 */
@@ -533,7 +533,7 @@ class Query {
 	/**
 	 * Set the offset.
 	 *
-	 * @param  mixed	Integer offset or false to unset.
+	 * @param mixed	Integer offset or false to unset.
 	 *
 	 * @return boolean	Success
 	 */
@@ -549,7 +549,7 @@ class Query {
 	/**
 	 * Set the ORDER BY direction
 	 *
-	 * @param  string	SQL direction key word.
+	 * @param string	SQL direction key word.
 	 *
 	 * @return boolean	Success
 	 */
@@ -561,7 +561,7 @@ class Query {
 	/**
 	 * Set the character set collation.
 	 *
-	 * @param  string	Collation
+	 * @param string	Collation
 	 *
 	 * @return void
 	 */
@@ -581,8 +581,8 @@ class Query {
 	/**
 	 * Recursively get and return an array of subcategories.
 	 *
-	 * @param  string	Category Name
-	 * @param  integer	[Optional] Maximum Depth
+	 * @param string	Category Name
+	 * @param integer	[Optional] Maximum Depth
 	 *
 	 * @return array	Subcategories
 	 */
@@ -624,7 +624,7 @@ class Query {
 	/**
 	 * Helper method to handle relative timestamps.
 	 *
-	 * @param  mixed	Integer or string
+	 * @param mixed	Integer or string
 	 *
 	 * @return integer
 	 */
@@ -849,8 +849,8 @@ class Query {
 	/**
 	 * Set SQL for 'adduser' parameter.
 	 *
-	 * @param mixed $option Parameter Option
-	 * @param  string	[Optional] Table Alias
+	 * @param mixed                            $option Parameter Option
+	 * @param string	[Optional] Table Alias
 	 *
 	 * @return void
 	 */

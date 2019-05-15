@@ -32,7 +32,7 @@ class Logger {
 	/**
 	 * Return the buffer of messages.
 	 *
-	 * @param  boolean	[Optional] Clear the message buffer.
+	 * @param boolean	[Optional] Clear the message buffer.
 	 *
 	 * @return array	Messages in the order added.
 	 */
@@ -48,7 +48,7 @@ class Logger {
 	 * Get a message, with optional parameters
 	 * Parameters from user input must be escaped for HTML *before* passing to this function
 	 *
-	 * @param  integer	Message ID
+	 * @param integer	Message ID
 	 *
 	 * @return string
 	 */

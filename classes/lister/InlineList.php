@@ -3,8 +3,9 @@
  * DynamicPageList3
  * DPL InlineList Class
  *
- * @license GPL-2.0-or-later
  * @package DynamicPageList3
+ * @author  Alexia E. Smith
+ * @license GPL-2.0-or-later
  **/
 
 namespace DPL\Lister;
@@ -69,8 +70,8 @@ class InlineList extends Lister {
 	/**
 	 * Main Constructor
 	 *
-	 * @param  object	\DPL\Parameters
-	 * @param  object	MediaWiki \Parser
+	 * @param object	\DPL\Parameters
+	 * @param object	MediaWiki \Parser
 	 *
 	 * @return void
 	 */
@@ -82,7 +83,7 @@ class InlineList extends Lister {
 	/**
 	 * Join together items after being processed by formatItem().
 	 *
-	 * @param  array	Items as formatted by formatItem().
+	 * @param array	Items as formatted by formatItem().
 	 *
 	 * @return string	Imploded items.
 	 */

@@ -3,8 +3,9 @@
  * DynamicPageList3
  * DPL DefinitionList Class
  *
- * @license GPL-2.0-or-later
  * @package DynamicPageList3
+ * @author  Alexia E. Smith
+ * @license GPL-2.0-or-later
  **/
 
 namespace DPL\Lister;

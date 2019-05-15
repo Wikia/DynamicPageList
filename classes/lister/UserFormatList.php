@@ -3,8 +3,9 @@
  * DynamicPageList3
  * DPL UserFormatList Class
  *
- * @license GPL-2.0-or-later
  * @package DynamicPageList3
+ * @author  Alexia E. Smith
+ * @license GPL-2.0-or-later
  **/
 
 namespace DPL\Lister;
@@ -29,8 +30,8 @@ class UserFormatList extends Lister {
 	/**
 	 * Main Constructor
 	 *
-	 * @param  object	\DPL\Parameters
-	 * @param  object	MediaWiki \Parser
+	 * @param object	\DPL\Parameters
+	 * @param object	MediaWiki \Parser
 	 *
 	 * @return void
 	 */
@@ -55,9 +56,9 @@ class UserFormatList extends Lister {
 	/**
 	 * Format the list of articles.
 	 *
-	 * @param  array	List of \DPL\Article
-	 * @param  integer	Start position of the array to process.
-	 * @param  integer	Total objects from the array to process.
+	 * @param array	List of \DPL\Article
+	 * @param integer	Start position of the array to process.
+	 * @param integer	Total objects from the array to process.
 	 *
 	 * @return string	Formatted list.
 	 */
@@ -131,8 +132,8 @@ class UserFormatList extends Lister {
 	/**
 	 * Format a single item.
 	 *
-	 * @param  object	DPL\Article
-	 * @param  string	[Optional] Page text to include.
+	 * @param object	DPL\Article
+	 * @param string	[Optional] Page text to include.
 	 *
 	 * @return string	Item HTML
 	 */
@@ -172,7 +173,7 @@ class UserFormatList extends Lister {
 	/**
 	 * Join together items after being processed by formatItem().
 	 *
-	 * @param  array	Items as formatted by formatItem().
+	 * @param array	Items as formatted by formatItem().
 	 *
 	 * @return string	Imploded items.
 	 */

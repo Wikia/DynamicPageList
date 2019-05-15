@@ -129,7 +129,7 @@ class DynamicPageListHooks {
 	/**
 	 * Sets up this extension's parser functions.
 	 *
-	 * @param  object	Parser object passed as a reference.
+	 * @param object	Parser object passed as a reference.
 	 *
 	 * @return boolean	true
 	 */
@@ -156,7 +156,7 @@ class DynamicPageListHooks {
 	/**
 	 * Sets up this extension's parser functions for migration from Intersection.
 	 *
-	 * @param  object	Parser object passed as a reference.
+	 * @param object	Parser object passed as a reference.
 	 *
 	 * @return boolean	true
 	 */
@@ -191,7 +191,7 @@ class DynamicPageListHooks {
 	/**
 	 * Set to behave like intersection.
 	 *
-	 * @param  boolean	Behave Like Intersection
+	 * @param boolean	Behave Like Intersection
 	 *
 	 * @return void
 	 */
@@ -211,10 +211,10 @@ class DynamicPageListHooks {
 	/**
 	 * Tag <section> entry point.
 	 *
-	 * @param  string	Raw User Input
-	 * @param  array	Arguments on the tag.
-	 * @param  object	Parser object.
-	 * @param  object	PPFrame object.
+	 * @param string	Raw User Input
+	 * @param array	Arguments on the tag.
+	 * @param object	Parser object.
+	 * @param object	PPFrame object.
 	 *
 	 * @return string	HTML
 	 */
@@ -226,10 +226,10 @@ class DynamicPageListHooks {
 	/**
 	 * Tag <dpl> entry point.
 	 *
-	 * @param  string	Raw User Input
-	 * @param  array	Arguments on the tag.
-	 * @param  object	Parser object.
-	 * @param  object	PPFrame object.
+	 * @param string	Raw User Input
+	 * @param array	Arguments on the tag.
+	 * @param object	Parser object.
+	 * @param object	PPFrame object.
 	 *
 	 * @return string	HTML
 	 */
@@ -241,10 +241,10 @@ class DynamicPageListHooks {
 	/**
 	 * The callback function wrapper for converting the input text to HTML output
 	 *
-	 * @param  string	Raw User Input
-	 * @param  array	Arguments on the tag.(While not used, it is left here for future compatibility.)
-	 * @param  object	Parser object.
-	 * @param  object	PPFrame object.
+	 * @param string	Raw User Input
+	 * @param array	Arguments on the tag.(While not used, it is left here for future compatibility.)
+	 * @param object	Parser object.
+	 * @param object	PPFrame object.
 	 *
 	 * @return string	HTML
 	 */
@@ -285,7 +285,7 @@ class DynamicPageListHooks {
 	/**
 	 * The #dpl parser tag entry point.
 	 *
-	 * @param  object	Parser object passed as a reference.
+	 * @param object	Parser object passed as a reference.
 	 *
 	 * @return string	Wiki Text
 	 */
@@ -321,7 +321,7 @@ class DynamicPageListHooks {
 	 * The #dplnum parser tag entry point.
 	 * From the old documentation: "Tries to guess a number that is buried in the text.  Uses a set of heuristic rules which may work or not.  The idea is to extract the number so that it can be used as a sorting value in the column of a DPL table output."
 	 *
-	 * @param  object	Parser object passed as a reference.
+	 * @param object	Parser object passed as a reference.
 	 *
 	 * @return string	Wiki Text
 	 */
@@ -510,7 +510,7 @@ class DynamicPageListHooks {
 	/**
 	 * Set Debugging Level
 	 *
-	 * @param  integer	Debug Level
+	 * @param integer	Debug Level
 	 *
 	 * @return void
 	 */
@@ -607,7 +607,7 @@ class DynamicPageListHooks {
 	/**
 	 * Setups and Modifies Database Information
 	 *
-	 * @param  object	[Optional] DatabaseUpdater Object
+	 * @param object	[Optional] DatabaseUpdater Object
 	 *
 	 * @return boolean	true
 	 */

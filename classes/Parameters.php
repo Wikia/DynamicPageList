@@ -52,8 +52,8 @@ class Parameters extends ParametersData {
 	/**
 	 * Handle simple parameter functions.
 	 *
-	 * @param  string	Function(Parameter) Called
-	 * @param  string	Function Arguments
+	 * @param string	Function(Parameter) Called
+	 * @param string	Function Arguments
 	 *
 	 * @return boolean	Successful
 	 */
@@ -195,7 +195,7 @@ class Parameters extends ParametersData {
 	 * Sort cleaned parameter arrays by priority.
 	 * Users can not be told to put the parameters into a specific order each time.  Some parameters are dependent on each other coming in a certain order due to some procedural legacy issues.
 	 *
-	 * @param  array	Unsorted Parameters
+	 * @param array	Unsorted Parameters
 	 *
 	 * @return array	Sorted Parameters
 	 */
@@ -233,7 +233,7 @@ class Parameters extends ParametersData {
 	/**
 	 * Set Selection Criteria Found
 	 *
-	 * @param  boolean	Is Found?
+	 * @param boolean	Is Found?
 	 *
 	 * @return void
 	 */
@@ -256,7 +256,7 @@ class Parameters extends ParametersData {
 	/**
 	 * Set Open References Conflict - See 'openreferences' parameter.
 	 *
-	 * @param  boolean	References Conflict?
+	 * @param boolean	References Conflict?
 	 *
 	 * @return void
 	 */
@@ -298,8 +298,8 @@ class Parameters extends ParametersData {
 	/**
 	 * Set a parameter's option.
 	 *
-	 * @param  string	Parameter to set
-	 * @param  mixed	Option to set
+	 * @param string	Parameter to set
+	 * @param mixed	Option to set
 	 *
 	 * @return void
 	 */
@@ -310,7 +310,7 @@ class Parameters extends ParametersData {
 	/**
 	 * Get a parameter's option.
 	 *
-	 * @param  string	Parameter to get
+	 * @param string	Parameter to get
 	 *
 	 * @return mixed	Option for specified parameter.
 	 */
@@ -330,7 +330,7 @@ class Parameters extends ParametersData {
 	/**
 	 * Filter a standard boolean like value into an actual boolean.
 	 *
-	 * @param  mixed	Integer or string to evaluated through filter_var().
+	 * @param mixed	Integer or string to evaluated through filter_var().
 	 *
 	 * @return bool
 	 */
@@ -341,7 +341,7 @@ class Parameters extends ParametersData {
 	/**
 	 * Strip <html> tags.
 	 *
-	 * @param  string	Dirty Text
+	 * @param string	Dirty Text
 	 *
 	 * @return string	Clean Text
 	 */
@@ -354,8 +354,8 @@ class Parameters extends ParametersData {
 	/**
 	 * Get a list of valid page names.
 	 *
-	 * @param  string	Raw Text of Pages
-	 * @param  boolean	[Optional] Each Title MUST Exist
+	 * @param string	Raw Text of Pages
+	 * @param boolean	[Optional] Each Title MUST Exist
 	 *
 	 * @return mixed	List of page titles or false on error.
 	 */
@@ -385,8 +385,8 @@ class Parameters extends ParametersData {
 	/**
 	 * Check if a regular expression is valid.
 	 *
-	 * @param  mixed	Regular Expression(s) in an array or a single expression in a string.
-	 * @param  boolean	Is this a database REGEXP?
+	 * @param mixed	Regular Expression(s) in an array or a single expression in a string.
+	 * @param boolean	Is this a database REGEXP?
 	 *
 	 * @return boolean
 	 */
@@ -414,7 +414,7 @@ class Parameters extends ParametersData {
 	/**
 	 * Clean and test 'category' parameter.
 	 *
-	 * @param  string	Options passed to parameter.
+	 * @param string $option Options passed to parameter.
 	 *
 	 * @return boolean	Success
 	 */
@@ -506,7 +506,7 @@ class Parameters extends ParametersData {
 	/**
 	 * Clean and test 'categoryregexp' parameter.
 	 *
-	 * @param  string	Options passed to parameter.
+	 * @param string $option Options passed to parameter.
 	 *
 	 * @return boolean	Success
 	 */
@@ -526,7 +526,7 @@ class Parameters extends ParametersData {
 	/**
 	 * Clean and test 'categorymatch' parameter.
 	 *
-	 * @param  string	Options passed to parameter.
+	 * @param string $option Options passed to parameter.
 	 *
 	 * @return boolean	Success
 	 */
@@ -553,7 +553,7 @@ class Parameters extends ParametersData {
 	/**
 	 * Clean and test 'notcategory' parameter.
 	 *
-	 * @param  string	Options passed to parameter.
+	 * @param string $option Options passed to parameter.
 	 *
 	 * @return boolean	Success
 	 */
@@ -572,7 +572,7 @@ class Parameters extends ParametersData {
 	/**
 	 * Clean and test 'notcategoryregexp' parameter.
 	 *
-	 * @param  string	Options passed to parameter.
+	 * @param string $option Options passed to parameter.
 	 *
 	 * @return boolean	Success
 	 */
@@ -591,7 +591,7 @@ class Parameters extends ParametersData {
 	/**
 	 * Clean and test 'notcategorymatch' parameter.
 	 *
-	 * @param  string	Options passed to parameter.
+	 * @param string $option Options passed to parameter.
 	 *
 	 * @return boolean	Success
 	 */
@@ -610,7 +610,7 @@ class Parameters extends ParametersData {
 	/**
 	 * Clean and test 'count' parameter.
 	 *
-	 * @param  string	Options passed to parameter.
+	 * @param string $option Options passed to parameter.
 	 *
 	 * @return boolean	Success
 	 */
@@ -625,7 +625,7 @@ class Parameters extends ParametersData {
 	/**
 	 * Clean and test 'namespace' parameter.
 	 *
-	 * @param  string	Option passed to parameter.
+	 * @param string	Option passed to parameter.
 	 *
 	 * @return boolean	Success
 	 */
@@ -651,7 +651,7 @@ class Parameters extends ParametersData {
 	/**
 	 * Clean and test 'notnamespace' parameter.
 	 *
-	 * @param  string	Options passed to parameter.
+	 * @param string $option Options passed to parameter.
 	 *
 	 * @return boolean	Success
 	 */
@@ -677,7 +677,7 @@ class Parameters extends ParametersData {
 	/**
 	 * Clean and test 'openreferences' parameter.
 	 *
-	 * @param  string	Options passed to parameter.
+	 * @param string $option Options passed to parameter.
 	 *
 	 * @return boolean	Success
 	 */
@@ -697,7 +697,7 @@ class Parameters extends ParametersData {
 	/**
 	 * Clean and test 'ordermethod' parameter.
 	 *
-	 * @param  string	Options passed to parameter.
+	 * @param string $option Options passed to parameter.
 	 *
 	 * @return boolean	Success
 	 */
@@ -721,7 +721,7 @@ class Parameters extends ParametersData {
 	/**
 	 * Clean and test 'mode' parameter.
 	 *
-	 * @param  string	Options passed to parameter.
+	 * @param string $option Options passed to parameter.
 	 *
 	 * @return boolean	Success
 	 */
@@ -747,7 +747,7 @@ class Parameters extends ParametersData {
 	/**
 	 * Clean and test 'distinct' parameter.
 	 *
-	 * @param  string	Options passed to parameter.
+	 * @param string $option Options passed to parameter.
 	 *
 	 * @return boolean	Success
 	 */
@@ -766,7 +766,7 @@ class Parameters extends ParametersData {
 	/**
 	 * Clean and test 'ordercollation' parameter.
 	 *
-	 * @param  string	Options passed to parameter.
+	 * @param string $option Options passed to parameter.
 	 *
 	 * @return boolean	Success
 	 */
@@ -793,7 +793,7 @@ class Parameters extends ParametersData {
 	/**
 	 * Clean and test 'format' parameter.
 	 *
-	 * @param  string	Options passed to parameter.
+	 * @param string $option Options passed to parameter.
 	 *
 	 * @return boolean	Success
 	 */
@@ -811,7 +811,7 @@ class Parameters extends ParametersData {
 	/**
 	 * Clean and test 'title' parameter.
 	 *
-	 * @param  string	Options passed to parameter.
+	 * @param string $option Options passed to parameter.
 	 *
 	 * @return boolean	Success
 	 */
@@ -838,7 +838,7 @@ class Parameters extends ParametersData {
 	/**
 	 * Clean and test 'titleregexp' parameter.
 	 *
-	 * @param  string	Options passed to parameter.
+	 * @param string $option Options passed to parameter.
 	 *
 	 * @return boolean	Success
 	 */
@@ -862,7 +862,7 @@ class Parameters extends ParametersData {
 	/**
 	 * Clean and test 'titlematch' parameter.
 	 *
-	 * @param  string	Options passed to parameter.
+	 * @param string $option Options passed to parameter.
 	 *
 	 * @return boolean	Success
 	 */
@@ -881,7 +881,7 @@ class Parameters extends ParametersData {
 	/**
 	 * Clean and test 'nottitleregexp' parameter.
 	 *
-	 * @param  string	Options passed to parameter.
+	 * @param string $option Options passed to parameter.
 	 *
 	 * @return boolean	Success
 	 */
@@ -905,7 +905,7 @@ class Parameters extends ParametersData {
 	/**
 	 * Clean and test 'nottitlematch' parameter.
 	 *
-	 * @param  string	Options passed to parameter.
+	 * @param string $option Options passed to parameter.
 	 *
 	 * @return boolean	Success
 	 */
@@ -924,7 +924,7 @@ class Parameters extends ParametersData {
 	/**
 	 * Clean and test 'scroll' parameter.
 	 *
-	 * @param  string	Options passed to parameter.
+	 * @param string $option Options passed to parameter.
 	 *
 	 * @return boolean	Success
 	 */
@@ -963,7 +963,7 @@ class Parameters extends ParametersData {
 	/**
 	 * Clean and test 'replaceintitle' parameter.
 	 *
-	 * @param  string	Options passed to parameter.
+	 * @param string $option Options passed to parameter.
 	 *
 	 * @return boolean	Success
 	 */
@@ -982,7 +982,7 @@ class Parameters extends ParametersData {
 	/**
 	 * Clean and test 'debug' parameter.
 	 *
-	 * @param  string	Options passed to parameter.
+	 * @param string $option Options passed to parameter.
 	 *
 	 * @return boolean	Success
 	 */
@@ -1008,7 +1008,7 @@ class Parameters extends ParametersData {
 	/**
 	 * Clean and test 'include' parameter.
 	 *
-	 * @param  string	Options passed to parameter.
+	 * @param string $option Options passed to parameter.
 	 *
 	 * @return boolean	Success
 	 */
@@ -1025,7 +1025,7 @@ class Parameters extends ParametersData {
 	/**
 	 * Clean and test 'includematch' parameter.
 	 *
-	 * @param  string	Options passed to parameter.
+	 * @param string $option Options passed to parameter.
 	 *
 	 * @return boolean	Success
 	 */
@@ -1043,7 +1043,7 @@ class Parameters extends ParametersData {
 	/**
 	 * Clean and test 'includematchparsed' parameter.
 	 *
-	 * @param  string	Options passed to parameter.
+	 * @param string $option Options passed to parameter.
 	 *
 	 * @return boolean	Success
 	 */
@@ -1062,7 +1062,7 @@ class Parameters extends ParametersData {
 	/**
 	 * Clean and test 'includenotmatch' parameter.
 	 *
-	 * @param  string	Options passed to parameter.
+	 * @param string $option Options passed to parameter.
 	 *
 	 * @return boolean	Success
 	 */
@@ -1080,7 +1080,7 @@ class Parameters extends ParametersData {
 	/**
 	 * Clean and test 'includenotmatchparsed' parameter.
 	 *
-	 * @param  string	Options passed to parameter.
+	 * @param string $option Options passed to parameter.
 	 *
 	 * @return boolean	Success
 	 */
@@ -1099,7 +1099,7 @@ class Parameters extends ParametersData {
 	/**
 	 * Clean and test 'secseparators' parameter.
 	 *
-	 * @param  string	Options passed to parameter.
+	 * @param string $option Options passed to parameter.
 	 *
 	 * @return boolean	Success
 	 */
@@ -1112,7 +1112,7 @@ class Parameters extends ParametersData {
 	/**
 	 * Clean and test 'multisecseparators' parameter.
 	 *
-	 * @param  string	Options passed to parameter.
+	 * @param string $option Options passed to parameter.
 	 *
 	 * @return boolean	Success
 	 */
@@ -1125,7 +1125,7 @@ class Parameters extends ParametersData {
 	/**
 	 * Clean and test 'table' parameter.
 	 *
-	 * @param  string	Options passed to parameter.
+	 * @param string $option Options passed to parameter.
 	 *
 	 * @return boolean	Success
 	 */
@@ -1193,7 +1193,7 @@ class Parameters extends ParametersData {
 	/**
 	 * Clean and test 'tablerow' parameter.
 	 *
-	 * @param  string	Options passed to parameter.
+	 * @param string $option Options passed to parameter.
 	 *
 	 * @return boolean	Success
 	 */
@@ -1211,7 +1211,7 @@ class Parameters extends ParametersData {
 	 * Clean and test 'allowcachedresults' parameter.
 	 * This function is necessary for the custom 'yes+warn' option that sets 'warncachedresults'.
 	 *
-	 * @param  string	Options passed to parameter.
+	 * @param string $option Options passed to parameter.
 	 *
 	 * @return boolean	Success
 	 */
@@ -1238,7 +1238,7 @@ class Parameters extends ParametersData {
 	/**
 	 * Clean and test 'fixcategory' parameter.
 	 *
-	 * @param  string	Options passed to parameter.
+	 * @param string $option Options passed to parameter.
 	 *
 	 * @return boolean	Success
 	 */
@@ -1250,7 +1250,7 @@ class Parameters extends ParametersData {
 	/**
 	 * Clean and test 'reset' parameter.
 	 *
-	 * @param  string	Options passed to parameter.
+	 * @param string $option Options passed to parameter.
 	 *
 	 * @return boolean	Success
 	 */
@@ -1288,7 +1288,7 @@ class Parameters extends ParametersData {
 	/**
 	 * Clean and test 'eliminate' parameter.
 	 *
-	 * @param  string	Options passed to parameter.
+	 * @param string $option Options passed to parameter.
 	 *
 	 * @return boolean	Success
 	 */

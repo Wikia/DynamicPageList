@@ -3,8 +3,9 @@
  * DynamicPageList3
  * DPL OrderedList Class
  *
- * @license GPL-2.0-or-later
  * @package DynamicPageList3
+ * @author  Alexia E. Smith
+ * @license GPL-2.0-or-later
  **/
 
 namespace DPL\Lister;
@@ -41,9 +42,9 @@ class OrderedList extends UnorderedList {
 	/**
 	 * Format the list of articles.
 	 *
-	 * @param  array	List of \DPL\Article
-	 * @param  integer	Start position of the array to process.
-	 * @param  integer	Total objects from the array to process.
+	 * @param array	List of \DPL\Article
+	 * @param integer	Start position of the array to process.
+	 * @param integer	Total objects from the array to process.
 	 *
 	 * @return string	Formatted list.
 	 */

@@ -184,8 +184,8 @@ class Article {
 	/**
 	 * Main Constructor
 	 *
-	 * @param  string	Title
-	 * @param  integer	Namespace
+	 * @param string	Title
+	 * @param integer	Namespace
 	 *
 	 * @return void
 	 */
@@ -197,11 +197,11 @@ class Article {
 	/**
 	 * Initialize a new instance from a database row.
 	 *
-	 * @param  array	Database Row
-	 * @param  object	\DPL\Parameters Object
-	 * @param  object	Mediawiki Title Object
-	 * @param  integer	Page Namespace ID
-	 * @param  string	Page Title as Selected from Query
+	 * @param array	Database Row
+	 * @param object	\DPL\Parameters Object
+	 * @param object	Mediawiki Title Object
+	 * @param integer	Page Namespace ID
+	 * @param string	Page Title as Selected from Query
 	 *
 	 * @return object	\DPL\Article Object
 	 */

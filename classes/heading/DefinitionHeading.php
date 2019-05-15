@@ -3,8 +3,9 @@
  * DynamicPageList3
  * DPL DefinitionHeading Class
  *
- * @license GPL-2.0-or-later
  * @package DynamicPageList3
+ * @author  Alexia E. Smith
+ * @license GPL-2.0-or-later
  **/
 
 namespace DPL\Heading;
@@ -73,11 +74,11 @@ class DefinitionHeading extends Heading {
 	/**
 	 * Format a heading group.
 	 *
-	 * @param  integer	Article start index for this heading.
-	 * @param  integer	Article count for this heading.
-	 * @param  string	Heading link/text display.
-	 * @param  array	List of \DPL\Article.
-	 * @param  object	List of \DPL\Lister\Lister
+	 * @param integer	Article start index for this heading.
+	 * @param integer	Article count for this heading.
+	 * @param string	Heading link/text display.
+	 * @param array	List of \DPL\Article.
+	 * @param object	List of \DPL\Lister\Lister
 	 *
 	 * @return string	Heading HTML
 	 */

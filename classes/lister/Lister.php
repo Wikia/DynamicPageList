@@ -3,8 +3,9 @@
  * DynamicPageList3
  * DPL List Class
  *
- * @license GPL-2.0-or-later
  * @package DynamicPageList3
+ * @author  Alexia E. Smith
+ * @license GPL-2.0-or-later
  **/
 
 namespace DPL\Lister;
@@ -240,8 +241,8 @@ class Lister {
 	/**
 	 * Main Constructor
 	 *
-	 * @param  object	\DPL\Parameters
-	 * @param  object	MediaWiki \Parser
+	 * @param object	\DPL\Parameters
+	 * @param object	MediaWiki \Parser
 	 *
 	 * @return void
 	 */
@@ -271,9 +272,9 @@ class Lister {
 	/**
 	 * Get a new List subclass based on user selection.
 	 *
-	 * @param  string	List style.
-	 * @param  object	\DPL\Parameters
-	 * @param  object	MediaWiki \Parser
+	 * @param string	List style.
+	 * @param object	\DPL\Parameters
+	 * @param object	MediaWiki \Parser
 	 *
 	 * @return object	Lister subclass.
 	 */
@@ -323,7 +324,7 @@ class Lister {
 	/**
 	 * Set extra list attributes for header wraps.
 	 *
-	 * @param  string	Tag soup attributes, example: this="that" thing="no"
+	 * @param string	Tag soup attributes, example: this="that" thing="no"
 	 *
 	 * @return void
 	 */
@@ -334,7 +335,7 @@ class Lister {
 	/**
 	 * Set extra item attributes for header items.
 	 *
-	 * @param  string	Tag soup attributes, example: this="that" thing="no"
+	 * @param string	Tag soup attributes, example: this="that" thing="no"
 	 *
 	 * @return void
 	 */
@@ -345,7 +346,7 @@ class Lister {
 	/**
 	 * Set extra list attributes.
 	 *
-	 * @param  string	Tag soup attributes, example: this="that" thing="no"
+	 * @param string	Tag soup attributes, example: this="that" thing="no"
 	 *
 	 * @return void
 	 */
@@ -356,7 +357,7 @@ class Lister {
 	/**
 	 * Set extra item attributes.
 	 *
-	 * @param  string	Tag soup attributes, example: this="that" thing="no"
+	 * @param string	Tag soup attributes, example: this="that" thing="no"
 	 *
 	 * @return void
 	 */
@@ -367,7 +368,7 @@ class Lister {
 	/**
 	 * Set the count of items to trigger a section as dominant.
 	 *
-	 * @param  integer	Count
+	 * @param integer	Count
 	 *
 	 * @return void
 	 */
@@ -396,7 +397,7 @@ class Lister {
 	/**
 	 * Set the template suffix for whatever the hell uses it.
 	 *
-	 * @param  string	Template Suffix
+	 * @param string	Template Suffix
 	 *
 	 * @return void
 	 */
@@ -416,7 +417,7 @@ class Lister {
 	/**
 	 * Set if included wiki text should be trimmed.
 	 *
-	 * @param  boolean	[Optional] Trim
+	 * @param boolean	[Optional] Trim
 	 *
 	 * @return void
 	 */
@@ -438,7 +439,7 @@ class Lister {
 	 *
 	 * @todo The naming of this parameter is weird and I am not sure what it does.
 	 *
-	 * @param  boolean	[Optional] Escape
+	 * @param boolean	[Optional] Escape
 	 *
 	 * @return void
 	 */
@@ -458,7 +459,7 @@ class Lister {
 	/**
 	 * Set the index of the table column to sort by.
 	 *
-	 * @param  mixed	[Optional] Integer index or null to disable.
+	 * @param mixed	[Optional] Integer index or null to disable.
 	 *
 	 * @return void
 	 */
@@ -478,7 +479,7 @@ class Lister {
 	/**
 	 * Set the maximum title length for display.
 	 *
-	 * @param  mixed	[Optional] Integer length or null to disable.
+	 * @param mixed	[Optional] Integer length or null to disable.
 	 *
 	 * @return void
 	 */
@@ -498,7 +499,7 @@ class Lister {
 	/**
 	 * Set the separators that separate sections of matched page text.
 	 *
-	 * @param  array	[Optional] Array of section separators.
+	 * @param array	[Optional] Array of section separators.
 	 *
 	 * @return void
 	 */
@@ -509,7 +510,7 @@ class Lister {
 	/**
 	 * Set the separators that separate related sections of matched page text.
 	 *
-	 * @param  array	[Optional] Array of section separators.
+	 * @param array	[Optional] Array of section separators.
 	 *
 	 * @return void
 	 */
@@ -520,7 +521,7 @@ class Lister {
 	/**
 	 * Set if wiki text should be included in output.
 	 *
-	 * @param  boolean	[Optional] Parse
+	 * @param boolean	[Optional] Parse
 	 *
 	 * @return void
 	 */
@@ -531,7 +532,7 @@ class Lister {
 	/**
 	 * Set the maximum included page text length before truncating.
 	 *
-	 * @param  mixed	[Optional] Integer length or null to disable.
+	 * @param mixed	[Optional] Integer length or null to disable.
 	 *
 	 * @return void
 	 */
@@ -542,7 +543,7 @@ class Lister {
 	/**
 	 * Set the plain string text matching for page transclusion.
 	 *
-	 * @param  array	[Optional] Array of plain string matches.
+	 * @param array	[Optional] Array of plain string matches.
 	 *
 	 * @return void
 	 */
@@ -553,7 +554,7 @@ class Lister {
 	/**
 	 * Set the regex text matching for page transclusion.
 	 *
-	 * @param  array	[Optional] Array of regexes.
+	 * @param array	[Optional] Array of regexes.
 	 *
 	 * @return void
 	 */
@@ -564,7 +565,7 @@ class Lister {
 	/**
 	 * Set the not regex text matching for page transclusion.
 	 *
-	 * @param  array	[Optional] Array of regexes.
+	 * @param array	[Optional] Array of regexes.
 	 *
 	 * @return void
 	 */
@@ -575,7 +576,7 @@ class Lister {
 	/**
 	 * Set if included wiki text should be parsed before being matched against.
 	 *
-	 * @param  boolean	[Optional] Parse
+	 * @param boolean	[Optional] Parse
 	 *
 	 * @return void
 	 */
@@ -586,7 +587,7 @@ class Lister {
 	/**
 	 * Shortcut to format all articles into a single formatted list.
 	 *
-	 * @param  array	List of \DPL\Article
+	 * @param array	List of \DPL\Article
 	 *
 	 * @return string	Formatted list.
 	 */
@@ -597,9 +598,9 @@ class Lister {
 	/**
 	 * Format a list of articles into a singular list.
 	 *
-	 * @param  array	List of \DPL\Article
-	 * @param  integer	Start position of the array to process.
-	 * @param  integer	Total objects from the array to process.
+	 * @param array	List of \DPL\Article
+	 * @param integer	Start position of the array to process.
+	 * @param integer	Total objects from the array to process.
 	 *
 	 * @return string	Formatted list.
 	 */
@@ -632,8 +633,8 @@ class Lister {
 	/**
 	 * Format a single item.
 	 *
-	 * @param  object	DPL\Article
-	 * @param  string	[Optional] Page text to include.
+	 * @param object	DPL\Article
+	 * @param string	[Optional] Page text to include.
 	 *
 	 * @return string	Item HTML
 	 */
@@ -751,7 +752,7 @@ class Lister {
 	/**
 	 * Join together items after being processed by formatItem().
 	 *
-	 * @param  array	Items as formatted by formatItem().
+	 * @param array	Items as formatted by formatItem().
 	 *
 	 * @return string	Imploded items.
 	 */
@@ -762,8 +763,8 @@ class Lister {
 	/**
 	 * Replace user tag parameters.
 	 *
-	 * @param  string	Text to perform replacements on.
-	 * @param  object	\DPL\Article
+	 * @param string	Text to perform replacements on.
+	 * @param object	\DPL\Article
 	 *
 	 * @return string	Text with replacements performed.
 	 */
@@ -831,8 +832,8 @@ class Lister {
 	/**
 	 * Replace user tag parameters for categories.
 	 *
-	 * @param  string	Text to perform replacements on.
-	 * @param  object	\DPL\Article
+	 * @param string	Text to perform replacements on.
+	 * @param object	\DPL\Article
 	 *
 	 * @return string	Text with replacements performed.
 	 */
@@ -853,8 +854,8 @@ class Lister {
 	/**
 	 * Replace the %NR%(current article sequence number) in text.
 	 *
-	 * @param  string	Text to perform replacements on.
-	 * @param  integer	The current article sequence number (starting from 1).
+	 * @param string	Text to perform replacements on.
+	 * @param integer	The current article sequence number (starting from 1).
 	 *
 	 * @return string	Text with replacements performed.
 	 */
@@ -869,9 +870,9 @@ class Lister {
 	 *
 	 * @todo I am not exactly sure how this function differs from replaceTagParameters().  It has something to do with table row formatting.  --Alexia
 	 *
-	 * @param  array	String pieces to perform replacements on.
-	 * @param  mixed	Index of the table row position.
-	 * @param  object	\DPL\Article
+	 * @param array	String pieces to perform replacements on.
+	 * @param mixed	Index of the table row position.
+	 * @param object	\DPL\Article
 	 *
 	 * @return void
 	 */
@@ -904,12 +905,12 @@ class Lister {
 	 *
 	 * @todo Again, another poorly documented function with vague functionality.  --Alexia
 	 *
-	 * @param  string	Argument to parse and replace.
-	 * @param  mixed	Index of the table row position.
-	 * @param  mixed	Other part of the index of the table row position?
-	 * @param  boolean	Is this the first time this function was called in this context?
-	 * @param  integer	Maximum text length allowed.
-	 * @param  object	\DPL\Article
+	 * @param string	Argument to parse and replace.
+	 * @param mixed	Index of the table row position.
+	 * @param mixed	Other part of the index of the table row position?
+	 * @param boolean	Is this the first time this function was called in this context?
+	 * @param integer	Maximum text length allowed.
+	 * @param object	\DPL\Article
 	 *
 	 * @return strig	Formatted text.
 	 */
@@ -952,8 +953,8 @@ class Lister {
 	 * ... it is balanced in terms of braces, brackets and tags
 	 * ... can be used as content of a wikitable field without spoiling the whole surrounding wikitext structure
 	 *
-	 * @param  $lim     limit of character count for the result
-	 * @param  $text    the wikitext to be truncated
+	 * @param $lim     limit of character count for the result
+	 * @param $text    the wikitext to be truncated
 	 *
 	 * @return the truncated text; note that in some cases it may be slightly longer than the given limit
 	 *         if the text is alread shorter than the limit or if the limit is negative, the text
@@ -969,7 +970,7 @@ class Lister {
 	/**
 	 * Prepends an image name with its hash path.
 	 *
-	 * @param  mixed	\DPL\Article or string image name of the image (may start with Image: or File:).
+	 * @param mixed	\DPL\Article or string image name of the image (may start with Image: or File:).
 	 *
 	 * @return string	Image URL
 	 */
@@ -1004,8 +1005,8 @@ class Lister {
 	/**
 	 * Transclude a page contents.
 	 *
-	 * @param  object	\DPL\Article
-	 * @param  integer	Filtered Article Count
+	 * @param object	\DPL\Article
+	 * @param integer	Filtered Article Count
 	 *
 	 * @return string	Page Text
 	 */
@@ -1243,9 +1244,9 @@ class Lister {
 	/**
 	 * Wrap seciton pieces with start and end tags.
 	 *
-	 * @param  string	Piece to be wrapped.
-	 * @param  string	Text to prepend.
-	 * @param  string	Text to append.
+	 * @param string	Piece to be wrapped.
+	 * @param string	Text to prepend.
+	 * @param string	Text to append.
 	 *
 	 * @return string	Wrapped text.
 	 */

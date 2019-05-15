@@ -36,8 +36,8 @@ class LST {
 	/**
 	 * Register what we're working on in the parser, so we don't fall into a trap.
 	 *
-	 * @param  $parser Parser
-	 * @param  $part1
+	 * @param $parser Parser
+	 * @param $part1
 	 *
 	 * @return bool
 	 */
@@ -55,8 +55,8 @@ class LST {
 	/**
 	 * Finish processing the function.
 	 *
-	 * @param  $parser Parser
-	 * @param  $part1
+	 * @param $parser Parser
+	 * @param $part1
 	 *
 	 * @return bool
 	 */
@@ -112,9 +112,9 @@ class LST {
 	 * Parser tag hook for <section>.
 	 * The section markers aren't paired, so we only need to remove them.
 	 *
-	 * @param  string $in
-	 * @param  array  $assocArgs
-	 * @param  Parser $parser
+	 * @param string $in
+	 * @param array  $assocArgs
+	 * @param Parser $parser
 	 *
 	 * @return string HTML output
 	 */
@@ -155,8 +155,8 @@ class LST {
 	 * Count skipped headings, so parser (as of r18218) can skip them, to
 	 * prevent wrong heading links (see bug 6563).
 	 *
-	 * @param   string $text
-	 * @param   int    $limit Cutoff point in the text to stop searching
+	 * @param string $text
+	 * @param int    $limit Cutoff point in the text to stop searching
 	 *
 	 * @return  int Number of matches
 	 * @private
@@ -229,9 +229,9 @@ class LST {
 	 * ... it is cut at a word boundary (white space) if possible
 	 * ... can be used as content of a wikitable field without spoiling the whole surrounding wikitext structure
 	 *
-	 * @param  $lim     limit of character count for the result
-	 * @param  $text    the wikitext to be truncated
-	 * @param  $link    an optional link which will be appended to the text if it was truncatedt
+	 * @param $lim     limit of character count for the result
+	 * @param $text    the wikitext to be truncated
+	 * @param $link    an optional link which will be appended to the text if it was truncatedt
 	 *
 	 * @return the truncated text;
 	 *         note that the returned text may be longer than the limit if this is necessary

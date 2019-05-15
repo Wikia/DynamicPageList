@@ -3,8 +3,9 @@
  * DynamicPageList3
  * DPL SubPageList Class
  *
- * @license GPL-2.0-or-later
  * @package DynamicPageList3
+ * @author  Alexia E. Smith
+ * @license GPL-2.0-or-later
  **/
 
 namespace DPL\Lister;
@@ -48,9 +49,9 @@ class SubPageList extends UnorderedList {
 	/**
 	 * Format a list of articles into a singular list.
 	 *
-	 * @param  array	List of \DPL\Article
-	 * @param  integer	Start position of the array to process.
-	 * @param  integer	Total objects from the array to process.
+	 * @param array	List of \DPL\Article
+	 * @param integer	Start position of the array to process.
+	 * @param integer	Total objects from the array to process.
 	 *
 	 * @return string	Formatted list.
 	 */
@@ -83,9 +84,9 @@ class SubPageList extends UnorderedList {
 	/**
 	 * Nest items down to the proper level.
 	 *
-	 * @param  array	Part levels to nest down to.
-	 * @param  array	Items holder to nest the item into.
-	 * @param  string	Formatted Item
+	 * @param array	Part levels to nest down to.
+	 * @param array	Items holder to nest the item into.
+	 * @param string	Formatted Item
 	 *
 	 * @return array	Nest Items
 	 */
@@ -107,7 +108,7 @@ class SubPageList extends UnorderedList {
 	/**
 	 * Join together items after being processed by formatItem().
 	 *
-	 * @param  array	Items as formatted by formatItem().
+	 * @param array	Items as formatted by formatItem().
 	 *
 	 * @return string	Imploded items.
 	 */

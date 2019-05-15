@@ -3,8 +3,9 @@
  * DynamicPageList3
  * DPL GalleryList Class
  *
- * @license GPL-2.0-or-later
  * @package DynamicPageList3
+ * @author  Alexia E. Smith
+ * @license GPL-2.0-or-later
  **/
 
 namespace DPL\Lister;
@@ -50,8 +51,8 @@ class GalleryList extends Lister {
 	/**
 	 * Format an item.
 	 *
-	 * @param  object	DPL\Article
-	 * @param  string	[Optional] Page text to include.
+	 * @param object	DPL\Article
+	 * @param string	[Optional] Page text to include.
 	 *
 	 * @return string	Item HTML
 	 */

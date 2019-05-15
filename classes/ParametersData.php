@@ -1158,7 +1158,7 @@ class ParametersData {
 	/**
 	 * Return if the parameter exists.
 	 *
-	 * @param  string	Parameter name.
+	 * @param string	Parameter name.
 	 *
 	 * @return boolean	Exists
 	 */
@@ -1169,7 +1169,7 @@ class ParametersData {
 	/**
 	 * Return data for the supplied parameter.
 	 *
-	 * @param  string	Parameter name.
+	 * @param string	Parameter name.
 	 *
 	 * @return mixed	Parameter array or false if it does not exist.
 	 */
@@ -1184,7 +1184,7 @@ class ParametersData {
 	/**
 	 * Sets the current parameter richness.
 	 *
-	 * @param  integer	Integer level.
+	 * @param integer	Integer level.
 	 *
 	 * @return void
 	 */
@@ -1204,7 +1204,7 @@ class ParametersData {
 	/**
 	 * Tests if the function is valid for the current functional richness level.
 	 *
-	 * @param  string	Function to test.
+	 * @param string	Function to test.
 	 *
 	 * @return boolean	Valid for this functional richness level.
 	 */
@@ -1222,7 +1222,7 @@ class ParametersData {
 	/**
 	 * Returns all parameters for the current richness level or limited to the optional maximum richness.
 	 *
-	 * @param  integer	[Optional] Maximum richness level
+	 * @param integer	[Optional] Maximum richness level
 	 *
 	 * @return array	The functional richness parameters list.
 	 */
@@ -1243,7 +1243,7 @@ class ParametersData {
 	/**
 	 * Return the default value for the parameter.
 	 *
-	 * @param  string	Parameter Name
+	 * @param string	Parameter Name
 	 *
 	 * @return mixed
 	 */
@@ -1260,7 +1260,7 @@ class ParametersData {
 	/**
 	 * Return the acceptable values for the parameter.
 	 *
-	 * @param  string	Parameter Name
+	 * @param string	Parameter Name
 	 *
 	 * @return mixed	Array of allowed values or false that the parameter allows any.
 	 */
@@ -1277,7 +1277,7 @@ class ParametersData {
 	/**
 	 * Does the parameter set that criteria for selection was found?
 	 *
-	 * @param  string	Parameter Name
+	 * @param string	Parameter Name
 	 *
 	 * @return bool
 	 */
@@ -1294,7 +1294,7 @@ class ParametersData {
 	/**
 	 * Does the parameter cause an open reference conflict?
 	 *
-	 * @param  string	Parameter Name
+	 * @param string	Parameter Name
 	 *
 	 * @return bool
 	 */
@@ -1311,7 +1311,7 @@ class ParametersData {
 	/**
 	 * Should this parameter preserve the case of the user supplied input?
 	 *
-	 * @param  string	Parameter Name
+	 * @param string	Parameter Name
 	 *
 	 * @return bool
 	 */
@@ -1328,7 +1328,7 @@ class ParametersData {
 	/**
 	 * Does this parameter take a list of page names?
 	 *
-	 * @param  string	Parameter Name
+	 * @param string	Parameter Name
 	 *
 	 * @return bool
 	 */
@@ -1345,7 +1345,7 @@ class ParametersData {
 	/**
 	 * Is the parameter supposed to be parsed as a boolean?
 	 *
-	 * @param  string	Parameter Name
+	 * @param string	Parameter Name
 	 *
 	 * @return bool
 	 */
@@ -1362,7 +1362,7 @@ class ParametersData {
 	/**
 	 * Is the parameter supposed to be parsed as a Mediawiki timestamp?
 	 *
-	 * @param  string	Parameter Name
+	 * @param string	Parameter Name
 	 *
 	 * @return bool
 	 */

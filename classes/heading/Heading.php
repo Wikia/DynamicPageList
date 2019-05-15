@@ -3,8 +3,9 @@
  * DynamicPageList3
  * DPL List Class
  *
- * @license GPL-2.0-or-later
  * @package DynamicPageList3
+ * @author  Alexia E. Smith
+ * @license GPL-2.0-or-later
  **/
 
 namespace DPL\Heading;
@@ -82,7 +83,7 @@ class Heading {
 	/**
 	 * Main Constructor
 	 *
-	 * @param  object	\DPL\Parameters
+	 * @param object	\DPL\Parameters
 	 *
 	 * @return void
 	 */
@@ -96,9 +97,9 @@ class Heading {
 	/**
 	 * Get a new List subclass based on user selection.
 	 *
-	 * @param  string	Heading style.
-	 * @param  object	\DPL\Parameters
-	 * @param  object	MediaWiki \Parser
+	 * @param string	Heading style.
+	 * @param object	\DPL\Parameters
+	 * @param object	MediaWiki \Parser
 	 *
 	 * @return mixed	Heading subclass or null for a bad style.
 	 */
@@ -144,7 +145,7 @@ class Heading {
 	/**
 	 * Set extra list attributes.
 	 *
-	 * @param  string	Tag soup attributes, example: this="that" thing="no"
+	 * @param string	Tag soup attributes, example: this="that" thing="no"
 	 *
 	 * @return void
 	 */
@@ -155,7 +156,7 @@ class Heading {
 	/**
 	 * Set extra item attributes.
 	 *
-	 * @param  string	Tag soup attributes, example: this="that" thing="no"
+	 * @param string	Tag soup attributes, example: this="that" thing="no"
 	 *
 	 * @return void
 	 */
@@ -166,7 +167,7 @@ class Heading {
 	/**
 	 * Set if the article count per heading should be shown.
 	 *
-	 * @param  boolean	[Optional] Show Heading Count
+	 * @param boolean	[Optional] Show Heading Count
 	 *
 	 * @return void
 	 */
@@ -186,8 +187,8 @@ class Heading {
 	/**
 	 * Format a list of articles into all lists with headings as needed.
 	 *
-	 * @param  array	List of \DPL\Article
-	 * @param  object	List of \DPL\Lister\Lister
+	 * @param array	List of \DPL\Article
+	 * @param object	List of \DPL\Lister\Lister
 	 *
 	 * @return string	Formatted list.
 	 */
@@ -339,11 +340,11 @@ class Heading {
 	/**
 	 * Format a heading group.
 	 *
-	 * @param  integer	Article start index for this heading.
-	 * @param  integer	Article count for this heading.
-	 * @param  string	Heading link/text display.
-	 * @param  array	List of \DPL\Article.
-	 * @param  object	List of \DPL\Lister\Lister
+	 * @param integer	Article start index for this heading.
+	 * @param integer	Article count for this heading.
+	 * @param string	Heading link/text display.
+	 * @param array	List of \DPL\Article.
+	 * @param object	List of \DPL\Lister\Lister
 	 *
 	 * @return string	Heading HTML
 	 */
@@ -390,7 +391,7 @@ class Heading {
 	/**
 	 * Get the article count message appropriate for this list.
 	 *
-	 * @param  integer	Count
+	 * @param integer	Count
 	 *
 	 * @return string	Message
 	 */

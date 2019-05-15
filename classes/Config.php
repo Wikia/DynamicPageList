@@ -21,7 +21,7 @@ class Config {
 	/**
 	 * Initialize the static object with settings.
 	 *
-	 * @param  array	Settings to initialize for DPL.
+	 * @param array	Settings to initialize for DPL.
 	 *
 	 * @return void
 	 */
@@ -42,7 +42,7 @@ class Config {
 	/**
 	 * Return a single setting.
 	 *
-	 * @param  string	Setting Key
+	 * @param string	Setting Key
 	 *
 	 * @return mixed	The setting's actual setting or null if it does not exist.
 	 */
@@ -62,8 +62,8 @@ class Config {
 	/**
 	 * Set a single setting.
 	 *
-	 * @param  string	Setting Key
-	 * @param  mixed	[Optional] Appropriate value for the setting key.
+	 * @param string	Setting Key
+	 * @param mixed	[Optional] Appropriate value for the setting key.
 	 *
 	 * @return void
 	 */

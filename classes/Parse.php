@@ -115,11 +115,11 @@ class Parse {
 	/**
 	 * The real callback function for converting the input text to wiki text output
 	 *
-	 * @param  string	Raw User Input
-	 * @param  object	Mediawiki Parser object.
-	 * @param  array	End Reset Booleans
-	 * @param  array	End Eliminate Booleans
-	 * @param  boolean	[Optional] Called as a parser tag
+	 * @param string	Raw User Input
+	 * @param object	Mediawiki Parser object.
+	 * @param array	End Reset Booleans
+	 * @param array	End Eliminate Booleans
+	 * @param boolean	[Optional] Called as a parser tag
 	 *
 	 * @return string	Wiki/HTML Output
 	 */
@@ -332,7 +332,7 @@ class Parse {
 	/**
 	 * Process Query Results
 	 *
-	 * @param  object	Mediawiki Result Object
+	 * @param object	Mediawiki Result Object
 	 *
 	 * @return array	Array of Article objects.
 	 */
@@ -413,7 +413,7 @@ class Parse {
 	/**
 	 * Do basic clean up and structuring of raw user input.
 	 *
-	 * @param  string	Raw User Input
+	 * @param string	Raw User Input
 	 *
 	 * @return array	Array of raw text parameter => option.
 	 */
@@ -474,7 +474,7 @@ class Parse {
 	/**
 	 * Concatenate output
 	 *
-	 * @param  string	Output to add
+	 * @param string	Output to add
 	 *
 	 * @return void
 	 */
@@ -495,8 +495,8 @@ class Parse {
 	/**
 	 * Return output optionally including header and footer.
 	 *
-	 * @param  boolean	[Optional] Total results.
-	 * @param  boolean	[Optional] Skip adding the header and footer.
+	 * @param boolean	[Optional] Total results.
+	 * @param boolean	[Optional] Skip adding the header and footer.
 	 *
 	 * @return string	Output
 	 */
@@ -529,7 +529,7 @@ class Parse {
 	/**
 	 * Set the header text.
 	 *
-	 * @param  string	Header Text
+	 * @param string	Header Text
 	 *
 	 * @return void
 	 */
@@ -552,7 +552,7 @@ class Parse {
 	/**
 	 * Set the footer text.
 	 *
-	 * @param  string	Footer Text
+	 * @param string	Footer Text
 	 *
 	 * @return void
 	 */
@@ -575,8 +575,8 @@ class Parse {
 	/**
 	 * Determine the header/footer type to use based on what output format parameters were chosen and the number of results.
 	 *
-	 * @param  string	Page position to check: 'header' or 'footer'.
-	 * @param  integer	Count of pages.
+	 * @param string	Page position to check: 'header' or 'footer'.
+	 * @param integer	Count of pages.
 	 *
 	 * @return mixed	Type to use: 'results', 'oneresult', or 'noresults'.  False if invalid or none should be used.
 	 */
@@ -601,8 +601,8 @@ class Parse {
 	/**
 	 * Set a variable to be replaced with the provided text later at the end of the output.
 	 *
-	 * @param  string	Variable name, will be transformed to uppercase and have leading and trailing percent signs added.
-	 * @param  string	Text to replace the variable with.
+	 * @param string	Variable name, will be transformed to uppercase and have leading and trailing percent signs added.
+	 * @param string	Text to replace the variable with.
 	 *
 	 * @return void
 	 */
@@ -614,7 +614,7 @@ class Parse {
 	/**
 	 * Return text with variables replaced.
 	 *
-	 * @param  string	Text to perform replacements on.
+	 * @param string	Text to perform replacements on.
 	 *
 	 * @return string	Replaced Text
 	 */
@@ -629,7 +629,7 @@ class Parse {
 	/**
 	 * Return text with custom new line characters replaced.
 	 *
-	 * @param  string	Text
+	 * @param string	Text
 	 *
 	 * @return string	New Lined Text
 	 */
@@ -767,8 +767,8 @@ class Parse {
 	/**
 	 * Create keys for TableRow which represent the structure of the "include=" arguments.
 	 *
-	 * @param  array	Array of 'tablerow' parameter data.
-	 * @param  array	Array of 'include' parameter data.
+	 * @param array	Array of 'tablerow' parameter data.
+	 * @param array	Array of 'include' parameter data.
 	 *
 	 * @return array	Updated 'tablerow' parameter.
 	 */
@@ -804,8 +804,8 @@ class Parse {
 	/**
 	 * Resolve arguments in the input that would normally be in the URL.
 	 *
-	 * @param  string	Raw Uncleaned User Input
-	 * @param  array	Array of URL arguments to resolve.  Non-arrays will be casted to an array.
+	 * @param string	Raw Uncleaned User Input
+	 * @param array	Array of URL arguments to resolve.  Non-arrays will be casted to an array.
 	 *
 	 * @return string	Raw input with variables replaced
 	 */
@@ -845,7 +845,7 @@ class Parse {
 	/**
 	 * This function uses the Variables extension to provide navigation aids such as DPL_firstTitle, DPL_lastTitle, or DPL_findTitle.  These variables can be accessed as {{#var:DPL_firstTitle}} if Extension:Variables is installed.
 	 *
-	 * @param  array	Array of scroll variables with the key as the variable name and the value as the value.  Non-arrays will be casted to arrays.
+	 * @param array	Array of scroll variables with the key as the variable name and the value as the value.  Non-arrays will be casted to arrays.
 	 *
 	 * @return void
 	 */
@@ -863,10 +863,10 @@ class Parse {
 	/**
 	 * Trigger Resets and Eliminates that run at the end of parsing.
 	 *
-	 * @param  string	Full output including header, footer, and any warnings.
-	 * @param  array	End Reset Booleans
-	 * @param  array	End Eliminate Booleans
-	 * @param  boolean	Call as a parser tag
+	 * @param string	Full output including header, footer, and any warnings.
+	 * @param array	End Reset Booleans
+	 * @param array	End Eliminate Booleans
+	 * @param boolean	Call as a parser tag
 	 *
 	 * @return void
 	 */
@@ -951,7 +951,7 @@ class Parse {
 	/**
 	 * Sort an array of Article objects by the card suit symbol.
 	 *
-	 * @param  array	Article objects in an array.
+	 * @param array	Article objects in an array.
 	 *
 	 * @return array	Sorted objects
 	 */

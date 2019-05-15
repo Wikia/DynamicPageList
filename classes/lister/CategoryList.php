@@ -3,8 +3,9 @@
  * DynamicPageList3
  * DPL CategoryList Class
  *
- * @license GPL-2.0-or-later
  * @package DynamicPageList3
+ * @author  Alexia E. Smith
+ * @license GPL-2.0-or-later
  **/
 
 namespace DPL\Lister;
@@ -23,9 +24,9 @@ class CategoryList extends Lister {
 	/**
 	 * Format the list of articles.
 	 *
-	 * @param  array	List of \DPL\Article
-	 * @param  integer	Start position of the array to process.
-	 * @param  integer	Total objects from the array to process.
+	 * @param array	List of \DPL\Article
+	 * @param integer	Start position of the array to process.
+	 * @param integer	Total objects from the array to process.
 	 *
 	 * @return string	Formatted list.
 	 */
@@ -51,8 +52,8 @@ class CategoryList extends Lister {
 	/**
 	 * Format a single item.
 	 *
-	 * @param  object	DPL\Article
-	 * @param  string	[Optional] Page text to include.
+	 * @param object	DPL\Article
+	 * @param string	[Optional] Page text to include.
 	 *
 	 * @return string	Item HTML
 	 */
