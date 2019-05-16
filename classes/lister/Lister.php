@@ -308,6 +308,9 @@ class Lister {
 			case 'userformat':
 				$class = 'UserFormatList';
 				break;
+			default:
+				throw new MWException('Bad list style passed.');
+				break;
 		}
 		$class = '\DPL\Lister\\' . $class;
 
@@ -439,9 +442,9 @@ class Lister {
 	/**
 	 * Set if links should be escaped?
 	 *
-	 * @todo The naming of this parameter is weird and I am not sure what it does.
-	 *
 	 * @param boolean $escape [Optional] Escape
+	 *
+	 * @todo The naming of this parameter is weird and I am not sure what it does.
 	 *
 	 * @return void
 	 */
@@ -868,11 +871,11 @@ class Lister {
 	/**
 	 * Format one single item of an entry in the output list (i.e. one occurence of one item from the include parameter).
 	 *
-	 * @todo I am not exactly sure how this function differs from replaceTagParameters().  It has something to do with table row formatting.  --Alexia
-	 *
-	 * @param array  &$pieces String pieces to perform replacements on.
+	 * @param array  $pieces  String pieces to perform replacements on.
 	 * @param mixed  $s       Index of the table row position.
 	 * @param object $article \DPL\Article
+	 *
+	 * @todo I am not exactly sure how this function differs from replaceTagParameters().  It has something to do with table row formatting.  --Alexia
 	 *
 	 * @return void
 	 */
@@ -903,14 +906,14 @@ class Lister {
 	/**
 	 * Format one single template argument of one occurence of one item from the include parameter.  This is called via a backlink from LST::includeTemplate().
 	 *
-	 * @todo Again, another poorly documented function with vague functionality.  --Alexia
-	 *
 	 * @param string  $arg       Argument to parse and replace.
 	 * @param mixed   $s         Index of the table row position.
 	 * @param mixed   $argNr     Other part of the index of the table row position?
 	 * @param boolean $firstCall Is this the first time this function was called in this context?
 	 * @param integer $maxLength Maximum text length allowed.
 	 * @param object  $article   \DPL\Article
+	 *
+	 * @todo Again, another poorly documented function with vague functionality.  --Alexia
 	 *
 	 * @return string Formatted text.
 	 */
@@ -931,7 +934,8 @@ class Lister {
 			}
 			$result = str_replace('%%', $arg, substr($tableFormat["$s.$argNr"], $n + 1));
 			$result = str_replace('%PAGE%', $article->getTitle()->getPrefixedText(), $result);
-			$result = str_replace('%IMAGE%', $this->parseImageUrlWithPath($arg), $result); // @TODO: This just blindly passes the argument through hoping it is an image.  --Alexia
+			// @TODO: This just blindly passes the argument through hoping it is an image.  --Alexia
+			$result = str_replace('%IMAGE%', $this->parseImageUrlWithPath($arg), $result);
 			$result = $this->cutAt($maxLength, $result);
 			if (strlen($result) > 0 && $result[0] == '-') {
 				return ' ' . $result;
@@ -953,24 +957,26 @@ class Lister {
 	 * ... it is balanced in terms of braces, brackets and tags
 	 * ... can be used as content of a wikitable field without spoiling the whole surrounding wikitext structure
 	 *
-	 * @param $lim     limit of character count for the result
-	 * @param $text    the wikitext to be truncated
+	 * @param integer $limit Limit of character count for the result
+	 * @param string  $text  The wikitext to be truncated
 	 *
-	 * @return the truncated text; note that in some cases it may be slightly longer than the given limit
+	 * @return string The truncated text; note that in some cases it may be slightly longer than the given limit
 	 *         if the text is alread shorter than the limit or if the limit is negative, the text
 	 *         will be returned without any checks for balance of tags
 	 */
-	private function cutAt($lim, $text) {
-		if ($lim < 0) {
+	private function cutAt(int $limit, string $text) {
+		if ($limit < 0) {
 			return $text;
 		}
-		return LST::limitTranscludedText($text, $lim);
+		return LST::limitTranscludedText($text, $limit);
 	}
 
 	/**
 	 * Prepends an image name with its hash path.
 	 *
-	 * @param mixed	\DPL\Article or string image name of the image (may start with Image: or File:).
+	 * @param mixed	$article \DPL\Article or string image name of the image (may start with Image: or File:).
+	 *
+	 * @todo This needs to not accept mixed and break out its functionality.
 	 *
 	 * @return string Image URL
 	 */
@@ -1005,14 +1011,15 @@ class Lister {
 	/**
 	 * Transclude a page contents.
 	 *
-	 * @param object	\DPL\Article
-	 * @param integer	Filtered Article Count
+	 * @param object  $article       \DPL\Article
+	 * @param integer $filteredCount Filtered Article Count
 	 *
 	 * @return string Page Text
 	 */
-	public function transcludePage(Article $article, &$filteredCount) {
+	public function transcludePage(Article $article, int &$filteredCount) {
 		$matchFailed = false;
-		if (empty($this->pageTextMatch) || $this->pageTextMatch[0] == '*') { // include whole article
+		if (empty($this->pageTextMatch) || $this->pageTextMatch[0] == '*') {
+			// Include whole article.
 			$title = $article->getTitle()->getPrefixedText();
 			if ($this->getStyle() == self::LIST_USERFORMAT) {
 				$pageText = '';
@@ -1026,19 +1033,19 @@ class Lister {
 				}
 				$filteredCount = $filteredCount + 1;
 
-				// update article if include=* and updaterules are given
+				// Update article if include=* and updaterules are given
 				$updateRules = $this->getParameters()->getParameter('updaterules');
 				$deleteRules = $this->getParameters()->getParameter('deleterules');
 				if (!empty($updateRules)) {
 					$ruleOutput = UpdateArticle::updateArticleByRule($title, $text, $updateRules);
-					// append update message to output
+					// Append update message to output
 					$pageText .= $ruleOutput;
 				} elseif (!empty($deleteRules)) {
 					$ruleOutput = UpdateArticle::deleteArticleByRule($title, $text, $deleteRules);
-					// append delete message to output
+					// Append delete message to output
 					$pageText .= $ruleOutput;
 				} else {
-					// append full text to output
+					// Append full text to output
 					if (is_array($this->sectionSeparators) && array_key_exists('0', $this->sectionSeparators)) {
 						$pageText .= $this->replaceTagCount($this->sectionSeparators[0], $filteredCount);
 						$pieces = [
@@ -1054,7 +1061,7 @@ class Lister {
 				return '';
 			}
 		} else {
-			// identify section pieces
+			// Identify section pieces
 			$secPiece       = [];
 			$dominantPieces = false;
 			// ONE section can be marked as "dominant"; if this section contains multiple entries
@@ -1066,7 +1073,7 @@ class Lister {
 				if ($sSecLabel == '') {
 					break;
 				}
-				// if sections are identified by number we have a % at the beginning
+				// If sections are identified by number we have a % at the beginning.
 				if ($sSecLabel[0] == '%') {
 					$sSecLabel = '#' . $sSecLabel;
 				}
@@ -1074,7 +1081,7 @@ class Lister {
 				$maxLength = -1;
 				if ($sSecLabel == '-') {
 					// '-' is used as a dummy parameter which will produce no output
-					// if maxlen was 0 we suppress all output; note that for matching we used the full text
+					// If maxlen was 0 we suppress all output; note that for matching we used the full text.
 					$secPieces = [
 						''
 					];
@@ -1084,7 +1091,7 @@ class Lister {
 					$cutLink     = 'default';
 					$skipPattern = [];
 					if ($limpos > 0 && $sSecLabel[strlen($sSecLabel) - 1] == ']') {
-						// regular expressions which define a skip pattern may precede the text
+						// Regular expressions which define a skip pattern may precede the text
 						$fmtSec = explode('~', substr($sSecLabel, $limpos + 1, strlen($sSecLabel) - $limpos - 2));
 						$sSecLabel = substr($sSecLabel, 0, $limpos);
 						$cutInfo = explode(" ", $fmtSec[count($fmtSec) - 1], 2);
@@ -1100,11 +1107,12 @@ class Lister {
 						}
 					}
 					if ($maxLength < 0) {
-						$maxLength = -1; // without valid limit include whole section
+						// Without valid limit include whole section.
+						$maxLength = -1;
 					}
 				}
 
-				// find out if the user specified an includematch / includenotmatch condition
+				// Find out if the user specified an includematch / includenotmatch condition.
 				if (is_array($this->pageTextMatchRegex) && count($this->pageTextMatchRegex) > $s && !empty($this->pageTextMatchRegex[$s])) {
 					$mustMatch = $this->pageTextMatchRegex[$s];
 				} else {
@@ -1116,7 +1124,7 @@ class Lister {
 					$mustNotMatch = '';
 				}
 
-				// if chapters are selected by number, text or regexp we get the heading from LST::includeHeading
+				// If chapters are selected by number, text or regexp we get the heading from LST::includeHeading
 				$sectionHeading[0] = '';
 				if ($sSecLabel == '-') {
 					$secPiece[$s] = $secPieces[0];
@@ -1161,7 +1169,8 @@ class Lister {
 						$dominantPieces = $secPieces;
 					}
 					if (($mustMatch != '' || $mustNotMatch != '') && count($secPieces) <= 0) {
-						$matchFailed = true; // NOTHING MATCHED
+						// NOTHING MATCHED
+						$matchFailed = true;
 						break;
 					}
 
@@ -1182,7 +1191,8 @@ class Lister {
 						$dominantPieces = $secPieces;
 					}
 					if (($mustMatch != '' || $mustNotMatch != '') && count($secPieces) <= 1 && $secPieces[0] == '') {
-						$matchFailed = true; // NOTHING MATCHED
+						// NOTHING MATCHED
+						$matchFailed = true;
 						break;
 					}
 				} else {
@@ -1244,13 +1254,13 @@ class Lister {
 	/**
 	 * Wrap seciton pieces with start and end tags.
 	 *
-	 * @param string	Piece to be wrapped.
-	 * @param string	Text to prepend.
-	 * @param string	Text to append.
+	 * @param string $piece Piece to be wrapped.
+	 * @param string $start Text to prepend.
+	 * @param string $end   Text to append.
 	 *
 	 * @return string Wrapped text.
 	 */
-	protected function joinSectionTagPieces($piece, $start, $end) {
+	protected function joinSectionTagPieces(string $piece, string $start, string $end) {
 		return $start . $piece . $end;
 	}
 

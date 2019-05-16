@@ -52,7 +52,7 @@ class TieredHeading extends Heading {
 	/**
 	 * Main Constructor
 	 *
-	 * @param object	\DPL\Parameters
+	 * @param object $parameters \DPL\Parameters
 	 *
 	 * @return void
 	 */
@@ -67,7 +67,7 @@ class TieredHeading extends Heading {
 	 * @param integer $headingStart Article start index for this heading.
 	 * @param integer $headingCount Article count for this heading.
 	 * @param string  $headingLink  Heading link/text display.
-	 * @param array   $article      List of \DPL\Article.
+	 * @param array   $articles     List of \DPL\Article.
 	 * @param object  $lister       List of \DPL\Lister\Lister
 	 *
 	 * @return string	Heading HTML

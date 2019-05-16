@@ -83,7 +83,7 @@ class Heading {
 	/**
 	 * Main Constructor
 	 *
-	 * @param object	\DPL\Parameters
+	 * @param object $parameters \DPL\Parameters
 	 *
 	 * @return void
 	 */
@@ -97,13 +97,12 @@ class Heading {
 	/**
 	 * Get a new List subclass based on user selection.
 	 *
-	 * @param string	Heading style.
-	 * @param object	\DPL\Parameters
-	 * @param object	MediaWiki \Parser
+	 * @param string $style      Heading style.
+	 * @param object $parameters \DPL\Parameters
 	 *
-	 * @return mixed	Heading subclass or null for a bad style.
+	 * @return object Heading subclass
 	 */
-	public static function newFromStyle($style, \DPL\Parameters $parameters) {
+	public static function newFromStyle(string $style, Parameters $parameters) {
 		$style = strtolower($style);
 		switch ($style) {
 			case 'definition':
@@ -125,8 +124,7 @@ class Heading {
 				$class = 'UnorderedHeading';
 				break;
 			default:
-				return null;
-				break;
+				throw new MWException('Bad heading style passed.');
 		}
 		$class = '\DPL\Heading\\' . $class;
 
@@ -136,7 +134,7 @@ class Heading {
 	/**
 	 * Get the \DPL\Parameters object this object was constructed with.
 	 *
-	 * @return object	\DPL\Parameters
+	 * @return object \DPL\Parameters
 	 */
 	public function getParameters() {
 		return $this->parameters;
@@ -145,33 +143,33 @@ class Heading {
 	/**
 	 * Set extra list attributes.
 	 *
-	 * @param string	Tag soup attributes, example: this="that" thing="no"
+	 * @param string $attributes Tag soup attributes, example: this="that" thing="no"
 	 *
 	 * @return void
 	 */
-	public function setListAttributes($attributes) {
+	public function setListAttributes(string $attributes) {
 		$this->listAttributes = \Sanitizer::fixTagAttributes($attributes, 'ul');
 	}
 
 	/**
 	 * Set extra item attributes.
 	 *
-	 * @param string	Tag soup attributes, example: this="that" thing="no"
+	 * @param string $attributes Tag soup attributes, example: this="that" thing="no"
 	 *
 	 * @return void
 	 */
-	public function setItemAttributes($attributes) {
+	public function setItemAttributes(string $attributes) {
 		$this->itemAttributes = \Sanitizer::fixTagAttributes($attributes, 'li');
 	}
 
 	/**
 	 * Set if the article count per heading should be shown.
 	 *
-	 * @param boolean	[Optional] Show Heading Count
+	 * @param boolean $show [Optional] Show Heading Count
 	 *
 	 * @return void
 	 */
-	public function setShowHeadingCount($show = false) {
+	public function setShowHeadingCount(bool $show = false) {
 		$this->showHeadingCount = boolval($show);
 	}
 
@@ -205,9 +203,9 @@ class Heading {
 		$output = '';
 		if (!empty($headings)) {
 			if ($columns != 1 || $rows != 1) {
-				$hspace = 2; // the extra space for headings
-				// repeat outer tags for each of the specified columns / rows in the output
-				// we assume that a heading roughly takes the space of two articles
+				// The extra space for headings.
+				$hspace = 2;
+				// Repeat outer tags for each of the specified columns / rows in the output we assume that a heading roughly takes the space of two articles.
 				$count = count($articles) + $hspace * count($headings);
 				if ($columns != 1) {
 					$iGroup = $columns;
@@ -221,11 +219,13 @@ class Heading {
 				}
 				$output .= "{|" . $rowColFormat . "\n|\n";
 				if ($nsize < $hspace + 1) {
-					$nsize = $hspace + 1; // correction for result sets with one entry
+					// Correction for result sets with one entry.
+					$nsize = $hspace + 1;
 				}
 				$output .= $this->getListStart();
 				$nstart = 0;
-				$greml  = $nsize; // remaining lines in current group
+				// Remaining lines in current group.
+				$greml  = $nsize;
 				$g      = 0;
 				$offset = 0;
 				foreach ($headings as $headingCount) {
@@ -343,7 +343,7 @@ class Heading {
 	 * @param integer $headingStart Article start index for this heading.
 	 * @param integer $headingCount Article count for this heading.
 	 * @param string  $headingLink  Heading link/text display.
-	 * @param array   $article      List of \DPL\Article.
+	 * @param array   $articles     List of \DPL\Article.
 	 * @param object  $lister       List of \DPL\Lister\Lister
 	 *
 	 * @return string	Heading HTML
@@ -391,11 +391,11 @@ class Heading {
 	/**
 	 * Get the article count message appropriate for this list.
 	 *
-	 * @param integer	Count
+	 * @param integer $count Count
 	 *
-	 * @return string	Message
+	 * @return string Message
 	 */
-	protected function articleCountMessage($count) {
+	protected function articleCountMessage(int $count) {
 		$orderMethods = $this->getParameters()->getParameter('ordermethods');
 		if (isset($orderMethods[0]) && $orderMethods[0] === 'category') {
 			$message = 'categoryarticlecount';
