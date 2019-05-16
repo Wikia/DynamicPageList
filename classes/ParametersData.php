@@ -1279,7 +1279,7 @@ class ParametersData {
 	 *
 	 * @param string	Parameter Name
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function setsCriteriaFound($parameter) {
 		if (array_key_exists($parameter, $this->data)) {
@@ -1296,7 +1296,7 @@ class ParametersData {
 	 *
 	 * @param string	Parameter Name
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function isOpenReferenceConflict($parameter) {
 		if (array_key_exists($parameter, $this->data)) {
@@ -1313,7 +1313,7 @@ class ParametersData {
 	 *
 	 * @param string	Parameter Name
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function shouldPreserveCase($parameter) {
 		if (array_key_exists($parameter, $this->data)) {
@@ -1330,7 +1330,7 @@ class ParametersData {
 	 *
 	 * @param string	Parameter Name
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function isPageNameList($parameter) {
 		if (array_key_exists($parameter, $this->data)) {
@@ -1347,7 +1347,7 @@ class ParametersData {
 	 *
 	 * @param string	Parameter Name
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function isBoolean($parameter) {
 		if (array_key_exists($parameter, $this->data)) {
@@ -1364,7 +1364,7 @@ class ParametersData {
 	 *
 	 * @param string	Parameter Name
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function isTimestamp($parameter) {
 		if (array_key_exists($parameter, $this->data)) {

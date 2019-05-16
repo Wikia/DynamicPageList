@@ -10,6 +10,9 @@
 
 namespace DPL;
 
+use PermissionsError;
+use Title;
+
 class Parameters extends ParametersData {
 	/**
 	 * Set parameter options.
@@ -52,12 +55,12 @@ class Parameters extends ParametersData {
 	/**
 	 * Handle simple parameter functions.
 	 *
-	 * @param string	Function(Parameter) Called
-	 * @param string	Function Arguments
+	 * @param string $parameter Function(Parameter) Called
+	 * @param array  $arguments Function Arguments
 	 *
-	 * @return boolean	Successful
+	 * @return boolean Successful
 	 */
-	public function __call($parameter, $arguments) {
+	public function __call(string $parameter, array $arguments) {
 		$parameterData = $this->getData($parameter);
 
 		if ($parameterData === false) {
@@ -68,8 +71,7 @@ class Parameters extends ParametersData {
 		if (array_key_exists('permission', $parameterData)) {
 			global $wgUser;
 			if (!$wgUser->isAllowed($parameterData['permission'])) {
-				throw new \PermissionsError($parameterData['permission']);
-				return;
+				throw new PermissionsError($parameterData['permission']);
 			}
 		}
 
@@ -195,14 +197,11 @@ class Parameters extends ParametersData {
 	 * Sort cleaned parameter arrays by priority.
 	 * Users can not be told to put the parameters into a specific order each time.  Some parameters are dependent on each other coming in a certain order due to some procedural legacy issues.
 	 *
-	 * @param array	Unsorted Parameters
+	 * @param array $parameters Unsorted Parameters
 	 *
-	 * @return array	Sorted Parameters
+	 * @return array Sorted Parameters
 	 */
-	public static function sortByPriority($parameters) {
-		if (!is_array($parameters)) {
-			throw new \MWException(__METHOD__ . ': A non-array was passed.');
-		}
+	public static function sortByPriority(array $parameters) {
 		// 'category' to get category headings first for ordermethod.
 		// 'include'/'includepage' to make sure section labels are ready for 'table'.
 		$priority = [
@@ -233,11 +232,11 @@ class Parameters extends ParametersData {
 	/**
 	 * Set Selection Criteria Found
 	 *
-	 * @param boolean	Is Found?
+	 * @param boolean $found Is Found?
 	 *
 	 * @return void
 	 */
-	private function setSelectionCriteriaFound($found = true) {
+	private function setSelectionCriteriaFound(bool $found = true) {
 		if (!is_bool($found)) {
 			throw new MWException(__METHOD__ . ': A non-boolean was passed.');
 		}
@@ -256,11 +255,11 @@ class Parameters extends ParametersData {
 	/**
 	 * Set Open References Conflict - See 'openreferences' parameter.
 	 *
-	 * @param boolean	References Conflict?
+	 * @param boolean $conflict References Conflict?
 	 *
 	 * @return void
 	 */
-	private function setOpenReferencesConflict($conflict = true) {
+	private function setOpenReferencesConflict(bool $conflict = true) {
 		if (!is_bool($conflict)) {
 			throw new MWException(__METHOD__ . ': A non-boolean was passed.');
 		}
@@ -298,23 +297,23 @@ class Parameters extends ParametersData {
 	/**
 	 * Set a parameter's option.
 	 *
-	 * @param string	Parameter to set
-	 * @param mixed	Option to set
+	 * @param string $parameter Parameter to set
+	 * @param mixed  $option    Option to set
 	 *
 	 * @return void
 	 */
-	public function setParameter($parameter, $option) {
+	public function setParameter(string $parameter, $option) {
 		$this->parameterOptions[$parameter] = $option;
 	}
 
 	/**
 	 * Get a parameter's option.
 	 *
-	 * @param string	Parameter to get
+	 * @param string $parameter Parameter to get
 	 *
-	 * @return mixed	Option for specified parameter.
+	 * @return mixed Option for specified parameter.
 	 */
-	public function getParameter($parameter) {
+	public function getParameter(string $parameter) {
 		return array_key_exists($parameter, $this->parameterOptions) ? $this->parameterOptions[$parameter] : null;
 	}
 
@@ -330,9 +329,9 @@ class Parameters extends ParametersData {
 	/**
 	 * Filter a standard boolean like value into an actual boolean.
 	 *
-	 * @param mixed	Integer or string to evaluated through filter_var().
+	 * @param mixed $boolean Integer or string to evaluated through filter_var().
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function filterBoolean($boolean) {
 		return filter_var($boolean, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
@@ -341,11 +340,11 @@ class Parameters extends ParametersData {
 	/**
 	 * Strip <html> tags.
 	 *
-	 * @param string	Dirty Text
+	 * @param string $text Dirty Text
 	 *
-	 * @return string	Clean Text
+	 * @return string Clean Text
 	 */
-	private function stripHtmlTags($text) {
+	private function stripHtmlTags(string $text) {
 		$text = preg_replace("#<.*?html.*?>#is", "", $text);
 
 		return $text;
@@ -354,12 +353,12 @@ class Parameters extends ParametersData {
 	/**
 	 * Get a list of valid page names.
 	 *
-	 * @param string	Raw Text of Pages
-	 * @param boolean	[Optional] Each Title MUST Exist
+	 * @param string  $text      Raw Text of Pages
+	 * @param boolean $mustExist [Optional] Each Title MUST Exist
 	 *
-	 * @return mixed	List of page titles or false on error.
+	 * @return mixed List of page titles or false on error.
 	 */
-	private function getPageNameList($text, $mustExist = true) {
+	private function getPageNameList(string $text, bool $mustExist = true) {
 		$list = [];
 		$pages = explode('|', trim($text));
 		foreach ($pages as $page) {
@@ -369,7 +368,7 @@ class Parameters extends ParametersData {
 				continue;
 			}
 			if ($mustExist === true) {
-				$title = \Title::newFromText($page);
+				$title = Title::newFromText($page);
 				if (!$title) {
 					return false;
 				}
@@ -385,12 +384,14 @@ class Parameters extends ParametersData {
 	/**
 	 * Check if a regular expression is valid.
 	 *
-	 * @param mixed	Regular Expression(s) in an array or a single expression in a string.
-	 * @param boolean	Is this a database REGEXP?
+	 * @param mixed   $regexes Regular Expression(s) in an array or a single expression in a string.
+	 * @param boolean $forDb   Is this a database REGEXP?
+	 *
+	 * @todo Enforce $regexes to be an array.
 	 *
 	 * @return boolean
 	 */
-	private function isRegexValid($regexes, $forDb = false) {
+	private function isRegexValid($regexes, bool $forDb = false) {
 		if (!is_array($regexes)) {
 			$regexes = [$regexes];
 		}
@@ -625,7 +626,7 @@ class Parameters extends ParametersData {
 	/**
 	 * Clean and test 'namespace' parameter.
 	 *
-	 * @param string	Option passed to parameter.
+	 * @param string $option Option passed to parameter.
 	 *
 	 * @return boolean	Success
 	 */

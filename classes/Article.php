@@ -81,7 +81,7 @@ class Article {
 	 *
 	 * @var string
 	 */
-	public $mParentHLink = ''; // heading (link to the associated page) that page belongs to in the list (default '' means no heading)
+	public $mParentHLink = '';
 
 	/**
 	 * Category links on the page.
@@ -184,8 +184,8 @@ class Article {
 	/**
 	 * Main Constructor
 	 *
-	 * @param string	Title
-	 * @param integer	Namespace
+	 * @param string  $title     Title
+	 * @param integer $namespace Namespace
 	 *
 	 * @return void
 	 */
@@ -197,13 +197,13 @@ class Article {
 	/**
 	 * Initialize a new instance from a database row.
 	 *
-	 * @param array	Database Row
-	 * @param object	\DPL\Parameters Object
-	 * @param object	Mediawiki Title Object
-	 * @param integer	Page Namespace ID
-	 * @param string	Page Title as Selected from Query
+	 * @param array   $row           Database Row
+	 * @param object  $parameters    \DPL\Parameters Object
+	 * @param object  $title         Mediawiki Title Object
+	 * @param integer $pageNamespace Page Namespace ID
+	 * @param string  $pageTitle     Page Title as Selected from Query
 	 *
-	 * @return object	\DPL\Article Object
+	 * @return object \DPL\Article Object
 	 */
 	public static function newFromRow(array $row, Parameters $parameters, Title $title, int $pageNamespace, string $pageTitle) {
 		global $wgLang, $wgContLang;
@@ -333,7 +333,7 @@ class Article {
 						// Count one more page in this heading
 						self::$headings[$row['cl_to']] = (isset(self::$headings[$row['cl_to']]) ? self::$headings[$row['cl_to']] + 1 : 1);
 						if ($row['cl_to'] == '') {
-							// uncategorized page (used if ordermethod=category,...)
+							// Uncategorized page (used if ordermethod=category,...)
 							$article->mParentHLink = '[[:Special:Uncategorizedpages|' . wfMessage('uncategorizedpages') . ']]';
 						} else {
 							$article->mParentHLink = '[[:Category:' . $row['cl_to'] . '|' . str_replace('_', ' ', $row['cl_to']) . ']]';
@@ -341,7 +341,8 @@ class Article {
 						break;
 					case 'user':
 						self::$headings[$row['rev_user_text']] = (isset(self::$headings[$row['rev_user_text']]) ? self::$headings[$row['rev_user_text']] + 1 : 1);
-						if ($row['rev_user'] == 0) { // anonymous user
+						if ($row['rev_user'] == 0) {
+							// Anonymous user.
 							$article->mParentHLink = '[[User:' . $row['rev_user_text'] . '|' . $row['rev_user_text'] . ']]';
 						} else {
 							$article->mParentHLink = '[[User:' . $row['rev_user_text'] . '|' . $row['rev_user_text'] . ']]';

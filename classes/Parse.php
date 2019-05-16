@@ -12,6 +12,8 @@ namespace DPL;
 
 use DPL\Heading\Heading;
 use DPL\Lister\Lister;
+use Parser;
+use Wikimedia\Rdbms\ResultWrapper;
 
 class Parse {
 	/**
@@ -115,15 +117,15 @@ class Parse {
 	/**
 	 * The real callback function for converting the input text to wiki text output
 	 *
-	 * @param string	Raw User Input
-	 * @param object	Mediawiki Parser object.
-	 * @param array	End Reset Booleans
-	 * @param array	End Eliminate Booleans
-	 * @param boolean	[Optional] Called as a parser tag
+	 * @param string  $input       Raw User Input
+	 * @param object  $parser      Mediawiki Parser object.
+	 * @param array   $reset       End Reset Booleans
+	 * @param array   $eliminate   End Eliminate Booleans
+	 * @param boolean $isParserTag [Optional] Called as a parser tag
 	 *
-	 * @return string	Wiki/HTML Output
+	 * @return string Wiki/HTML Output
 	 */
-	public function parse($input, \Parser $parser, &$reset, &$eliminate, $isParserTag = false) {
+	public function parse(string $input, Parser $parser, array &$reset, array &$eliminate, bool $isParserTag = false) {
 		$dplStartTime = microtime(true);
 		$this->parser = $parser;
 
@@ -332,11 +334,11 @@ class Parse {
 	/**
 	 * Process Query Results
 	 *
-	 * @param object	Mediawiki Result Object
+	 * @param ResultWrapper $result Mediawiki Result Object
 	 *
-	 * @return array	Array of Article objects.
+	 * @return array Array of Article objects.
 	 */
-	private function processQueryResults($result) {
+	private function processQueryResults(ResultWrapper $result) {
 		/*******************************/
 		/* Random Count Pick Generator */
 		/*******************************/
@@ -413,11 +415,11 @@ class Parse {
 	/**
 	 * Do basic clean up and structuring of raw user input.
 	 *
-	 * @param string	Raw User Input
+	 * @param string Raw User Input
 	 *
-	 * @return array	Array of raw text parameter => option.
+	 * @return array Array of raw text parameter => option.
 	 */
-	private function prepareUserInput($input) {
+	private function prepareUserInput(string $input) {
 		// We replace double angle brackets with single angle brackets to avoid premature tag expansion in the input.
 		// The ¦ symbol is an alias for |.
 		// The combination '²{' and '}²'will be translated to double curly braces; this allows postponed template execution which is crucial for DPL queries which call other DPL queries.
@@ -474,11 +476,11 @@ class Parse {
 	/**
 	 * Concatenate output
 	 *
-	 * @param string	Output to add
+	 * @param string $output Output to add
 	 *
 	 * @return void
 	 */
-	private function addOutput($output) {
+	private function addOutput(string $output) {
 		$this->output .= $output;
 	}
 
@@ -495,12 +497,12 @@ class Parse {
 	/**
 	 * Return output optionally including header and footer.
 	 *
-	 * @param boolean	[Optional] Total results.
-	 * @param boolean	[Optional] Skip adding the header and footer.
+	 * @param boolean $totalResults     [Optional] Total results.
+	 * @param boolean $skipHeaderFooter [Optional] Skip adding the header and footer.
 	 *
-	 * @return string	Output
+	 * @return string Output
 	 */
-	private function getFullOutput($totalResults = false, $skipHeaderFooter = true) {
+	private function getFullOutput(bool $totalResults = false, bool $skipHeaderFooter = true) {
 		if (!$skipHeaderFooter) {
 			$header = '';
 			$footer = '';
@@ -529,11 +531,11 @@ class Parse {
 	/**
 	 * Set the header text.
 	 *
-	 * @param string	Header Text
+	 * @param string $header Header Text
 	 *
 	 * @return void
 	 */
-	private function setHeader($header) {
+	private function setHeader(string $header) {
 		if (\DynamicPageListHooks::getDebugLevel() == 5) {
 			$header = '<pre><nowiki>' . $header;
 		}
@@ -543,7 +545,7 @@ class Parse {
 	/**
 	 * Set the header text.
 	 *
-	 * @return string	Header Text
+	 * @return string Header Text
 	 */
 	private function getHeader() {
 		return $this->header;
@@ -552,11 +554,11 @@ class Parse {
 	/**
 	 * Set the footer text.
 	 *
-	 * @param string	Footer Text
+	 * @param string $footer Footer Text
 	 *
 	 * @return void
 	 */
-	private function setFooter($footer) {
+	private function setFooter(string $footer) {
 		if (\DynamicPageListHooks::getDebugLevel() == 5) {
 			$footer .= '</nowiki></pre>';
 		}
@@ -566,7 +568,7 @@ class Parse {
 	/**
 	 * Set the footer text.
 	 *
-	 * @return string	Footer Text
+	 * @return string Footer Text
 	 */
 	private function getFooter() {
 		return $this->footer;
@@ -575,12 +577,12 @@ class Parse {
 	/**
 	 * Determine the header/footer type to use based on what output format parameters were chosen and the number of results.
 	 *
-	 * @param string	Page position to check: 'header' or 'footer'.
-	 * @param integer	Count of pages.
+	 * @param string  $position Page position to check: 'header' or 'footer'.
+	 * @param integer $count    Count of pages.
 	 *
-	 * @return mixed	Type to use: 'results', 'oneresult', or 'noresults'.  False if invalid or none should be used.
+	 * @return mixed Type to use: 'results', 'oneresult', or 'noresults'.  False if invalid or none should be used.
 	 */
-	private function getHeaderFooterType($position, $count) {
+	private function getHeaderFooterType(string $position, int $count) {
 		$count = intval($count);
 		if ($position != 'header' && $position != 'footer') {
 			return false;
@@ -601,12 +603,12 @@ class Parse {
 	/**
 	 * Set a variable to be replaced with the provided text later at the end of the output.
 	 *
-	 * @param string	Variable name, will be transformed to uppercase and have leading and trailing percent signs added.
-	 * @param string	Text to replace the variable with.
+	 * @param string $variable    Variable name, will be transformed to uppercase and have leading and trailing percent signs added.
+	 * @param string $replacement Text to replace the variable with.
 	 *
 	 * @return void
 	 */
-	private function setVariable($variable, $replacement) {
+	private function setVariable(string $variable, string $replacement) {
 		$variable = "%" . mb_strtoupper($variable, "UTF-8") . "%";
 		$this->replacementVariables[$variable] = $replacement;
 	}
@@ -614,9 +616,9 @@ class Parse {
 	/**
 	 * Return text with variables replaced.
 	 *
-	 * @param string	Text to perform replacements on.
+	 * @param string $text Text to perform replacements on.
 	 *
-	 * @return string	Replaced Text
+	 * @return string Replaced Text
 	 */
 	private function replaceVariables($text) {
 		$text = self::replaceNewLines($text);
@@ -629,9 +631,9 @@ class Parse {
 	/**
 	 * Return text with custom new line characters replaced.
 	 *
-	 * @param string	Text
+	 * @param string $text Text
 	 *
-	 * @return string	New Lined Text
+	 * @return string New Lined Text
 	 */
 	public static function replaceNewLines($text) {
 		return str_replace(['\n', "¶"], "\n", $text);
@@ -767,12 +769,12 @@ class Parse {
 	/**
 	 * Create keys for TableRow which represent the structure of the "include=" arguments.
 	 *
-	 * @param array	Array of 'tablerow' parameter data.
-	 * @param array	Array of 'include' parameter data.
+	 * @param array $tableRow      Array of 'tablerow' parameter data.
+	 * @param array $sectionLabels Array of 'include' parameter data.
 	 *
-	 * @return array	Updated 'tablerow' parameter.
+	 * @return array Updated 'tablerow' parameter.
 	 */
-	private static function updateTableRowKeys($tableRow, $sectionLabels) {
+	private static function updateTableRowKeys(array $tableRow, array $sectionLabels) {
 		$_tableRow	= (array)$tableRow;
 		$tableRow	= [];
 		$groupNr	= -1;
@@ -804,12 +806,12 @@ class Parse {
 	/**
 	 * Resolve arguments in the input that would normally be in the URL.
 	 *
-	 * @param string	Raw Uncleaned User Input
-	 * @param array	Array of URL arguments to resolve.  Non-arrays will be casted to an array.
+	 * @param string $input     Raw Uncleaned User Input
+	 * @param array  $arguments Array of URL arguments to resolve.  Non-arrays will be casted to an array.
 	 *
-	 * @return string	Raw input with variables replaced
+	 * @return string Raw input with variables replaced
 	 */
-	private function resolveUrlArguments($input, $arguments) {
+	private function resolveUrlArguments(string $input, array $arguments) {
 		$arguments = (array)$arguments;
 		foreach ($arguments as $arg) {
 			$dplArg = $this->wgRequest->getVal($arg, '');
@@ -845,7 +847,7 @@ class Parse {
 	/**
 	 * This function uses the Variables extension to provide navigation aids such as DPL_firstTitle, DPL_lastTitle, or DPL_findTitle.  These variables can be accessed as {{#var:DPL_firstTitle}} if Extension:Variables is installed.
 	 *
-	 * @param array	Array of scroll variables with the key as the variable name and the value as the value.  Non-arrays will be casted to arrays.
+	 * @param array $scrollVariables Array of scroll variables with the key as the variable name and the value as the value.  Non-arrays will be casted to arrays.
 	 *
 	 * @return void
 	 */
@@ -863,17 +865,17 @@ class Parse {
 	/**
 	 * Trigger Resets and Eliminates that run at the end of parsing.
 	 *
-	 * @param string	Full output including header, footer, and any warnings.
-	 * @param array	End Reset Booleans
-	 * @param array	End Eliminate Booleans
-	 * @param boolean	Call as a parser tag
+	 * @param string  $output      Full output including header, footer, and any warnings.
+	 * @param array   $reset       End Reset Booleans
+	 * @param array   $eliminate   End Eliminate Booleans
+	 * @param boolean $isParserTag Call as a parser tag
 	 *
 	 * @return void
 	 */
-	private function triggerEndResets($output, &$reset, &$eliminate, $isParserTag) {
+	private function triggerEndResets(string $output, array &$reset, array &$eliminate, bool $isParserTag) {
 		global $wgHooks;
 
-		$localParser = new \Parser();
+		$localParser = new Parser();
 		$parserOutput = $localParser->parse($output, $this->parser->getTitle(), $this->parser->mOptions);
 
 		if (!is_array($reset)) {
@@ -951,11 +953,11 @@ class Parse {
 	/**
 	 * Sort an array of Article objects by the card suit symbol.
 	 *
-	 * @param array	Article objects in an array.
+	 * @param array $articles Article objects in an array.
 	 *
-	 * @return array	Sorted objects
+	 * @return array Sorted objects
 	 */
-	private function cardSuitSort($articles) {
+	private function cardSuitSort(array $articles) {
 		$sortKeys = [];
 		foreach ($articles as $key => $article) {
 			$title  = preg_replace('/.*:/', '', $article->getTitle()->getPrefixedText());

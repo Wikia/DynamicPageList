@@ -39,7 +39,7 @@ class LST {
 	 * @param $parser Parser
 	 * @param $part1
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public static function open($parser, $part1) {
 		// Infinite loop test
@@ -58,7 +58,7 @@ class LST {
 	 * @param $parser Parser
 	 * @param $part1
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public static function close($parser, $part1) {
 		// Infinite loop test
