@@ -24,13 +24,13 @@ class CategoryList extends Lister {
 	/**
 	 * Format the list of articles.
 	 *
-	 * @param array	List of \DPL\Article
-	 * @param integer	Start position of the array to process.
-	 * @param integer	Total objects from the array to process.
+	 * @param array   $articles List of \DPL\Article
+	 * @param integer $start    Start position of the array to process.
+	 * @param integer $count    Total objects from the array to process.
 	 *
-	 * @return string	Formatted list.
+	 * @return string Formatted list.
 	 */
-	public function formatList($articles, $start, $count) {
+	public function formatList(array $articles, int $start, int $count) {
 		$filteredCount = 0;
 		for ($i = $start; $i < $start + $count; $i++) {
 			$articleLinks[] = $articles[$i]->mLink;
@@ -52,12 +52,12 @@ class CategoryList extends Lister {
 	/**
 	 * Format a single item.
 	 *
-	 * @param object	DPL\Article
-	 * @param string	[Optional] Page text to include.
+	 * @param object $article  DPL\Article
+	 * @param string $pageText [Optional] Page text to include.
 	 *
-	 * @return string	Item HTML
+	 * @return string Item HTML
 	 */
-	public function formatItem(Article $article, $pageText = null) {
+	public function formatItem(Article $article, string $pageText = '') {
 		return '';
 	}
 }

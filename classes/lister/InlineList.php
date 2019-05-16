@@ -10,6 +10,9 @@
 
 namespace DPL\Lister;
 
+use DPL\Parameters;
+use Parser;
+
 class InlineList extends Lister {
 	/**
 	 * Listing style for this class.
@@ -70,12 +73,12 @@ class InlineList extends Lister {
 	/**
 	 * Main Constructor
 	 *
-	 * @param object	\DPL\Parameters
-	 * @param object	MediaWiki \Parser
+	 * @param object $parameters \DPL\Parameters
+	 * @param object $parser     MediaWiki \Parser
 	 *
 	 * @return void
 	 */
-	public function __construct(\DPL\Parameters $parameters, \Parser $parser) {
+	public function __construct(Parameters $parameters, Parser $parser) {
 		parent::__construct($parameters, $parser);
 		$this->textSeparator = $parameters->getParameter('inlinetext');
 	}
@@ -83,11 +86,11 @@ class InlineList extends Lister {
 	/**
 	 * Join together items after being processed by formatItem().
 	 *
-	 * @param array	Items as formatted by formatItem().
+	 * @param array $items Items as formatted by formatItem().
 	 *
-	 * @return string	Imploded items.
+	 * @return string Imploded items.
 	 */
-	protected function implodeItems($items) {
+	protected function implodeItems(array $items) {
 		return implode($this->textSeparator, $items);
 	}
 }

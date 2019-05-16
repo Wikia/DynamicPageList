@@ -47,15 +47,15 @@ class SubPageList extends UnorderedList {
 	public $itemEnd = '</li>';
 
 	/**
-	 * Format a list of articles into a singular list.
+	 * Format the list of articles.
 	 *
-	 * @param array	List of \DPL\Article
-	 * @param integer	Start position of the array to process.
-	 * @param integer	Total objects from the array to process.
+	 * @param array   $articles List of \DPL\Article
+	 * @param integer $start    Start position of the array to process.
+	 * @param integer $count    Total objects from the array to process.
 	 *
-	 * @return string	Formatted list.
+	 * @return string Formatted list.
 	 */
-	public function formatList($articles, $start, $count) {
+	public function formatList(array $articles, int $start, int $count) {
 		$filteredCount = 0;
 		$items = [];
 		for ($i = $start; $i < $start + $count; $i++) {
@@ -84,13 +84,13 @@ class SubPageList extends UnorderedList {
 	/**
 	 * Nest items down to the proper level.
 	 *
-	 * @param array	Part levels to nest down to.
-	 * @param array	Items holder to nest the item into.
-	 * @param string	Formatted Item
+	 * @param array  $parts Part levels to nest down to.
+	 * @param array  $items Items holder to nest the item into.
+	 * @param string $item  Formatted Item
 	 *
 	 * @return array	Nest Items
 	 */
-	private function nestItem(&$parts, $items, $item) {
+	private function nestItem(array &$parts, array $items, string $item) {
 		$firstPart = reset($parts);
 		if (count($parts) > 1) {
 			array_shift($parts);
@@ -108,11 +108,11 @@ class SubPageList extends UnorderedList {
 	/**
 	 * Join together items after being processed by formatItem().
 	 *
-	 * @param array	Items as formatted by formatItem().
+	 * @param array $items Items as formatted by formatItem().
 	 *
-	 * @return string	Imploded items.
+	 * @return string Imploded items.
 	 */
-	protected function implodeItems($items) {
+	protected function implodeItems(array $items) {
 		$list = '';
 		foreach ($items as $key => $item) {
 			if (is_string($item)) {

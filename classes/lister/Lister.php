@@ -12,7 +12,9 @@ namespace DPL\Lister;
 
 use DPL\Article;
 use DPL\LST;
+use DPL\Parameters;
 use DPL\UpdateArticle;
+use Parser;
 
 class Lister {
 	const LIST_DEFINITION = 1;
@@ -241,12 +243,12 @@ class Lister {
 	/**
 	 * Main Constructor
 	 *
-	 * @param object	\DPL\Parameters
-	 * @param object	MediaWiki \Parser
+	 * @param object $parameters \DPL\Parameters
+	 * @param object $parser     MediaWiki \Parser
 	 *
 	 * @return void
 	 */
-	public function __construct(\DPL\Parameters $parameters, \Parser $parser) {
+	public function __construct(Parameters $parameters, Parser $parser) {
 		$this->setHeadListAttributes($parameters->getParameter('hlistattr'));
 		$this->setHeadItemAttributes($parameters->getParameter('hitemattr'));
 		$this->setListAttributes($parameters->getParameter('listattr'));
@@ -272,13 +274,13 @@ class Lister {
 	/**
 	 * Get a new List subclass based on user selection.
 	 *
-	 * @param string	List style.
-	 * @param object	\DPL\Parameters
-	 * @param object	MediaWiki \Parser
+	 * @param string $style      List style.
+	 * @param object $parameters \DPL\Parameters
+	 * @param object $parser     MediaWiki \Parser
 	 *
-	 * @return object	Lister subclass.
+	 * @return object Lister subclass.
 	 */
-	public static function newFromStyle($style, \DPL\Parameters $parameters, \Parser $parser) {
+	public static function newFromStyle(string $style, Parameters $parameters, Parser $parser) {
 		$style = strtolower($style);
 		switch ($style) {
 			case 'category':
@@ -324,62 +326,62 @@ class Lister {
 	/**
 	 * Set extra list attributes for header wraps.
 	 *
-	 * @param string	Tag soup attributes, example: this="that" thing="no"
+	 * @param string $attributes Tag soup attributes, example: this="that" thing="no"
 	 *
 	 * @return void
 	 */
-	public function setHeadListAttributes($attributes) {
+	public function setHeadListAttributes(string $attributes) {
 		$this->headListAttributes = \Sanitizer::fixTagAttributes($attributes, 'ul');
 	}
 
 	/**
 	 * Set extra item attributes for header items.
 	 *
-	 * @param string	Tag soup attributes, example: this="that" thing="no"
+	 * @param string $attributes Tag soup attributes, example: this="that" thing="no"
 	 *
 	 * @return void
 	 */
-	public function setHeadItemAttributes($attributes) {
+	public function setHeadItemAttributes(string $attributes) {
 		$this->headItemAttributes = \Sanitizer::fixTagAttributes($attributes, 'li');
 	}
 
 	/**
 	 * Set extra list attributes.
 	 *
-	 * @param string	Tag soup attributes, example: this="that" thing="no"
+	 * @param string $attributes Tag soup attributes, example: this="that" thing="no"
 	 *
 	 * @return void
 	 */
-	public function setListAttributes($attributes) {
+	public function setListAttributes(string $attributes) {
 		$this->listAttributes = \Sanitizer::fixTagAttributes($attributes, 'ul');
 	}
 
 	/**
 	 * Set extra item attributes.
 	 *
-	 * @param string	Tag soup attributes, example: this="that" thing="no"
+	 * @param string $attributes Tag soup attributes, example: this="that" thing="no"
 	 *
 	 * @return void
 	 */
-	public function setItemAttributes($attributes) {
+	public function setItemAttributes(string $attributes) {
 		$this->itemAttributes = \Sanitizer::fixTagAttributes($attributes, 'li');
 	}
 
 	/**
 	 * Set the count of items to trigger a section as dominant.
 	 *
-	 * @param integer	Count
+	 * @param integer $count Count
 	 *
 	 * @return void
 	 */
-	public function setDominantSectionCount($count = -1) {
+	public function setDominantSectionCount(int $count = -1) {
 		$this->dominantSectionCount = intval($count);
 	}
 
 	/**
 	 * Get the count of items to trigger a section as dominant.
 	 *
-	 * @return integer	Count
+	 * @return integer Count
 	 */
 	public function getDominantSectionCount() {
 		return $this->dominantSectionCount;
@@ -388,7 +390,7 @@ class Lister {
 	/**
 	 * Return the list style.
 	 *
-	 * @return integer	List style constant.
+	 * @return integer List style constant.
 	 */
 	public function getStyle() {
 		return $this->style;
@@ -397,11 +399,11 @@ class Lister {
 	/**
 	 * Set the template suffix for whatever the hell uses it.
 	 *
-	 * @param string	Template Suffix
+	 * @param string $suffix Template Suffix
 	 *
 	 * @return void
 	 */
-	public function setTemplateSuffix($suffix = '.default') {
+	public function setTemplateSuffix(string $suffix = '.default') {
 		$this->templateSuffix = $suffix;
 	}
 
@@ -417,18 +419,18 @@ class Lister {
 	/**
 	 * Set if included wiki text should be trimmed.
 	 *
-	 * @param boolean	[Optional] Trim
+	 * @param boolean $trim [Optional] Trim
 	 *
 	 * @return void
 	 */
-	public function setTrimIncluded($trim = false) {
+	public function setTrimIncluded(bool $trim = false) {
 		$this->trimIncluded = boolval($trim);
 	}
 
 	/**
 	 * Get if included wiki text should be trimmed.
 	 *
-	 * @return boolean	Trim
+	 * @return boolean Trim
 	 */
 	public function getTrimIncluded() {
 		return $this->trimIncluded;
@@ -439,18 +441,18 @@ class Lister {
 	 *
 	 * @todo The naming of this parameter is weird and I am not sure what it does.
 	 *
-	 * @param boolean	[Optional] Escape
+	 * @param boolean $escape [Optional] Escape
 	 *
 	 * @return void
 	 */
-	public function setEscapeLinks($escape = true) {
+	public function setEscapeLinks(bool $escape = true) {
 		$this->escapeLinks = boolval($escape);
 	}
 
 	/**
 	 * Get if links should be escaped.
 	 *
-	 * @return boolean	Escape
+	 * @return boolean Escape
 	 */
 	public function getEscapeLinks() {
 		return $this->escapeLinks;
@@ -459,7 +461,7 @@ class Lister {
 	/**
 	 * Set the index of the table column to sort by.
 	 *
-	 * @param mixed	[Optional] Integer index or null to disable.
+	 * @param mixed	$index [Optional] Integer index or null to disable.
 	 *
 	 * @return void
 	 */
@@ -470,7 +472,7 @@ class Lister {
 	/**
 	 * Get the index of the table column to sort by.
 	 *
-	 * @return mixed	Integer index or null to disable.
+	 * @return mixed Integer index or null to disable.
 	 */
 	public function getTableSortColumn() {
 		return $this->tableSortColumn;
@@ -479,7 +481,7 @@ class Lister {
 	/**
 	 * Set the maximum title length for display.
 	 *
-	 * @param mixed	[Optional] Integer length or null to disable.
+	 * @param mixed $length [Optional] Integer length or null to disable.
 	 *
 	 * @return void
 	 */
@@ -499,7 +501,7 @@ class Lister {
 	/**
 	 * Set the separators that separate sections of matched page text.
 	 *
-	 * @param array	[Optional] Array of section separators.
+	 * @param array	$separators [Optional] Array of section separators.
 	 *
 	 * @return void
 	 */
@@ -510,7 +512,7 @@ class Lister {
 	/**
 	 * Set the separators that separate related sections of matched page text.
 	 *
-	 * @param array	[Optional] Array of section separators.
+	 * @param array	$separators [Optional] Array of section separators.
 	 *
 	 * @return void
 	 */
@@ -521,7 +523,7 @@ class Lister {
 	/**
 	 * Set if wiki text should be included in output.
 	 *
-	 * @param boolean	[Optional] Parse
+	 * @param boolean $include [Optional] Parse
 	 *
 	 * @return void
 	 */
@@ -532,7 +534,7 @@ class Lister {
 	/**
 	 * Set the maximum included page text length before truncating.
 	 *
-	 * @param mixed	[Optional] Integer length or null to disable.
+	 * @param mixed	$length [Optional] Integer length or null to disable.
 	 *
 	 * @return void
 	 */
@@ -543,7 +545,7 @@ class Lister {
 	/**
 	 * Set the plain string text matching for page transclusion.
 	 *
-	 * @param array	[Optional] Array of plain string matches.
+	 * @param array	$pageTextMatch [Optional] Array of plain string matches.
 	 *
 	 * @return void
 	 */
@@ -554,7 +556,7 @@ class Lister {
 	/**
 	 * Set the regex text matching for page transclusion.
 	 *
-	 * @param array	[Optional] Array of regexes.
+	 * @param array	$pageTextMatchRegex [Optional] Array of regexes.
 	 *
 	 * @return void
 	 */
@@ -565,7 +567,7 @@ class Lister {
 	/**
 	 * Set the not regex text matching for page transclusion.
 	 *
-	 * @param array	[Optional] Array of regexes.
+	 * @param array	$pageTextMatchNotRegex [Optional] Array of regexes.
 	 *
 	 * @return void
 	 */
@@ -576,7 +578,7 @@ class Lister {
 	/**
 	 * Set if included wiki text should be parsed before being matched against.
 	 *
-	 * @param boolean	[Optional] Parse
+	 * @param boolean $parse [Optional] Parse
 	 *
 	 * @return void
 	 */
@@ -587,22 +589,22 @@ class Lister {
 	/**
 	 * Shortcut to format all articles into a single formatted list.
 	 *
-	 * @param array	List of \DPL\Article
+	 * @param array	$articles List of \DPL\Article
 	 *
-	 * @return string	Formatted list.
+	 * @return string Formatted list.
 	 */
 	public function format(array $articles) {
 		return $this->formatList($articles, 0, count($articles));
 	}
 
 	/**
-	 * Format a list of articles into a singular list.
+	 * Format the list of articles.
 	 *
-	 * @param array	List of \DPL\Article
-	 * @param integer	Start position of the array to process.
-	 * @param integer	Total objects from the array to process.
+	 * @param array   $articles List of \DPL\Article
+	 * @param integer $start    Start position of the array to process.
+	 * @param integer $count    Total objects from the array to process.
 	 *
-	 * @return string	Formatted list.
+	 * @return string Formatted list.
 	 */
 	public function formatList(array $articles, int $start, int $count) {
 		$filteredCount = 0;
@@ -633,10 +635,10 @@ class Lister {
 	/**
 	 * Format a single item.
 	 *
-	 * @param object	DPL\Article
-	 * @param string	[Optional] Page text to include.
+	 * @param object $article  DPL\Article
+	 * @param string $pageText [Optional] Page text to include.
 	 *
-	 * @return string	Item HTML
+	 * @return string Item HTML
 	 */
 	public function formatItem(Article $article, string $pageText = '') {
 		global $wgContLang, $wgLang;
@@ -698,7 +700,7 @@ class Lister {
 	/**
 	 * Return $this->headListStart with attributes replaced.
 	 *
-	 * @return string	Head List Start
+	 * @return string Head List Start
 	 */
 	public function getHeadListStart() {
 		return sprintf($this->headListStart, $this->headListAttributes);
@@ -707,7 +709,7 @@ class Lister {
 	/**
 	 * Return $this->headItemStart with attributes replaced.
 	 *
-	 * @return string	Head Item Start
+	 * @return string Head Item Start
 	 */
 	public function getHeadItemStart() {
 		return sprintf($this->headItemStart, $this->headItemAttributes);
@@ -716,7 +718,7 @@ class Lister {
 	/**
 	 * Return $this->headItemStart with attributes replaced.
 	 *
-	 * @return string	Head Item End
+	 * @return string Head Item End
 	 */
 	public function getHeadItemEnd() {
 		return $this->headItemEnd;
@@ -725,7 +727,7 @@ class Lister {
 	/**
 	 * Return $this->listStart with attributes replaced.
 	 *
-	 * @return string	List Start
+	 * @return string List Start
 	 */
 	public function getListStart() {
 		return sprintf($this->listStart, $this->listAttributes);
@@ -734,7 +736,7 @@ class Lister {
 	/**
 	 * Return $this->itemStart with attributes replaced.
 	 *
-	 * @return string	Item Start
+	 * @return string Item Start
 	 */
 	public function getItemStart() {
 		return sprintf($this->itemStart, $this->itemAttributes);
@@ -743,7 +745,7 @@ class Lister {
 	/**
 	 * Return $this->itemEnd with attributes replaced.
 	 *
-	 * @return string	Item End
+	 * @return string Item End
 	 */
 	public function getItemEnd() {
 		return $this->itemEnd;
@@ -752,9 +754,9 @@ class Lister {
 	/**
 	 * Join together items after being processed by formatItem().
 	 *
-	 * @param array	Items as formatted by formatItem().
+	 * @param array $items Items as formatted by formatItem().
 	 *
-	 * @return string	Imploded items.
+	 * @return string Imploded items.
 	 */
 	protected function implodeItems(array $items) {
 		return implode('', $items);
@@ -763,10 +765,10 @@ class Lister {
 	/**
 	 * Replace user tag parameters.
 	 *
-	 * @param string	Text to perform replacements on.
-	 * @param object	\DPL\Article
+	 * @param string $tag     Text to perform replacements on.
+	 * @param object $article \DPL\Article
 	 *
-	 * @return string	Text with replacements performed.
+	 * @return string Text with replacements performed.
 	 */
 	protected function replaceTagParameters(string $tag, Article $article) {
 		global $wgContLang;
@@ -832,12 +834,12 @@ class Lister {
 	/**
 	 * Replace user tag parameters for categories.
 	 *
-	 * @param string	Text to perform replacements on.
-	 * @param object	\DPL\Article
+	 * @param string $tag     Text to perform replacements on.
+	 * @param object $article \DPL\Article
 	 *
-	 * @return string	Text with replacements performed.
+	 * @return string Text with replacements performed.
 	 */
-	protected function replaceTagCategory($tag, Article $article) {
+	protected function replaceTagCategory(string $tag, Article $article) {
 		if (!empty($article->mCategoryLinks)) {
 			$tag = str_replace('%CATLIST%', implode(', ', $article->mCategoryLinks), $tag);
 			$tag = str_replace('%CATBULLETS%', '* ' . implode("\n* ", $article->mCategoryLinks), $tag);
@@ -854,29 +856,27 @@ class Lister {
 	/**
 	 * Replace the %NR%(current article sequence number) in text.
 	 *
-	 * @param string	Text to perform replacements on.
-	 * @param integer	The current article sequence number (starting from 1).
+	 * @param string  $tag Text to perform replacements on.
+	 * @param integer $nr  The current article sequence number (starting from 1).
 	 *
-	 * @return string	Text with replacements performed.
+	 * @return string Text with replacements performed.
 	 */
-	protected function replaceTagCount($tag, $nr) {
+	protected function replaceTagCount(string $tag, int $nr) {
 		return str_replace('%NR%', $nr, $tag);
 	}
-
-	//
 
 	/**
 	 * Format one single item of an entry in the output list (i.e. one occurence of one item from the include parameter).
 	 *
 	 * @todo I am not exactly sure how this function differs from replaceTagParameters().  It has something to do with table row formatting.  --Alexia
 	 *
-	 * @param array	String pieces to perform replacements on.
-	 * @param mixed	Index of the table row position.
-	 * @param object	\DPL\Article
+	 * @param array  &$pieces String pieces to perform replacements on.
+	 * @param mixed  $s       Index of the table row position.
+	 * @param object $article \DPL\Article
 	 *
 	 * @return void
 	 */
-	private function replaceTagTableRow(&$pieces, $s, Article $article) {
+	private function replaceTagTableRow(array &$pieces, $s, Article $article) {
 		$tableFormat = $this->getParameters()->getParameter('tablerow');
 		$firstCall = true;
 		foreach ($pieces as $key => $val) {
@@ -905,16 +905,16 @@ class Lister {
 	 *
 	 * @todo Again, another poorly documented function with vague functionality.  --Alexia
 	 *
-	 * @param string	Argument to parse and replace.
-	 * @param mixed	Index of the table row position.
-	 * @param mixed	Other part of the index of the table row position?
-	 * @param boolean	Is this the first time this function was called in this context?
-	 * @param integer	Maximum text length allowed.
-	 * @param object	\DPL\Article
+	 * @param string  $arg       Argument to parse and replace.
+	 * @param mixed   $s         Index of the table row position.
+	 * @param mixed   $argNr     Other part of the index of the table row position?
+	 * @param boolean $firstCall Is this the first time this function was called in this context?
+	 * @param integer $maxLength Maximum text length allowed.
+	 * @param object  $article   \DPL\Article
 	 *
-	 * @return strig	Formatted text.
+	 * @return string Formatted text.
 	 */
-	public function formatTemplateArg($arg, $s, $argNr, $firstCall, $maxLength, Article $article) {
+	public function formatTemplateArg(string $arg, $s, $argNr, bool $firstCall, int $maxLength, Article $article) {
 		$tableFormat = $this->getParameters()->getParameter('tablerow');
 		// we could try to format fields differently within the first call of a template
 		// currently we do not make such a difference
@@ -972,7 +972,7 @@ class Lister {
 	 *
 	 * @param mixed	\DPL\Article or string image name of the image (may start with Image: or File:).
 	 *
-	 * @return string	Image URL
+	 * @return string Image URL
 	 */
 	protected function parseImageUrlWithPath($article) {
 		$imageUrl = '';
@@ -1008,7 +1008,7 @@ class Lister {
 	 * @param object	\DPL\Article
 	 * @param integer	Filtered Article Count
 	 *
-	 * @return string	Page Text
+	 * @return string Page Text
 	 */
 	public function transcludePage(Article $article, &$filteredCount) {
 		$matchFailed = false;
@@ -1248,7 +1248,7 @@ class Lister {
 	 * @param string	Text to prepend.
 	 * @param string	Text to append.
 	 *
-	 * @return string	Wrapped text.
+	 * @return string Wrapped text.
 	 */
 	protected function joinSectionTagPieces($piece, $start, $end) {
 		return $start . $piece . $end;

@@ -49,14 +49,14 @@ class GalleryList extends Lister {
 	public $itemEnd = "|";
 
 	/**
-	 * Format an item.
+	 * Format a single item.
 	 *
-	 * @param object	DPL\Article
-	 * @param string	[Optional] Page text to include.
+	 * @param object $article  DPL\Article
+	 * @param string $pageText [Optional] Page text to include.
 	 *
-	 * @return string	Item HTML
+	 * @return string Item HTML
 	 */
-	public function formatItem(Article $article, $pageText = null) {
+	public function formatItem(Article $article, string $pageText = '') {
 		$item = $article->getTitle()->getPrefixedText();
 
 		if ($pageText !== null) {

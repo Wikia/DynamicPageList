@@ -187,12 +187,12 @@ class Heading {
 	/**
 	 * Format a list of articles into all lists with headings as needed.
 	 *
-	 * @param array	List of \DPL\Article
-	 * @param object	List of \DPL\Lister\Lister
+	 * @param array  $articles List of \DPL\Article
+	 * @param object $lister   List of \DPL\Lister\Lister
 	 *
-	 * @return string	Formatted list.
+	 * @return string Formatted list.
 	 */
-	public function format($articles, Lister $lister) {
+	public function format(array $articles, Lister $lister) {
 		$columns = $this->getParameters()->getParameter('columns');
 		$rows = $this->getParameters()->getParameter('rows');
 		$rowSize = $this->getParameters()->getParameter('rowsize');
@@ -340,15 +340,15 @@ class Heading {
 	/**
 	 * Format a heading group.
 	 *
-	 * @param integer	Article start index for this heading.
-	 * @param integer	Article count for this heading.
-	 * @param string	Heading link/text display.
-	 * @param array	List of \DPL\Article.
-	 * @param object	List of \DPL\Lister\Lister
+	 * @param integer $headingStart Article start index for this heading.
+	 * @param integer $headingCount Article count for this heading.
+	 * @param string  $headingLink  Heading link/text display.
+	 * @param array   $article      List of \DPL\Article.
+	 * @param object  $lister       List of \DPL\Lister\Lister
 	 *
 	 * @return string	Heading HTML
 	 */
-	public function formatItem($headingStart, $headingCount, $headingLink, $articles, Lister $lister) {
+	public function formatItem(int $headingStart, int $headingCount, string $headingLink, array $articles, Lister $lister) {
 		$item = '';
 
 		$item .= $this->getItemStart() . $headingLink;

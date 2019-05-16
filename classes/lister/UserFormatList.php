@@ -11,6 +11,8 @@
 namespace DPL\Lister;
 
 use DPL\Article;
+use DPL\Parameters;
+use Parser;
 
 class UserFormatList extends Lister {
 	/**
@@ -30,12 +32,12 @@ class UserFormatList extends Lister {
 	/**
 	 * Main Constructor
 	 *
-	 * @param object	\DPL\Parameters
-	 * @param object	MediaWiki \Parser
+	 * @param object $parameters \DPL\Parameters
+	 * @param object $parser     MediaWiki \Parser
 	 *
 	 * @return void
 	 */
-	public function __construct(\DPL\Parameters $parameters, \Parser $parser) {
+	public function __construct(Parameters $parameters, Parser $parser) {
 		parent::__construct($parameters, $parser);
 		$this->textSeparator = $parameters->getParameter('inlinetext');
 		$listSeparators = $parameters->getParameter('listseparators');
@@ -56,13 +58,13 @@ class UserFormatList extends Lister {
 	/**
 	 * Format the list of articles.
 	 *
-	 * @param array	List of \DPL\Article
-	 * @param integer	Start position of the array to process.
-	 * @param integer	Total objects from the array to process.
+	 * @param array   $articles List of \DPL\Article
+	 * @param integer $start    Start position of the array to process.
+	 * @param integer $count    Total objects from the array to process.
 	 *
-	 * @return string	Formatted list.
+	 * @return string Formatted list.
 	 */
-	public function formatList($articles, $start, $count) {
+	public function formatList(array $articles, int $start, int $count) {
 		$filteredCount = 0;
 		$items = [];
 		for ($i = $start; $i < $start + $count; $i++) {
@@ -132,12 +134,12 @@ class UserFormatList extends Lister {
 	/**
 	 * Format a single item.
 	 *
-	 * @param object	DPL\Article
-	 * @param string	[Optional] Page text to include.
+	 * @param object $article  DPL\Article
+	 * @param string $pageText [Optional] Page text to include.
 	 *
-	 * @return string	Item HTML
+	 * @return string Item HTML
 	 */
-	public function formatItem(Article $article, $pageText = null) {
+	public function formatItem(Article $article, string $pageText = '') {
 		$item = '';
 
 		if ($pageText !== null) {
@@ -155,7 +157,7 @@ class UserFormatList extends Lister {
 	/**
 	 * Return $this->itemStart with attributes replaced.
 	 *
-	 * @return string	Item Start
+	 * @return string Item Start
 	 */
 	public function getItemStart() {
 		return $this->replaceTagCount($this->itemStart, $this->getRowCount());
@@ -164,7 +166,7 @@ class UserFormatList extends Lister {
 	/**
 	 * Return $this->itemEnd with attributes replaced.
 	 *
-	 * @return string	Item End
+	 * @return string Item End
 	 */
 	public function getItemEnd() {
 		return $this->replaceTagCount($this->itemEnd, $this->getRowCount());
@@ -173,11 +175,11 @@ class UserFormatList extends Lister {
 	/**
 	 * Join together items after being processed by formatItem().
 	 *
-	 * @param array	Items as formatted by formatItem().
+	 * @param array $items Items as formatted by formatItem().
 	 *
-	 * @return string	Imploded items.
+	 * @return string Imploded items.
 	 */
-	protected function implodeItems($items) {
+	protected function implodeItems(array $items) {
 		return implode($this->textSeparator, $items);
 	}
 }

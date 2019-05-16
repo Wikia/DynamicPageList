@@ -42,13 +42,13 @@ class OrderedList extends UnorderedList {
 	/**
 	 * Format the list of articles.
 	 *
-	 * @param array	List of \DPL\Article
-	 * @param integer	Start position of the array to process.
-	 * @param integer	Total objects from the array to process.
+	 * @param array   $articles List of \DPL\Article
+	 * @param integer $start    Start position of the array to process.
+	 * @param integer $count    Total objects from the array to process.
 	 *
-	 * @return string	Formatted list.
+	 * @return string Formatted list.
 	 */
-	public function formatList($articles, $start, $count) {
+	public function formatList(array $articles, int $start, int $count) {
 		$this->offsetCount = $count;
 		return parent::formatList($articles, $start, $count);
 	}
