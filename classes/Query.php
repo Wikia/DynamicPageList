@@ -1000,11 +1000,15 @@ class Query {
 	/**
 	 * Set SQL for 'notcategory' parameter.
 	 *
-	 * @param mixed $option Parameter Option
+	 * @param array $option Parameter Option
 	 *
 	 * @return void
 	 */
-	private function _notcategory($option) {
+	private function _notcategory(array $option) {
+		if (!count($option)) {
+			return;
+		}
+
 		$i = 0;
 		foreach ($option as $operatorType => $categories) {
 			foreach ($categories as $category) {
@@ -1121,11 +1125,15 @@ class Query {
 	/**
 	 * Set SQL for 'imagecontainer' parameter.
 	 *
-	 * @param mixed $option Parameter Option
+	 * @param array $option Parameter Option
 	 *
 	 * @return void
 	 */
-	private function _imagecontainer($option) {
+	private function _imagecontainer(array $option) {
+		if (!count($option)) {
+			return;
+		}
+
 		$this->addTable('imagelinks', 'ic');
 		$this->addSelect(
 			[
@@ -1155,11 +1163,15 @@ class Query {
 	/**
 	 * Set SQL for 'imageused' parameter.
 	 *
-	 * @param mixed $option Parameter Option
+	 * @param array $option Parameter Option
 	 *
 	 * @return void
 	 */
-	private function _imageused($option) {
+	private function _imageused(array $option) {
+		if (!count($option)) {
+			return;
+		}
+
 		if ($this->parameters->getParameter('distinct') == 'strict') {
 			$this->addGroupBy('page_title');
 		}
@@ -1223,11 +1235,15 @@ class Query {
 	/**
 	 * Set SQL for 'linksfrom' parameter.
 	 *
-	 * @param mixed $option Parameter Option
+	 * @param array $option Parameter Option
 	 *
 	 * @return void
 	 */
-	private function _linksfrom($option) {
+	private function _linksfrom(array $option) {
+		if (!count($option)) {
+			return;
+		}
+
 		if ($this->parameters->getParameter('distinct') == 'strict') {
 			$this->addGroupBy('page_title');
 		}
@@ -1267,71 +1283,78 @@ class Query {
 	/**
 	 * Set SQL for 'linksto' parameter.
 	 *
-	 * @param mixed $option Parameter Option
+	 * @param array $option Parameter Option
 	 *
 	 * @return void
 	 */
-	private function _linksto($option) {
+	private function _linksto(array $option) {
+		if (!count($option)) {
+			return;
+		}
+
 		if ($this->parameters->getParameter('distinct') == 'strict') {
 			$this->addGroupBy('page_title');
 		}
-		if (count($option) > 0) {
-			$this->addTable('pagelinks', 'pl');
-			$this->addSelect(['sel_title' => 'pl.pl_title', 'sel_ns' => 'pl.pl_namespace']);
-			foreach ($option as $index => $linkGroup) {
-				if ($index == 0) {
-					$where = $this->tableNames['page'] . '.page_id=pl.pl_from AND ';
-					$ors = [];
-					foreach ($linkGroup as $link) {
-						$_or = '(pl.pl_namespace=' . intval($link->getNamespace());
-						if (strpos($link->getDbKey(), '%') >= 0) {
-							$operator = 'LIKE';
-						} else {
-							$operator = '=';
-						}
-						if ($this->parameters->getParameter('ignorecase')) {
-							$_or .= ' AND LOWER(CAST(pl.pl_title AS char)) ' . $operator . ' LOWER(' . $this->DB->addQuotes($link->getDbKey()) . ')';
-						} else {
-							$_or .= ' AND pl.pl_title ' . $operator . ' ' . $this->DB->addQuotes($link->getDbKey());
-						}
-						$_or .= ')';
-						$ors[] = $_or;
+
+		$this->addTable('pagelinks', 'pl');
+		$this->addSelect(['sel_title' => 'pl.pl_title', 'sel_ns' => 'pl.pl_namespace']);
+		foreach ($option as $index => $linkGroup) {
+			if ($index == 0) {
+				$where = $this->tableNames['page'] . '.page_id=pl.pl_from AND ';
+				$ors = [];
+				foreach ($linkGroup as $link) {
+					$_or = '(pl.pl_namespace=' . intval($link->getNamespace());
+					if (strpos($link->getDbKey(), '%') >= 0) {
+						$operator = 'LIKE';
+					} else {
+						$operator = '=';
 					}
-					$where .= '(' . implode(' OR ', $ors) . ')';
-				} else {
-					$where = 'EXISTS(select pl_from FROM ' . $this->tableNames['pagelinks'] . ' WHERE (' . $this->tableNames['pagelinks'] . '.pl_from=page_id AND ';
-					$ors = [];
-					foreach ($linkGroup as $link) {
-						$_or = '(' . $this->tableNames['pagelinks'] . '.pl_namespace=' . intval($link->getNamespace());
-						if (strpos($link->getDbKey(), '%') >= 0) {
-							$operator = 'LIKE';
-						} else {
-							$operator = '=';
-						}
-						if ($this->parameters->getParameter('ignorecase')) {
-							$_or .= ' AND LOWER(CAST(' . $this->tableNames['pagelinks'] . '.pl_title AS char)) ' . $operator . ' LOWER(' . $this->DB->addQuotes($link->getDbKey()) . ')';
-						} else {
-							$_or .= ' AND ' . $this->tableNames['pagelinks'] . '.pl_title ' . $operator . ' ' . $this->DB->addQuotes($link->getDbKey());
-						}
-						$_or .= ')';
-						$ors[] = $_or;
+					if ($this->parameters->getParameter('ignorecase')) {
+						$_or .= ' AND LOWER(CAST(pl.pl_title AS char)) ' . $operator . ' LOWER(' . $this->DB->addQuotes($link->getDbKey()) . ')';
+					} else {
+						$_or .= ' AND pl.pl_title ' . $operator . ' ' . $this->DB->addQuotes($link->getDbKey());
 					}
-					$where .= '(' . implode(' OR ', $ors) . ')';
-					$where .= '))';
+					$_or .= ')';
+					$ors[] = $_or;
 				}
-				$this->addWhere($where);
+				$where .= '(' . implode(' OR ', $ors) . ')';
+			} else {
+				$where = 'EXISTS(select pl_from FROM ' . $this->tableNames['pagelinks'] . ' WHERE (' . $this->tableNames['pagelinks'] . '.pl_from=page_id AND ';
+				$ors = [];
+				foreach ($linkGroup as $link) {
+					$_or = '(' . $this->tableNames['pagelinks'] . '.pl_namespace=' . intval($link->getNamespace());
+					if (strpos($link->getDbKey(), '%') >= 0) {
+						$operator = 'LIKE';
+					} else {
+						$operator = '=';
+					}
+					if ($this->parameters->getParameter('ignorecase')) {
+						$_or .= ' AND LOWER(CAST(' . $this->tableNames['pagelinks'] . '.pl_title AS char)) ' . $operator . ' LOWER(' . $this->DB->addQuotes($link->getDbKey()) . ')';
+					} else {
+						$_or .= ' AND ' . $this->tableNames['pagelinks'] . '.pl_title ' . $operator . ' ' . $this->DB->addQuotes($link->getDbKey());
+					}
+					$_or .= ')';
+					$ors[] = $_or;
+				}
+				$where .= '(' . implode(' OR ', $ors) . ')';
+				$where .= '))';
 			}
+			$this->addWhere($where);
 		}
 	}
 
 	/**
 	 * Set SQL for 'notlinksfrom' parameter.
 	 *
-	 * @param mixed $option Parameter Option
+	 * @param array $option Parameter Option
 	 *
 	 * @return void
 	 */
-	private function _notlinksfrom($option) {
+	private function _notlinksfrom(array $option) {
+		if (!count($option)) {
+			return;
+		}
+
 		if ($this->parameters->getParameter('distinct') == 'strict') {
 			$this->addGroupBy('page_title');
 		}
@@ -1359,71 +1382,78 @@ class Query {
 	/**
 	 * Set SQL for 'notlinksto' parameter.
 	 *
-	 * @param mixed $option Parameter Option
+	 * @param array $option Parameter Option
 	 *
 	 * @return void
 	 */
-	private function _notlinksto($option) {
+	private function _notlinksto(array $option) {
+		if (!count($option)) {
+			return;
+		}
+
 		if ($this->parameters->getParameter('distinct') == 'strict') {
 			$this->addGroupBy('page_title');
 		}
-		if (count($option)) {
-			$where = $this->tableNames['page'] . '.page_id NOT IN (SELECT ' . $this->tableNames['pagelinks'] . '.pl_from FROM ' . $this->tableNames['pagelinks'] . ' WHERE ';
-			$ors = [];
-			foreach ($option as $linkGroup) {
-				foreach ($linkGroup as $link) {
-					$_or = '(' . $this->tableNames['pagelinks'] . '.pl_namespace=' . intval($link->getNamespace());
-					if (strpos($link->getDbKey(), '%') >= 0) {
-						$operator = 'LIKE';
-					} else {
-						$operator = '=';
-					}
-					if ($this->parameters->getParameter('ignorecase')) {
-						$_or .= ' AND LOWER(CAST(' . $this->tableNames['pagelinks'] . '.pl_title AS char)) ' . $operator . ' LOWER(' . $this->DB->addQuotes($link->getDbKey()) . '))';
-					} else {
-						$_or .= ' AND ' . $this->tableNames['pagelinks'] . '.pl_title ' . $operator . ' ' . $this->DB->addQuotes($link->getDbKey()) . ')';
-					}
-					$ors[] = $_or;
+
+		$where = $this->tableNames['page'] . '.page_id NOT IN (SELECT ' . $this->tableNames['pagelinks'] . '.pl_from FROM ' . $this->tableNames['pagelinks'] . ' WHERE ';
+		$ors = [];
+		foreach ($option as $linkGroup) {
+			foreach ($linkGroup as $link) {
+				$_or = '(' . $this->tableNames['pagelinks'] . '.pl_namespace=' . intval($link->getNamespace());
+				if (strpos($link->getDbKey(), '%') >= 0) {
+					$operator = 'LIKE';
+				} else {
+					$operator = '=';
 				}
+				if ($this->parameters->getParameter('ignorecase')) {
+					$_or .= ' AND LOWER(CAST(' . $this->tableNames['pagelinks'] . '.pl_title AS char)) ' . $operator . ' LOWER(' . $this->DB->addQuotes($link->getDbKey()) . '))';
+				} else {
+					$_or .= ' AND ' . $this->tableNames['pagelinks'] . '.pl_title ' . $operator . ' ' . $this->DB->addQuotes($link->getDbKey()) . ')';
+				}
+				$ors[] = $_or;
 			}
-			$where .= '(' . implode(' OR ', $ors) . '))';
 		}
+		$where .= '(' . implode(' OR ', $ors) . '))';
+
 		$this->addWhere($where);
 	}
 
 	/**
 	 * Set SQL for 'linkstoexternal' parameter.
 	 *
-	 * @param mixed $option Parameter Option
+	 * @param array $option Parameter Option
 	 *
 	 * @return void
 	 */
-	private function _linkstoexternal($option) {
+	private function _linkstoexternal(array $option) {
+		if (!count($option)) {
+			return;
+		}
+
 		if ($this->parameters->getParameter('distinct') == 'strict') {
 			$this->addGroupBy('page_title');
 		}
-		if (count($option) > 0) {
-			$this->addTable('externallinks', 'el');
-			$this->addSelect(['el_to' => 'el.el_to']);
-			foreach ($option as $index => $linkGroup) {
-				if ($index == 0) {
-					$where = $this->tableNames['page'] . '.page_id=el.el_from AND ';
-					$ors = [];
-					foreach ($linkGroup as $link) {
-						$ors[] = 'el.el_to LIKE ' . $this->DB->addQuotes($link);
-					}
-					$where .= '(' . implode(' OR ', $ors) . ')';
-				} else {
-					$where = 'EXISTS(SELECT el_from FROM ' . $this->tableNames['externallinks'] . ' WHERE (' . $this->tableNames['externallinks'] . '.el_from=page_id AND ';
-					$ors = [];
-					foreach ($linkGroup as $link) {
-						$ors[] = $this->tableNames['externallinks'] . '.el_to LIKE ' . $this->DB->addQuotes($link);
-					}
-					$where .= '(' . implode(' OR ', $ors) . ')';
-					$where .= '))';
+
+		$this->addTable('externallinks', 'el');
+		$this->addSelect(['el_to' => 'el.el_to']);
+		foreach ($option as $index => $linkGroup) {
+			if ($index == 0) {
+				$where = $this->tableNames['page'] . '.page_id=el.el_from AND ';
+				$ors = [];
+				foreach ($linkGroup as $link) {
+					$ors[] = 'el.el_to LIKE ' . $this->DB->addQuotes($link);
 				}
-				$this->addWhere($where);
+				$where .= '(' . implode(' OR ', $ors) . ')';
+			} else {
+				$where = 'EXISTS(SELECT el_from FROM ' . $this->tableNames['externallinks'] . ' WHERE (' . $this->tableNames['externallinks'] . '.el_from=page_id AND ';
+				$ors = [];
+				foreach ($linkGroup as $link) {
+					$ors[] = $this->tableNames['externallinks'] . '.el_to LIKE ' . $this->DB->addQuotes($link);
+				}
+				$where .= '(' . implode(' OR ', $ors) . ')';
+				$where .= '))';
 			}
+			$this->addWhere($where);
 		}
 	}
 
@@ -2109,27 +2139,30 @@ class Query {
 	/**
 	 * Set SQL for 'notuses' parameter.
 	 *
-	 * @param mixed $option Parameter Option
+	 * @param array $option Parameter Option
 	 *
 	 * @return void
 	 */
-	private function _notuses($option) {
-		if (count($option) > 0) {
-			$where = $this->tableNames['page'] . '.page_id NOT IN (SELECT ' . $this->tableNames['templatelinks'] . '.tl_from FROM ' . $this->tableNames['templatelinks'] . ' WHERE (';
-			$ors = [];
-			foreach ($option as $linkGroup) {
-				foreach ($linkGroup as $link) {
-					$_or = '(' . $this->tableNames['templatelinks'] . '.tl_namespace=' . intval($link->getNamespace());
-					if ($this->parameters->getParameter('ignorecase')) {
-						$_or .= ' AND LOWER(CAST(' . $this->tableNames['templatelinks'] . '.tl_title AS char))=LOWER(' . $this->DB->addQuotes($link->getDbKey()) . '))';
-					} else {
-						$_or .= ' AND ' . $this->tableNames['templatelinks'] . '.tl_title=' . $this->DB->addQuotes($link->getDbKey()) . ')';
-					}
-					$ors[] = $_or;
-				}
-			}
-			$where .= implode(' OR ', $ors) . '))';
+	private function _notuses(array $option) {
+		if (!count($option)) {
+			return;
 		}
+
+		$where = $this->tableNames['page'] . '.page_id NOT IN (SELECT ' . $this->tableNames['templatelinks'] . '.tl_from FROM ' . $this->tableNames['templatelinks'] . ' WHERE (';
+		$ors = [];
+		foreach ($option as $linkGroup) {
+			foreach ($linkGroup as $link) {
+				$_or = '(' . $this->tableNames['templatelinks'] . '.tl_namespace=' . intval($link->getNamespace());
+				if ($this->parameters->getParameter('ignorecase')) {
+					$_or .= ' AND LOWER(CAST(' . $this->tableNames['templatelinks'] . '.tl_title AS char))=LOWER(' . $this->DB->addQuotes($link->getDbKey()) . '))';
+				} else {
+					$_or .= ' AND ' . $this->tableNames['templatelinks'] . '.tl_title=' . $this->DB->addQuotes($link->getDbKey()) . ')';
+				}
+				$ors[] = $_or;
+			}
+		}
+		$where .= implode(' OR ', $ors) . '))';
+
 		$this->addWhere($where);
 	}
 }

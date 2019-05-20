@@ -256,6 +256,8 @@ class DynamicPageListHooks {
 		if (\DPL\Config::getSetting('recursiveTagParse')) {
 			$input = $parser->recursiveTagParse($input, $frame);
 		}
+		$reset = [];
+		$eliminate = [];
 		$text = $parse->parse($input, $parser, $reset, $eliminate, true);
 
 		$parserOutput = $parser->getOutput();
@@ -309,6 +311,8 @@ class DynamicPageListHooks {
 		}
 
 		$parse = new \DPL\Parse();
+		$reset = [];
+		$eliminate = [];
 		$dplresult = $parse->parse($input, $parser, $reset, $eliminate, false);
 		return [ // parser needs to be coaxed to do further recursive processing
 			$parser->getPreprocessor()->preprocessToObj($dplresult, Parser::PTD_FOR_INCLUSION),

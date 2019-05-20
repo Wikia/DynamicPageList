@@ -878,15 +878,10 @@ class Parse {
 		$localParser = new Parser();
 		$parserOutput = $localParser->parse($output, $this->parser->getTitle(), $this->parser->mOptions);
 
-		if (!is_array($reset)) {
-			$reset = [];
-		}
 		$reset = array_merge($reset, (array)$this->parameters->getParameter('reset'));
 
-		if (!is_array($eliminate)) {
-			$eliminate = [];
-		}
 		$eliminate = array_merge($eliminate, (array)$this->parameters->getParameter('eliminate'));
+
 		if ($isParserTag === true) {
 			// In tag mode 'eliminate' is the same as 'reset' for templates, categories, and images.
 			if (isset($eliminate['templates']) && $eliminate['templates']) {

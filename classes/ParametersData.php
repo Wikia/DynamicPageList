@@ -402,7 +402,7 @@ class ParametersData {
 		 * Example: hitemattr= class="topmenuli" style="color: red;"
 		 */
 		'hitemattr' => [
-			'default'	=> null
+			'default' => ''
 		],
 
 		/**
@@ -413,7 +413,7 @@ class ParametersData {
 		 * Example: hlistattr= class="topmenul" id="dmenu"
 		 */
 		'hlistattr' => [
-			'default'	=> null
+			'default' => ''
 		],
 
 		/**
@@ -501,7 +501,7 @@ class ParametersData {
 		 * Example: itemattr= class="submenuli" style="color: red;"
 		 */
 		'itemattr' => [
-			'default'	=> null
+			'default' => ''
 		],
 		/**
 		 * listseparators is an array of four tags (in wiki syntax) which defines the output of DPL
@@ -524,7 +524,7 @@ class ParametersData {
 		 *	 example:	listattr=<ul>,<li>,</li>,</ul>
 		 */
 		'listattr' => [
-			'default'	=> null
+			'default' => ''
 		],
 		/**
 		 * this parameter restricts the output to articles which can reached via a link from the specified pages.

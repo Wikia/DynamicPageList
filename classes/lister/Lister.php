@@ -301,7 +301,6 @@ class Lister {
 			case 'subpage':
 				$class = 'SubPageList';
 				break;
-			default:
 			case 'unordered':
 				$class = 'UnorderedList';
 				break;
