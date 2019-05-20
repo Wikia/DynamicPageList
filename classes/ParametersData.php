@@ -165,72 +165,72 @@ class ParametersData {
 	 */
 	private $data = [
 		'addauthor' => [
-			'default'			=> false,
-			'boolean'			=> true,
-			'open_ref_conflict'	=> true
+			'default' => false,
+			'boolean' => true,
+			'open_ref_conflict' => true
 		],
 		'addcategories' => [
-			'default'			=> false,
-			'boolean'			=> true,
-			'open_ref_conflict'	=> true
+			'default' => false,
+			'boolean' => true,
+			'open_ref_conflict' => true
 		],
 		'addcontribution' => [
-			'default'			=> false,
-			'boolean'			=> true,
-			'open_ref_conflict'	=> true
+			'default' => false,
+			'boolean' => true,
+			'open_ref_conflict' => true
 		],
 		'addeditdate' => [
-			'default'			=> false,
-			'boolean'			=> true,
-			'open_ref_conflict'	=> true
+			'default' => false,
+			'boolean' => true,
+			'open_ref_conflict' => true
 		],
 		'addexternallink' => [
-			'default'			=> false,
-			'boolean'			=> true,
-			'open_ref_conflict'	=> true
+			'default' => false,
+			'boolean' => true,
+			'open_ref_conflict' => true
 		],
 		'addfirstcategorydate' => [
-			'default'			=> false,
-			'boolean'			=> true,
-			'open_ref_conflict'	=> true
+			'default' => false,
+			'boolean' => true,
+			'open_ref_conflict' => true
 		],
 		'addlasteditor' => [
-			'default'			=> false,
-			'boolean'			=> true,
-			'open_ref_conflict'	=> true
+			'default' => false,
+			'boolean' => true,
+			'open_ref_conflict' => true
 		],
 		'addpagecounter' => [
-			'default'			=> false,
-			'boolean'			=> true,
-			'open_ref_conflict'	=> true
+			'default' => false,
+			'boolean' => true,
+			'open_ref_conflict' => true
 		],
 		'addpagesize' => [
-			'default'			=> false,
-			'boolean'			=> true,
-			'open_ref_conflict'	=> true
+			'default' => false,
+			'boolean' => true,
+			'open_ref_conflict' => true
 		],
 		'addpagetoucheddate' => [
-			'default'			=> false,
-			'boolean'			=> true,
-			'open_ref_conflict'	=> true
+			'default' => false,
+			'boolean' => true,
+			'open_ref_conflict' => true
 		],
 		'adduser' => [
-			'default'			=> false,
-			'boolean'			=> true,
-			'open_ref_conflict'	=> true
+			'default' => false,
+			'boolean' => true,
+			'open_ref_conflict' => true
 		],
 
 		// default of allowcachedresults depends on behaveasIntersetion and on LocalSettings ...
 		'allowcachedresults' => [
-			'default'			=> true,
-			'boolean'			=> true
+			'default' => true,
+			'boolean' => true
 		],
 		/**
 		 * search for a page with the same title in another namespace (this is normally the article to a talk page)
 		 */
 		'articlecategory' => [
-			'default'			=> null,
-			'db_format'			=> true
+			'default' => null,
+			'db_format' => true
 		],
 
 		/**
@@ -246,13 +246,13 @@ class ParametersData {
 		 * @todo define 'category' options (retrieve list of categories from 'categorylinks' table?)
 		 */
 		'category' => [
-			'default'	=> null,
+			'default' => null,
 		],
 		'categorymatch' => [
-			'default'	=> null,
+			'default' => null,
 		],
 		'categoryregexp' => [
-			'default'	=> null,
+			'default' => null,
 		],
 		/**
 		 * Min and Max of categories allowed for an article
@@ -265,14 +265,14 @@ class ParametersData {
 		 * hiddencategories
 		 */
 		'hiddencategories' => [
-			'default'	=> 'include',
-			'values'	=> ['include', 'exclude', 'only']
+			'default' => 'include',
+			'values' => ['include', 'exclude', 'only']
 		],
 		/**
 		 * Perform the command and do not query the database.
 		 */
 		'execandexit' => [
-			'default'	=> null
+			'default' => null
 		],
 
 		/**
@@ -280,36 +280,36 @@ class ParametersData {
 		 * default is 0
 		 */
 		'offset' => [
-			'default'	=> 0,
-			'integer'	=> true
+			'default' => 0,
+			'integer' => true
 		],
 		/**
 		 * Max of results to display, selection is based on random.
 		 */
 		'count' => [
-			'default'	=> 500,
-			'integer'	=> true
+			'default' => 500,
+			'integer' => true
 		],
 		/**
 		 * Max number of results to display, selection is based on random.
 		 */
 		'randomcount' => [
-			'default'	=> null,
-			'integer'	=> true
+			'default' => null,
+			'integer' => true
 		],
 		/**
 		 * shall the result set be distinct (=default) or not?
 		 */
 		'distinct' => [
-			'default'	=> true,
-			'values'	=> ['strict']
+			'default' => true,
+			'values' => ['strict']
 		],
 		/**
 		 * number of columns for output, default is 1
 		 */
 		'columns' => [
-			'default'	=> 1,
-			'integer'	=> true
+			'default' => 1,
+			'integer' => true
 		],
 
 		/**
@@ -322,8 +322,8 @@ class ParametersData {
 		 * - 5: <nowiki> tags around the ouput
 		 */
 		'debug' => [
-			'default'	=> 2,
-			'values'	=> [0, 1, 2, 3, 4, 5]
+			'default' => 2,
+			'values' => [0, 1, 2, 3, 4, 5]
 		],
 
 		/**
@@ -336,8 +336,8 @@ class ParametersData {
 		 * all		   all of the above
 		 */
 		'eliminate' => [
-			'default'	=> [],
-			'values'	=> [
+			'default' => [],
+			'values' => [
 				'categories',
 				'templates',
 				'links',
@@ -348,22 +348,22 @@ class ParametersData {
 		],
 
 		'format' => [
-			'default'	=> null,
+			'default' => null,
 		],
 
 		'goal' => [
-			'default'	=> 'pages',
-			'values'	=> [
+			'default' => 'pages',
+			'values' => [
 				'pages',
 				'categories'
 			],
-			'open_ref_conflict'	=> true
+			'open_ref_conflict' => true
 		],
 
 		// Include the lowercase variants of header tiers for ease of use.
 		'headingmode' => [
-			'default'	=> 'none',
-			'values'	=> [
+			'default' => 'none',
+			'values' => [
 				'H1',
 				'H2',
 				'H3',
@@ -382,16 +382,16 @@ class ParametersData {
 				'ordered',
 				'unordered'
 			],
-			'open_ref_conflict'	=> true
+			'open_ref_conflict' => true
 		],
 
 		/**
 		 * we can display the number of articles within a heading group
 		 */
 		'headingcount' => [
-			'default'			=> false,
-			'boolean'			=> true,
-			'open_ref_conflict'	=> true
+			'default' => false,
+			'boolean' => true,
+			'open_ref_conflict' => true
 		],
 
 		/**
@@ -431,58 +431,58 @@ class ParametersData {
 		 */
 
 		'includepage' => [
-			'default'	=> null
+			'default' => null
 		],
 
 		/**
 		 * make comparisons (linksto, linksfrom ) case insensitive
 		 */
 		'ignorecase' => [
-			'default'	=> false,
-			'boolean'	=> true
+			'default' => false,
+			'boolean' => true
 		],
 		'include'			   => [
-			'default'	=> null
+			'default' => null
 		],
 
 		/**
 		 * includesubpages
 		 */
 		'includesubpages' => [
-			'default'	=> true,
-			'boolean'	=> true
+			'default' => true,
+			'boolean' => true
 		],
 
 		/**
 		 * includematch=..,..	 allows to specify regular expressions which must match the included contents
 		 */
 		'includematch' => [
-			'default'	=> null
+			'default' => null
 		],
 		'includematchparsed' => [
-			'default'	=> false,
-			'boolean'	=> true
+			'default' => false,
+			'boolean' => true
 		],
 		/**
 		 * includenotmatch=..,..	allows to specify regular expressions which must NOT match the included contents
 		 */
 		'includenotmatch' => [
-			'default'	=> null
+			'default' => null
 		],
 		'includenotmatchparsed' => [
-			'default'	=> false,
-			'boolean'	=> true
+			'default' => false,
+			'boolean' => true
 		],
 		'includetrim' => [
-			'default'	=> false,
-			'boolean'	=> true
+			'default' => false,
+			'boolean' => true
 		],
 		/**
 		 * Inline text is some wiki text used to separate list items with 'mode=inline'.
 		 */
 		'inlinetext' => [
-			'default'		=> '&#160;-&#160;',
-			'strip_html'	=> true
+			'default' => '&#160;-&#160;',
+			'strip_html' => true
 		],
 		/**
 		 * Max # characters of included page to display.
@@ -490,8 +490,8 @@ class ParametersData {
 		 * If we include sections the limit will apply to each section.
 		 */
 		'includemaxlength' => [
-			'default'	=> null,
-			'integer'	=> true
+			'default' => null,
+			'integer' => true
 		],
 		/**
 		 * Attributes for HTML list items, depending on 'mode' ('li' for ordered/unordered, 'span' for others).
@@ -515,7 +515,7 @@ class ParametersData {
 		 *		   : listseparators={|,\n|-\n|[[%PAGE%]],,\n|}
 		 */
 		'listseparators' => [
-			'default'	=> []
+			'default' => []
 		],
 		/**
 		 * sequence of four wiki tags (separated by ",") to be used together with mode = 'userformat'
@@ -531,160 +531,160 @@ class ParametersData {
 		 * Examples:   linksfrom=my article|your article
 		 */
 		'linksfrom' => [
-			'default'				=> null,
-			'page_name_list'		=> true,
-			'page_name_must_exist'	=> true,
-			'set_criteria_found'	=> true
+			'default' => null,
+			'page_name_list' => true,
+			'page_name_must_exist' => true,
+			'set_criteria_found' => true
 		],
 		/**
 		 * this parameter restricts the output to articles which cannot be reached via a link from the specified pages.
 		 * Examples:   notlinksfrom=my article|your article
 		 */
 		'notlinksfrom' => [
-			'default'				=> null,
-			'page_name_list'		=> true,
-			'page_name_must_exist'	=> true,
-			'set_criteria_found'	=> true
+			'default' => null,
+			'page_name_list' => true,
+			'page_name_must_exist' => true,
+			'set_criteria_found' => true
 		],
 		/**
 		 * this parameter restricts the output to articles which contain a reference to one of the specified pages.
 		 * Examples:   linksto=my article|your article	 ,	linksto=Template:my template   ,  linksto = {{FULLPAGENAME}}
 		 */
 		'linksto' => [
-			'default'				=> null,
-			'open_ref_conflict'		=> true,
-			'page_name_list'		=> true,
-			'page_name_must_exist'	=> true,
-			'set_criteria_found'	=> true
+			'default' => null,
+			'open_ref_conflict' => true,
+			'page_name_list' => true,
+			'page_name_must_exist' => true,
+			'set_criteria_found' => true
 		],
 		/**
 		 * this parameter restricts the output to articles which do not contain a reference to the specified page.
 		 */
 		'notlinksto' => [
-			'default'				=> null,
-			'open_ref_conflict'		=> true,
-			'page_name_list'		=> true,
-			'page_name_must_exist'	=> true,
-			'set_criteria_found'	=> true
+			'default' => null,
+			'open_ref_conflict' => true,
+			'page_name_list' => true,
+			'page_name_must_exist' => true,
+			'set_criteria_found' => true
 		],
 		/**
 		 * this parameter restricts the output to articles which contain an external reference that conatins a certain pattern
 		 * Examples:   linkstoexternal= www.xyz.com|www.xyz2.com
 		 */
 		'linkstoexternal' => [
-			'default'				=> null,
-			'open_ref_conflict'		=> true,
-			'page_name_list'		=> true,
-			'page_name_must_exist'	=> false,
-			'set_criteria_found'	=> true
+			'default' => null,
+			'open_ref_conflict' => true,
+			'page_name_list' => true,
+			'page_name_must_exist' => false,
+			'set_criteria_found' => true
 		],
 		/**
 		 * this parameter restricts the output to articles which use one of the specified images.
 		 * Examples:   imageused=Image:my image|Image:your image
 		 */
 		'imageused' => [
-			'default'				=> null,
-			'open_ref_conflict'		=> true,
-			'page_name_list'		=> true,
-			'page_name_must_exist'	=> true,
-			'set_criteria_found'	=> true
+			'default' => null,
+			'open_ref_conflict' => true,
+			'page_name_list' => true,
+			'page_name_must_exist' => true,
+			'set_criteria_found' => true
 		],
 		 /**
 		 * this parameter restricts the output to images which are used (contained) by one of the specified pages.
 		 * Examples:   imagecontainer=my article|your article
 		 */
 		'imagecontainer' => [
-			'default'				=> null,
-			'open_ref_conflict'		=> false,
-			'page_name_list'		=> true,
-			'page_name_must_exist'	=> true,
-			'set_criteria_found'	=> true
+			'default' => null,
+			'open_ref_conflict' => false,
+			'page_name_list' => true,
+			'page_name_must_exist' => true,
+			'set_criteria_found' => true
 		],
 		/**
 		 * this parameter restricts the output to articles which use the specified template.
 		 * Examples:   uses=Template:my template
 		 */
 		'uses' => [
-			'default'				=> null,
-			'open_ref_conflict'		=> true,
-			'page_name_list'		=> true,
-			'page_name_must_exist'	=> true,
-			'set_criteria_found'	=> true
+			'default' => null,
+			'open_ref_conflict' => true,
+			'page_name_list' => true,
+			'page_name_must_exist' => true,
+			'set_criteria_found' => true
 		],
 		/**
 		 * this parameter restricts the output to articles which do not use the specified template.
 		 * Examples:   notuses=Template:my template
 		 */
 		'notuses' => [
-			'default'				=> null,
-			'open_ref_conflict'		=> true,
-			'page_name_list'		=> true,
-			'page_name_must_exist'	=> true,
-			'set_criteria_found'	=> true
+			'default' => null,
+			'open_ref_conflict' => true,
+			'page_name_list' => true,
+			'page_name_must_exist' => true,
+			'set_criteria_found' => true
 		],
 		/**
 		 * this parameter restricts the output to the template used by the specified page.
 		 */
 		'usedby' => [
-			'default'				=> null,
-			'open_ref_conflict'		=> true,
-			'page_name_list'		=> true,
-			'page_name_must_exist'	=> true,
-			'set_criteria_found'	=> true
+			'default' => null,
+			'open_ref_conflict' => true,
+			'page_name_list' => true,
+			'page_name_must_exist' => true,
+			'set_criteria_found' => true
 		],
 		/**
 		 * allows to specify a username who must be the first editor of the pages we select
 		 */
-		'createdby'	=> [
-			'default'				=> null,
-			'set_criteria_found'	=> true,
-			'open_ref_conflict'		=> true,
-			'preserve_case'			=> true
+		'createdby' => [
+			'default' => null,
+			'set_criteria_found' => true,
+			'open_ref_conflict' => true,
+			'preserve_case' => true
 		],
 		/**
 		 * allows to specify a username who must not be the first editor of the pages we select
 		 */
-		'notcreatedby'	=> [
-			'default'				=> null,
-			'set_criteria_found'	=> true,
-			'open_ref_conflict'		=> true,
-			'preserve_case'			=> true
+		'notcreatedby' => [
+			'default' => null,
+			'set_criteria_found' => true,
+			'open_ref_conflict' => true,
+			'preserve_case' => true
 		],
 		/**
 		 * allows to specify a username who must be among the editors of the pages we select
 		 */
-		'modifiedby'	=> [
-			'default'				=> null,
-			'set_criteria_found'	=> true,
-			'open_ref_conflict'		=> true,
-			'preserve_case'			=> true
+		'modifiedby' => [
+			'default' => null,
+			'set_criteria_found' => true,
+			'open_ref_conflict' => true,
+			'preserve_case' => true
 		],
 		/**
 		 * allows to specify a username who must not be among the editors of the pages we select
 		 */
-		'notmodifiedby'	=> [
-			'default'				=> null,
-			'set_criteria_found'	=> true,
-			'open_ref_conflict'		=> true,
-			'preserve_case'			=> true
+		'notmodifiedby' => [
+			'default' => null,
+			'set_criteria_found' => true,
+			'open_ref_conflict' => true,
+			'preserve_case' => true
 		],
 		/**
 		 * allows to specify a username who must be the last editor of the pages we select
 		 */
 		'lastmodifiedby' => [
-			'default'				=> null,
-			'set_criteria_found'	=> true,
-			'open_ref_conflict'		=> true,
-			'preserve_case'			=> true
+			'default' => null,
+			'set_criteria_found' => true,
+			'open_ref_conflict' => true,
+			'preserve_case' => true
 		],
 		/**
 		 * allows to specify a username who must not be the last editor of the pages we select
 		 */
-		'notlastmodifiedby'	=> [
-			'default'				=> null,
-			'set_criteria_found'	=> true,
-			'open_ref_conflict'		=> true,
-			'preserve_case'			=> true
+		'notlastmodifiedby' => [
+			'default' => null,
+			'set_criteria_found' => true,
+			'open_ref_conflict' => true,
+			'preserve_case' => true
 		],
 		/**
 		 * Mode for list of pages (possibly within a heading, see 'headingmode' param).
@@ -692,8 +692,8 @@ class ParametersData {
 		 * 'userformat' does not produce any html tags unless 'listseparators' are specified
 		 */
 		'mode' => [
-			'default'	=> 'unordered',
-			'values'	=> [
+			'default' => 'unordered',
+			'values' => [
 				'category',
 				'definition',
 				'gallery',
@@ -712,8 +712,8 @@ class ParametersData {
 		 * 'false'	images are shown, categories are assigned to the current document
 		 */
 		'escapelinks' => [
-			'default'	=> true,
-			'boolean'	=> true
+			'default' => true,
+			'boolean' => true
 		],
 		/**
 		 * By default the page containingthe query will not be part of the result set.
@@ -721,8 +721,8 @@ class ParametersData {
 		 * problems which are hard to track down, esp. in combination with contents transclusion.
 		 */
 		'skipthispage' => [
-			'default'	=> true,
-			'boolean'	=> true
+			'default' => true,
+			'boolean' => true
 		],
 		/**
 		 * namespace= Ns1 | Ns2 | ...
@@ -731,7 +731,7 @@ class ParametersData {
 		 * Magic words allowed.
 		 */
 		'namespace' => [
-			'default'	=> null,
+			'default' => null,
 		],
 		/**
 		 * notcategory= Cat1
@@ -742,13 +742,13 @@ class ParametersData {
 		 * @todo define 'notcategory' options (retrieve list of categories from 'categorylinks' table?)
 		 */
 		'notcategory' => [
-			'default'	=> null,
+			'default' => null,
 		],
 		'notcategorymatch' => [
-			'default'	=> null,
+			'default' => null,
 		],
 		'notcategoryregexp' => [
-			'default'	=> null,
+			'default' => null,
 		],
 		/**
 		 * notnamespace= Ns1
@@ -759,50 +759,50 @@ class ParametersData {
 		 * Magic words allowed.
 		*/
 		'notnamespace' => [
-			'default'	=> null,
+			'default' => null,
 		],
 		/**
 		 * title is the exact name of a page; this is useful if you want to use DPL
 		 * just for contents inclusion; mode=userformat is automatically implied with title=
 		*/
 		'title' => [
-			'default'	=> null,
+			'default' => null,
 		],
 		/**
 		 * titlematch is a (SQL-LIKE-expression) pattern
 		 * which restricts the result to pages matching that pattern
 		*/
 		'titlelt' => [
-			'default'				=> null,
-			'db_format'				=> true,
-			'set_criteria_found'	=> true
+			'default' => null,
+			'db_format' => true,
+			'set_criteria_found' => true
 		],
 		'titlegt' => [
-			'default'				=> null,
-			'db_format'				=> true,
-			'set_criteria_found'	=> true
+			'default' => null,
+			'db_format' => true,
+			'set_criteria_found' => true
 		],
 		'scroll' => [
-			'default'	=> false,
-			'boolean'	=> true
+			'default' => false,
+			'boolean' => true
 		],
 		'titlematch' => [
-			'default'	=> null
+			'default' => null
 		],
 		'titleregexp' => [
-			'default'	=> null
+			'default' => null
 		],
 		'userdateformat' => [
-			'default'		=> 'Y-m-d H:i:s',
-			'strip_html'	=> true
+			'default' => 'Y-m-d H:i:s',
+			'strip_html' => true
 		],
 		'updaterules' => [
-			'default'		=> null,
-			'permission'	=> 'dpl_param_update_rules'
+			'default' => null,
+			'permission' => 'dpl_param_update_rules'
 		],
 		'deleterules' => [
-			'default'		=> null,
-			'permission'	=> 'dpl_param_delete_rules'
+			'default' => null,
+			'permission' => 'dpl_param_delete_rules'
 		],
 
 		/**
@@ -810,14 +810,14 @@ class ParametersData {
 		 * which excludes pages matching that pattern from the result
 		*/
 		'nottitlematch' => [
-			'default'	=> null
+			'default' => null
 		],
 		'nottitleregexp' => [
-			'default'	=> null
+			'default' => null
 		],
 		'order' => [
-			'default'	=> 'ascending',
-			'values'	=> ['ascending', 'descending', 'asc', 'desc']
+			'default' => 'ascending',
+			'values' => ['ascending', 'descending', 'asc', 'desc']
 		],
 		/**
 		 * we can specify something like "latin1_swedish_ci" for case insensitive sorting
@@ -831,8 +831,8 @@ class ParametersData {
 		 * @todo: add 'ordermethod=category,categoryadd' (for each category CAT, pages ordered by date when page was added to CAT).
 		 */
 		'ordermethod' => [
-			'default'	=> ['none'],
-			'values'	=> [
+			'default' => ['none'],
+			'values' => [
 				'counter',
 				'size',
 				'category',
@@ -854,56 +854,56 @@ class ParametersData {
 		 * - include: include minor edits
 		 */
 		'minoredits' => [
-			'default'			=> null,
-			'values'			=> ['include', 'exclude'],
-			'open_ref_conflict'	=> true
+			'default' => null,
+			'values' => ['include', 'exclude'],
+			'open_ref_conflict' => true
 		],
 		/**
 		 * lastrevisionbefore = select the latest revision which was existent before the specified point in time
 		 */
 		'lastrevisionbefore' => [
-			'default'			=> null,
-			'timestamp'			=> true,
-			'open_ref_conflict'	=> true
+			'default' => null,
+			'timestamp' => true,
+			'open_ref_conflict' => true
 		],
 		/**
 		 * allrevisionsbefore = select the revisions which were created before the specified point in time
 		 */
 		'allrevisionsbefore' => [
-			'default'			=> null,
-			'timestamp'			=> true,
-			'open_ref_conflict'	=> true
+			'default' => null,
+			'timestamp' => true,
+			'open_ref_conflict' => true
 		],
 		/**
 		 * firstrevisionsince = select the first revision which was created after the specified point in time
 		 */
 		'firstrevisionsince' => [
-			'default'			=> null,
-			'timestamp'			=> true,
-			'open_ref_conflict'	=> true
+			'default' => null,
+			'timestamp' => true,
+			'open_ref_conflict' => true
 		],
 		/**
 		 * allrevisionssince = select the latest revisions which were created after the specified point in time
 		 */
 		'allrevisionssince' => [
-			'default'			=> null,
-			'timestamp'			=> true,
-			'open_ref_conflict'	=> true
+			'default' => null,
+			'timestamp' => true,
+			'open_ref_conflict' => true
 		],
 		/**
 		 * Minimum/Maximum number of revisions required
 		 */
 		'minrevisions' => [
-			'default'	=> null,
-			'integer'	=> true
+			'default' => null,
+			'integer' => true
 		],
 		'maxrevisions' => [
-			'default'	=> null,
-			'integer'	=> true
+			'default' => null,
+			'integer' => true
 		],
 		'suppresserrors' => [
-			'default'	=> false,
-			'boolean'	=> true
+			'default' => false,
+			'boolean' => true
 		],
 		/**
 		 * noresultsheader / footer is some wiki text which will be output (instead of a warning message)
@@ -911,28 +911,28 @@ class ParametersData {
 		 * the warning about empty result set.
 		 */
 		'noresultsheader' => [
-			'default'		=> null,
-			'strip_html'	=> true,
-			'preserve_case'	=> true
+			'default' => null,
+			'strip_html' => true,
+			'preserve_case' => true
 		],
 		'noresultsfooter' => [
-			'default'		=> null,
-			'strip_html'	=> true,
-			'preserve_case'	=> true
+			'default' => null,
+			'strip_html' => true,
+			'preserve_case' => true
 		],
 		/**
 		 * oneresultsheader / footer is some wiki text which will be output
 		 * if the result set contains exactly one entry.
 		 */
 		'oneresultheader' => [
-			'default'		=> null,
-			'strip_html'	=> true,
-			'preserve_case'	=> true
+			'default' => null,
+			'strip_html' => true,
+			'preserve_case' => true
 		],
 		'oneresultfooter' => [
-			'default'		=> null,
-			'strip_html'	=> true,
-			'preserve_case'	=> true
+			'default' => null,
+			'strip_html' => true,
+			'preserve_case' => true
 		],
 		/**
 		 * openreferences =...
@@ -940,8 +940,8 @@ class ParametersData {
 		 * - yes: includes pages which do not exist -- this conflicts with some other options
 		 */
 		'openreferences' => [
-			'default'	=> false,
-			'boolean'	=> true
+			'default' => false,
+			'boolean' => true
 		],
 		/**
 		 * redirects =...
@@ -950,8 +950,8 @@ class ParametersData {
 		 * - only: lists only redirect pages in lists (page_is_redirect = 1 only)
 		 */
 		'redirects' => [
-			'default'	=> 'exclude',
-			'values'	=> ['include', 'exclude', 'only']
+			'default' => 'exclude',
+			'values' => ['include', 'exclude', 'only']
 		],
 		/**
 		 * stablepages =...
@@ -960,8 +960,8 @@ class ParametersData {
 		 * - only: lists only stable pages in lists
 		 */
 		'stablepages' => [
-			'default'	=> null,
-			'values'	=> ['exclude', 'only']
+			'default' => null,
+			'values' => ['exclude', 'only']
 		],
 		/**
 		 * qualitypages =...
@@ -970,8 +970,8 @@ class ParametersData {
 		 * - only: lists only quality pages in lists
 		 */
 		'qualitypages' => [
-			'default'	=> null,
-			'values'	=> ['exclude', 'only']
+			'default' => null,
+			'values' => ['exclude', 'only']
 		],
 		/**
 		 * resultsheader / footer is some wiki text which will be output before / after the result list
@@ -979,14 +979,14 @@ class ParametersData {
 		 * used if there are at least TWO results
 		 */
 		'resultsheader' => [
-			'default'		=> null,
-			'strip_html'	=> true,
-			'preserve_case'	=> true
+			'default' => null,
+			'strip_html' => true,
+			'preserve_case' => true
 		],
 		'resultsfooter' => [
-			'default'		=> null,
-			'strip_html'	=> true,
-			'preserve_case'	=> true
+			'default' => null,
+			'strip_html' => true,
+			'preserve_case' => true
 		],
 		/**
 		 * reset=..
@@ -999,7 +999,7 @@ class ParametersData {
 		 */
 		'reset' => [
 			'default' => [],
-			'values'	=> [
+			'values' => [
 				'categories',
 				'templates',
 				'links',
@@ -1021,8 +1021,8 @@ class ParametersData {
 		 * Note: a "row" is a group of lines for which the heading tags defined in listseparators/format will be repeated
 		 */
 		'rows' => [
-			'default'	=> 1,
-			'integer'	=> true
+			'default' => 1,
+			'integer' => true
 		],
 
 		/**
@@ -1030,16 +1030,16 @@ class ParametersData {
 		 * Note: a "row" is a group of lines for which the heading tags defined in listeseparators will be repeated
 		 */
 		'rowsize' => [
-			'default'	=> 0,
-			'integer'	=> true
+			'default' => 0,
+			'integer' => true
 		],
 
 		/**
 		 * The HTML attribute tags(class, cellspacing) used for columns and rows in MediaWiki table markup.
 		 */
 		'rowcolformat' => [
-			'default'		=> null,
-			'strip_html'	=> true
+			'default' => null,
+			'strip_html' => true
 		],
 		/**
 		 * secseparators  is a sequence of pairs of tags used to separate sections (see "includepage=name1, name2, ..")
@@ -1062,48 +1062,48 @@ class ParametersData {
 		 * dominant column
 		 */
 		'dominantsection' => [
-			'default'	=> 0,
-			'integer'	=> true
+			'default' => 0,
+			'integer' => true
 		],
 		/**
 		 * showcurid creates a stable link to the current revision of a page
 		 */
 		'showcurid' => [
-			'default'			=> false,
-			'boolean'			=> true,
-			'open_ref_conflict'	=> true
+			'default' => false,
+			'boolean' => true,
+			'open_ref_conflict' => true
 		],
 		/**
 		 * shownamespace decides whether to show the namespace prefix or not
 		 */
 		'shownamespace' => [
-			'default'	=> true,
-			'boolean'	=> true
+			'default' => true,
+			'boolean' => true
 		],
 		/**
 		 * replaceintitle applies a regex replacement to %TITLE%
 		 */
 		'replaceintitle' => [
-			'default'	=> null
+			'default' => null
 		],
 		/**
 		 * table is a short hand for combined values of listseparators, colseparators and mulicolseparators
 		 */
 		'table' => [
-			'default'	=> null
+			'default' => null
 		],
 		/**
 		 * tablerow allows to define individual formats for table columns
 		 */
 		'tablerow' => [
-			'default'	=> []
+			'default' => []
 		],
 		/**
 		 * The number (starting with 1) of the column to be used for sorting
 		 */
 		'tablesortcol' => [
-			'default'	=> null,
-			'integer'	=> true
+			'default' => null,
+			'integer' => true
 		],
 		/**
 		 * Max # characters of page title to display.
@@ -1111,8 +1111,8 @@ class ParametersData {
 		 * Not applicable to mode=category.
 		 */
 		'titlemaxlength' => [
-			'default'	=> null,
-			'integer'	=> true
+			'default' => null,
+			'integer' => true
 		]
 	];
 
@@ -1126,23 +1126,23 @@ class ParametersData {
 
 		if (\DynamicPageListHooks::isLikeIntersection()) {
 			$this->data['ordermethod'] = [
-				'default'	=> 'categoryadd',
-				'values'	=> [
+				'default' => 'categoryadd',
+				'values' => [
 					'categoryadd',
 					'lastedit',
 					'none'
 				]
 			];
 			$this->data['order'] = [
-				'default'	=> 'descending',
-				'values'	=> [
+				'default' => 'descending',
+				'values' => [
 					'ascending',
 					'descending'
 				]
 			];
 			$this->data['mode'] = [
-				'default'	=> 'unordered',
-				'values'	=> [
+				'default' => 'unordered',
+				'values' => [
 					'none',
 					'ordered',
 					'unordered'
