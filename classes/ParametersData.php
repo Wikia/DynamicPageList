@@ -166,64 +166,64 @@ class ParametersData {
 	private $data = [
 		'addauthor' => [
 			'default' => false,
-			'boolean' => true,
+			'type' => 'boolean',
 			'open_ref_conflict' => true
 		],
 		'addcategories' => [
 			'default' => false,
-			'boolean' => true,
+			'type' => 'boolean',
 			'open_ref_conflict' => true
 		],
 		'addcontribution' => [
 			'default' => false,
-			'boolean' => true,
+			'type' => 'boolean',
 			'open_ref_conflict' => true
 		],
 		'addeditdate' => [
 			'default' => false,
-			'boolean' => true,
+			'type' => 'boolean',
 			'open_ref_conflict' => true
 		],
 		'addexternallink' => [
 			'default' => false,
-			'boolean' => true,
+			'type' => 'boolean',
 			'open_ref_conflict' => true
 		],
 		'addfirstcategorydate' => [
 			'default' => false,
-			'boolean' => true,
+			'type' => 'boolean',
 			'open_ref_conflict' => true
 		],
 		'addlasteditor' => [
 			'default' => false,
-			'boolean' => true,
+			'type' => 'boolean',
 			'open_ref_conflict' => true
 		],
 		'addpagecounter' => [
 			'default' => false,
-			'boolean' => true,
+			'type' => 'boolean',
 			'open_ref_conflict' => true
 		],
 		'addpagesize' => [
 			'default' => false,
-			'boolean' => true,
+			'type' => 'boolean',
 			'open_ref_conflict' => true
 		],
 		'addpagetoucheddate' => [
 			'default' => false,
-			'boolean' => true,
+			'type' => 'boolean',
 			'open_ref_conflict' => true
 		],
 		'adduser' => [
 			'default' => false,
-			'boolean' => true,
+			'type' => 'boolean',
 			'open_ref_conflict' => true
 		],
 
 		// default of allowcachedresults depends on behaveasIntersetion and on LocalSettings ...
 		'allowcachedresults' => [
 			'default' => true,
-			'boolean' => true
+			'type' => 'boolean'
 		],
 		/**
 		 * search for a page with the same title in another namespace (this is normally the article to a talk page)
@@ -281,21 +281,21 @@ class ParametersData {
 		 */
 		'offset' => [
 			'default' => 0,
-			'integer' => true
+			'type' => 'integer'
 		],
 		/**
 		 * Max of results to display, selection is based on random.
 		 */
 		'count' => [
 			'default' => 500,
-			'integer' => true
+			'type' => 'integer'
 		],
 		/**
 		 * Max number of results to display, selection is based on random.
 		 */
 		'randomcount' => [
 			'default' => null,
-			'integer' => true
+			'type' => 'integer'
 		],
 		/**
 		 * shall the result set be distinct (=default) or not?
@@ -309,7 +309,7 @@ class ParametersData {
 		 */
 		'columns' => [
 			'default' => 1,
-			'integer' => true
+			'type' => 'integer'
 		],
 
 		/**
@@ -390,7 +390,7 @@ class ParametersData {
 		 */
 		'headingcount' => [
 			'default' => false,
-			'boolean' => true,
+			'type' => 'boolean',
 			'open_ref_conflict' => true
 		],
 
@@ -439,7 +439,7 @@ class ParametersData {
 		 */
 		'ignorecase' => [
 			'default' => false,
-			'boolean' => true
+			'type' => 'boolean'
 		],
 		'include'			   => [
 			'default' => null
@@ -450,7 +450,7 @@ class ParametersData {
 		 */
 		'includesubpages' => [
 			'default' => true,
-			'boolean' => true
+			'type' => 'boolean'
 		],
 
 		/**
@@ -461,7 +461,7 @@ class ParametersData {
 		],
 		'includematchparsed' => [
 			'default' => false,
-			'boolean' => true
+			'type' => 'boolean'
 		],
 		/**
 		 * includenotmatch=..,..	allows to specify regular expressions which must NOT match the included contents
@@ -471,11 +471,11 @@ class ParametersData {
 		],
 		'includenotmatchparsed' => [
 			'default' => false,
-			'boolean' => true
+			'type' => 'boolean'
 		],
 		'includetrim' => [
 			'default' => false,
-			'boolean' => true
+			'type' => 'boolean'
 		],
 		/**
 		 * Inline text is some wiki text used to separate list items with 'mode=inline'.
@@ -491,7 +491,7 @@ class ParametersData {
 		 */
 		'includemaxlength' => [
 			'default' => null,
-			'integer' => true
+			'type' => 'integer'
 		],
 		/**
 		 * Attributes for HTML list items, depending on 'mode' ('li' for ordered/unordered, 'span' for others).
@@ -532,9 +532,9 @@ class ParametersData {
 		 */
 		'linksfrom' => [
 			'default' => null,
-			'page_name_list' => true,
 			'page_name_must_exist' => true,
-			'set_criteria_found' => true
+			'set_criteria_found' => true,
+			'type' => 'page_name_list'
 		],
 		/**
 		 * this parameter restricts the output to articles which cannot be reached via a link from the specified pages.
@@ -542,9 +542,9 @@ class ParametersData {
 		 */
 		'notlinksfrom' => [
 			'default' => null,
-			'page_name_list' => true,
 			'page_name_must_exist' => true,
-			'set_criteria_found' => true
+			'set_criteria_found' => true,
+			'type' => 'page_name_list'
 		],
 		/**
 		 * this parameter restricts the output to articles which contain a reference to one of the specified pages.
@@ -553,9 +553,9 @@ class ParametersData {
 		'linksto' => [
 			'default' => null,
 			'open_ref_conflict' => true,
-			'page_name_list' => true,
 			'page_name_must_exist' => true,
-			'set_criteria_found' => true
+			'set_criteria_found' => true,
+			'type' => 'page_name_list'
 		],
 		/**
 		 * this parameter restricts the output to articles which do not contain a reference to the specified page.
@@ -563,9 +563,9 @@ class ParametersData {
 		'notlinksto' => [
 			'default' => null,
 			'open_ref_conflict' => true,
-			'page_name_list' => true,
 			'page_name_must_exist' => true,
-			'set_criteria_found' => true
+			'set_criteria_found' => true,
+			'type' => 'page_name_list'
 		],
 		/**
 		 * this parameter restricts the output to articles which contain an external reference that conatins a certain pattern
@@ -574,9 +574,9 @@ class ParametersData {
 		'linkstoexternal' => [
 			'default' => null,
 			'open_ref_conflict' => true,
-			'page_name_list' => true,
 			'page_name_must_exist' => false,
-			'set_criteria_found' => true
+			'set_criteria_found' => true,
+			'type' => 'page_name_list'
 		],
 		/**
 		 * this parameter restricts the output to articles which use one of the specified images.
@@ -585,7 +585,7 @@ class ParametersData {
 		'imageused' => [
 			'default' => null,
 			'open_ref_conflict' => true,
-			'page_name_list' => true,
+			'type' => 'page_name_list',
 			'page_name_must_exist' => true,
 			'set_criteria_found' => true
 		],
@@ -596,7 +596,7 @@ class ParametersData {
 		'imagecontainer' => [
 			'default' => null,
 			'open_ref_conflict' => false,
-			'page_name_list' => true,
+			'type' => 'page_name_list',
 			'page_name_must_exist' => true,
 			'set_criteria_found' => true
 		],
@@ -607,7 +607,7 @@ class ParametersData {
 		'uses' => [
 			'default' => null,
 			'open_ref_conflict' => true,
-			'page_name_list' => true,
+			'type' => 'page_name_list',
 			'page_name_must_exist' => true,
 			'set_criteria_found' => true
 		],
@@ -618,7 +618,7 @@ class ParametersData {
 		'notuses' => [
 			'default' => null,
 			'open_ref_conflict' => true,
-			'page_name_list' => true,
+			'type' => 'page_name_list',
 			'page_name_must_exist' => true,
 			'set_criteria_found' => true
 		],
@@ -628,7 +628,7 @@ class ParametersData {
 		'usedby' => [
 			'default' => null,
 			'open_ref_conflict' => true,
-			'page_name_list' => true,
+			'type' => 'page_name_list',
 			'page_name_must_exist' => true,
 			'set_criteria_found' => true
 		],
@@ -713,7 +713,7 @@ class ParametersData {
 		 */
 		'escapelinks' => [
 			'default' => true,
-			'boolean' => true
+			'type' => 'boolean'
 		],
 		/**
 		 * By default the page containingthe query will not be part of the result set.
@@ -722,7 +722,7 @@ class ParametersData {
 		 */
 		'skipthispage' => [
 			'default' => true,
-			'boolean' => true
+			'type' => 'boolean'
 		],
 		/**
 		 * namespace= Ns1 | Ns2 | ...
@@ -784,7 +784,7 @@ class ParametersData {
 		],
 		'scroll' => [
 			'default' => false,
-			'boolean' => true
+			'type' => 'boolean'
 		],
 		'titlematch' => [
 			'default' => null
@@ -863,7 +863,7 @@ class ParametersData {
 		 */
 		'lastrevisionbefore' => [
 			'default' => null,
-			'timestamp' => true,
+			'type' => 'timestamp',
 			'open_ref_conflict' => true
 		],
 		/**
@@ -871,7 +871,7 @@ class ParametersData {
 		 */
 		'allrevisionsbefore' => [
 			'default' => null,
-			'timestamp' => true,
+			'type' => 'timestamp',
 			'open_ref_conflict' => true
 		],
 		/**
@@ -879,7 +879,7 @@ class ParametersData {
 		 */
 		'firstrevisionsince' => [
 			'default' => null,
-			'timestamp' => true,
+			'type' => 'timestamp',
 			'open_ref_conflict' => true
 		],
 		/**
@@ -887,7 +887,7 @@ class ParametersData {
 		 */
 		'allrevisionssince' => [
 			'default' => null,
-			'timestamp' => true,
+			'type' => 'timestamp',
 			'open_ref_conflict' => true
 		],
 		/**
@@ -895,15 +895,15 @@ class ParametersData {
 		 */
 		'minrevisions' => [
 			'default' => null,
-			'integer' => true
+			'type' => 'integer'
 		],
 		'maxrevisions' => [
 			'default' => null,
-			'integer' => true
+			'type' => 'integer'
 		],
 		'suppresserrors' => [
 			'default' => false,
-			'boolean' => true
+			'type' => 'boolean'
 		],
 		/**
 		 * noresultsheader / footer is some wiki text which will be output (instead of a warning message)
@@ -941,7 +941,7 @@ class ParametersData {
 		 */
 		'openreferences' => [
 			'default' => false,
-			'boolean' => true
+			'type' => 'boolean'
 		],
 		/**
 		 * redirects =...
@@ -1022,7 +1022,7 @@ class ParametersData {
 		 */
 		'rows' => [
 			'default' => 1,
-			'integer' => true
+			'type' => 'integer'
 		],
 
 		/**
@@ -1031,7 +1031,7 @@ class ParametersData {
 		 */
 		'rowsize' => [
 			'default' => 0,
-			'integer' => true
+			'type' => 'integer'
 		],
 
 		/**
@@ -1063,14 +1063,14 @@ class ParametersData {
 		 */
 		'dominantsection' => [
 			'default' => 0,
-			'integer' => true
+			'type' => 'integer'
 		],
 		/**
 		 * showcurid creates a stable link to the current revision of a page
 		 */
 		'showcurid' => [
 			'default' => false,
-			'boolean' => true,
+			'type' => 'boolean',
 			'open_ref_conflict' => true
 		],
 		/**
@@ -1078,7 +1078,7 @@ class ParametersData {
 		 */
 		'shownamespace' => [
 			'default' => true,
-			'boolean' => true
+			'type' => 'boolean'
 		],
 		/**
 		 * replaceintitle applies a regex replacement to %TITLE%
@@ -1103,7 +1103,7 @@ class ParametersData {
 		 */
 		'tablesortcol' => [
 			'default' => null,
-			'integer' => true
+			'type' => 'integer'
 		],
 		/**
 		 * Max # characters of page title to display.
@@ -1112,7 +1112,7 @@ class ParametersData {
 		 */
 		'titlemaxlength' => [
 			'default' => null,
-			'integer' => true
+			'type' => 'integer'
 		]
 	];
 

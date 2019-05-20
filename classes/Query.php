@@ -1460,11 +1460,11 @@ class Query {
 	/**
 	 * Set SQL for 'maxrevisions' parameter.
 	 *
-	 * @param mixed $option Parameter Option
+	 * @param integer $option Parameter Option
 	 *
 	 * @return void
 	 */
-	private function _maxrevisions($option) {
+	private function _maxrevisions(int $option) {
 		$this->addWhere("((SELECT count(rev_aux3.rev_page) FROM {$this->tableNames['revision']} AS rev_aux3 WHERE rev_aux3.rev_page = {$this->tableNames['page']}.page_id) <= {$option})");
 	}
 
@@ -1485,11 +1485,11 @@ class Query {
 	/**
 	 * Set SQL for 'minrevisions' parameter.
 	 *
-	 * @param mixed $option Parameter Option
+	 * @param integer $option Parameter Option
 	 *
 	 * @return void
 	 */
-	private function _minrevisions($option) {
+	private function _minrevisions(int $option) {
 		$this->addWhere("((SELECT count(rev_aux2.rev_page) FROM {$this->tableNames['revision']} AS rev_aux2 WHERE rev_aux2.rev_page = {$this->tableNames['page']}.page_id) >= {$option})");
 	}
 
@@ -2081,11 +2081,15 @@ class Query {
 	/**
 	 * Set SQL for 'usedby' parameter.
 	 *
-	 * @param mixed $option Parameter Option
+	 * @param array $option Parameter Option
 	 *
 	 * @return void
 	 */
-	private function _usedby($option) {
+	private function _usedby(array $option) {
+		if (!count($option)) {
+			return;
+		}
+
 		if ($this->parameters->getParameter('openreferences')) {
 			$ors = [];
 			foreach ($option as $linkGroup) {
@@ -2113,11 +2117,15 @@ class Query {
 	/**
 	 * Set SQL for 'uses' parameter.
 	 *
-	 * @param mixed $option Parameter Option
+	 * @param array $option Parameter Option
 	 *
 	 * @return void
 	 */
-	private function _uses($option) {
+	private function _uses(array $option) {
+		if (!count($option)) {
+			return;
+		}
+
 		$this->addTable('templatelinks', 'tl');
 		$where = $this->tableNames['page'] . '.page_id=tl.tl_from AND (';
 		$ors = [];

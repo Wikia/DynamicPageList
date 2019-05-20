@@ -101,61 +101,68 @@ class Parameters extends ParametersData {
 				$option = $this->stripHtmlTags($option);
 			}
 
-			// Simple integer intval().
-			if (array_key_exists('integer', $parameterData) && $parameterData['integer'] === true) {
-				if (!is_numeric($option)) {
-					if ($parameterData['default'] !== null) {
-						$option = intval($parameterData['default']);
-					} else {
-						$success = false;
-					}
-				} else {
-					$option = intval($option);
-				}
-			}
-
-			// Booleans
-			if (array_key_exists('boolean', $parameterData) && $parameterData['boolean'] === true) {
-				$option = $this->filterBoolean($option);
-				if ($option === null) {
-					$success = false;
-				}
-			}
-
-			// Timestamps
-			if (array_key_exists('timestamp', $parameterData) && $parameterData['timestamp'] === true) {
-				$option = strtolower($option);
-				switch ($option) {
-					case 'today':
-					case 'last hour':
-					case 'last day':
-					case 'last week':
-					case 'last month':
-					case 'last year':
-						break;
-					default:
-						$option = str_pad(preg_replace('#[^0-9]#', '', $option), 14, '0');
-						$option = wfTimestamp(TS_MW, $option);
-
-						if ($option === false) {
+			if (isset($parameterData['type'])) {
+				// Simple integer intval().
+				if ($parameterData['type'] === 'integer') {
+					if (!is_numeric($option)) {
+						if ($parameterData['default'] !== null) {
+							$option = intval($parameterData['default']);
+						} else {
 							$success = false;
 						}
-						break;
+					} else {
+						$option = intval($option);
+					}
 				}
-			}
 
-			// List of Pages
-			if (array_key_exists('page_name_list', $parameterData) && $parameterData['page_name_list'] === true) {
-				$pageGroups = $this->getParameter($parameter);
-				if (!is_array($pageGroups)) {
-					$pageGroups = [];
+				// Booleans
+				if ($parameterData['type'] === 'boolean') {
+					$option = $this->filterBoolean($option);
+					if ($option === null) {
+						$success = false;
+					}
 				}
-				$pages = $this->getPageNameList($option, (bool)$parameterData['page_name_must_exist']);
-				if ($pages === false) {
-					$success = false;
-				} else {
-					$pageGroups[] = $pages;
-					$option = $pageGroups;
+
+				// Arrays
+				if ($parameterData['type'] === 'array') {
+				
+				}
+
+				// Timestamps
+				if ($parameterData['type'] === 'timestamp') {
+					$option = strtolower($option);
+					switch ($option) {
+						case 'today':
+						case 'last hour':
+						case 'last day':
+						case 'last week':
+						case 'last month':
+						case 'last year':
+							break;
+						default:
+							$option = str_pad(preg_replace('#[^0-9]#', '', $option), 14, '0');
+							$option = wfTimestamp(TS_MW, $option);
+
+							if ($option === false) {
+								$success = false;
+							}
+							break;
+					}
+				}
+
+				// List of Pages
+				if ($parameterData['type'] === 'page_name_list') {
+					$pageGroups = $this->getParameter($parameter);
+					if (!is_array($pageGroups)) {
+						$pageGroups = [];
+					}
+					$pages = $this->getPageNameList($option, (bool)$parameterData['page_name_must_exist']);
+					if ($pages === false) {
+						$success = false;
+					} else {
+						$pageGroups[] = $pages;
+						$option = $pageGroups;
+					}
 				}
 			}
 
