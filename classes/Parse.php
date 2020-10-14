@@ -319,11 +319,19 @@ class Parse {
 		];
 		$this->defineScrollVariables($scrollVariables);
 
-		if ($this->parameters->getParameter('allowcachedresults')) {
-			$this->parser->getOutput()->updateCacheExpiry($this->parameters->getParameter('cacheperiod') ? $this->parameters->getParameter('cacheperiod') : 3600);
-		} else {
-			$this->parser->disableCache();
-		}
+		/**
+		 * Fandom change - start
+		 * Disable cache ignore flag.
+		 * @issue PLATFORM-5168
+		 * @author ttomalak
+		 */
+		// if ($this->parameters->getParameter('allowcachedresults')) {
+		// 	$this->parser->getOutput()->updateCacheExpiry($this->parameters->getParameter('cacheperiod') ? $this->parameters->getParameter('cacheperiod') : 3600);
+		// } else {
+		// 	$this->parser->disableCache();
+		// }
+		$this->parser->getOutput()->updateCacheExpiry($this->parameters->getParameter('cacheperiod') ? $this->parameters->getParameter('cacheperiod') : 3600);
+		/** Fandom change - end */
 
 		$finalOutput = $this->getFullOutput($foundRows, false);
 
