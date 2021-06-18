@@ -10,6 +10,9 @@
  **/
 namespace DPL;
 
+use Fandom\Includes\Util\LoggerContextBuilder;
+use MediaWiki\Logger\LoggerFactory;
+
 class Query {
 	/**
 	 * Parameters Object
@@ -145,6 +148,11 @@ class Query {
 	private $revisionAuxWhereAdded = false;
 
 	/**
+	 * @var \Psr\Log\LoggerInterface
+	 */
+	private $logger;
+
+	/**
 	 * Main Constructor
 	 *
 	 * @access	public
@@ -157,6 +165,8 @@ class Query {
 		$this->tableNames = self::getTableNames();
 
 		$this->DB = wfGetDB(DB_REPLICA, 'dpl');
+
+		$this->logger = LoggerFactory::getInstance(__CLASS__);
 	}
 
 	/**
@@ -690,6 +700,7 @@ class Query {
 				]
 			);
 			$this->_adduser(null, 'rev');
+			$this->logger->error( "Query::_addauthor is using outdated column: rev_timestamp" );
 		}
 	}
 
@@ -763,6 +774,7 @@ class Query {
 				$this->tableNames['page'] . '.page_id = rev.rev_page',
 			]
 		);
+		$this->logger->error( "Query::_addeditdate is using outdated column: rev_timestamp" );
 	}
 
 	/**
@@ -799,6 +811,7 @@ class Query {
 				]
 			);
 			$this->_adduser(null, 'rev');
+			$this->logger->error( "Query::_addlasteditor is using outdated column: rev_timestamp" );
 		}
 	}
 
@@ -876,6 +889,7 @@ class Query {
 				$tableAlias . 'rev_comment'
 			]
 		);
+		$this->logger->error( "Query::__adduser is using outdated column: rev_user, rev_user_text" );
 	}
 
 	/**
@@ -901,6 +915,7 @@ class Query {
 				'rev.rev_timestamp < ' . $this->convertTimestamp($option)
 			]
 		);
+		$this->logger->error( "Query::_allrevisionsbefore is using outdated column: rev_timestamp" );
 	}
 
 	/**
@@ -926,6 +941,7 @@ class Query {
 				'rev.rev_timestamp >= ' . $this->convertTimestamp($option)
 			]
 		);
+		$this->logger->error( "Query::_allrevisionssince is using outdated column: rev_timestamp" );
 	}
 
 	/**
@@ -1059,6 +1075,7 @@ class Query {
 				'creation_rev.rev_parent_id = 0'
 			]
 		);
+		$this->logger->error( "Query::_createdby is using outdated column: rev_user_text" );
 	}
 
 	/**
@@ -1104,6 +1121,7 @@ class Query {
 				'rev.rev_timestamp = (SELECT MIN(rev_aux_snc.rev_timestamp) FROM ' . $this->tableNames['revision'] . ' AS rev_aux_snc WHERE rev_aux_snc.rev_page=rev.rev_page AND rev_aux_snc.rev_timestamp >= ' . $this->convertTimestamp($option) . ')'
 			]
 		);
+		$this->logger->error( "Query::_firstrevisionsince is using outdated column: rev_timestamp" );
 	}
 
 	/**
@@ -1205,7 +1223,8 @@ class Query {
 	 * @return	void
 	 */
 	private function _lastmodifiedby($option) {
-	   $this->addWhere($this->DB->addQuotes($option) . ' = (SELECT rev_user_text FROM ' . $this->tableNames['revision'] . ' WHERE ' . $this->tableNames['revision'] . '.rev_page=page_id ORDER BY ' . $this->tableNames['revision'] . '.rev_timestamp DESC LIMIT 1)');
+		$this->addWhere($this->DB->addQuotes($option) . ' = (SELECT rev_user_text FROM ' . $this->tableNames['revision'] . ' WHERE ' . $this->tableNames['revision'] . '.rev_page=page_id ORDER BY ' . $this->tableNames['revision'] . '.rev_timestamp DESC LIMIT 1)');
+		$this->logger->error( "Query::_lastmodifiedby is using outdated column: rev_user_text" );
 	}
 
 	/**
@@ -1231,6 +1250,7 @@ class Query {
 				'rev.rev_timestamp = (SELECT MAX(rev_aux_bef.rev_timestamp) FROM ' . $this->tableNames['revision'] . ' AS rev_aux_bef WHERE rev_aux_bef.rev_page=rev.rev_page AND rev_aux_bef.rev_timestamp < ' . $this->convertTimestamp($option) . ')'
 			]
 		);
+		$this->logger->error( "Query::_lastrevisionbefore is using outdated column: rev_timestamp" );
 	}
 
 	/**
@@ -1486,6 +1506,7 @@ class Query {
 	private function _modifiedby($option) {
 		$this->addTable('revision', 'change_rev');
 		$this->addWhere($this->DB->addQuotes($option) . ' = change_rev.rev_user_text AND change_rev.rev_page = page_id');
+		$this->logger->error( "Query::_modifiedby is using outdated column: rev_user_text" );
 	}
 
 	/**
@@ -1523,6 +1544,7 @@ class Query {
 	private function _notcreatedby($option) {
 		$this->addTable('revision', 'no_creation_rev');
 		$this->addWhere($this->DB->addQuotes($option) . ' != no_creation_rev.rev_user_text AND no_creation_rev.rev_page = page_id AND no_creation_rev.rev_parent_id = 0');
+		$this->logger->error( "Query::_notcreatedby is using outdated column: rev_user_text" );
 	}
 
 	/**
@@ -1534,6 +1556,7 @@ class Query {
 	 */
 	private function _notlastmodifiedby($option) {
 		$this->addWhere($this->DB->addQuotes($option) . ' != (SELECT rev_user_text FROM ' . $this->tableNames['revision'] . ' WHERE ' . $this->tableNames['revision'] . '.rev_page=page_id ORDER BY ' . $this->tableNames['revision'] . '.rev_timestamp DESC LIMIT 1)');
+		$this->logger->error( "Query::_notlastmodifiedby is using outdated column: rev_user_text, rev_timestamp" );
 	}
 
 	/**
@@ -1545,6 +1568,7 @@ class Query {
 	 */
 	private function _notmodifiedby($option) {
 		$this->addWhere('NOT EXISTS (SELECT 1 FROM ' . $this->tableNames['revision'] . ' WHERE ' . $this->tableNames['revision'] . '.rev_page=page_id AND ' . $this->tableNames['revision'] . '.rev_user_text = ' . $this->DB->addQuotes($option) . ' LIMIT 1)');
+		$this->logger->error( "Query::_notmodifiedby is using outdated column: rev_user_text" );
 	}
 
 	/**
@@ -1736,6 +1760,7 @@ class Query {
 						);
 					}
 					$this->revisionAuxWhereAdded = true;
+					$this->logger->error( "Query::_ordermethod is using outdated column: rev_timestamp" );
 					break;
 				case 'lastedit':
 					if (\DynamicPageListHooks::isLikeIntersection()) {
@@ -1843,6 +1868,7 @@ class Query {
 					$this->addOrderBy('rev.rev_user_text');
 					$this->addTable('revision', 'rev');
 					$this->_adduser(null, 'rev');
+					$this->logger->error( "Query::_ordermethod is using outdated column: rev_user_text" );
 					break;
 				case 'none':
 					break;
