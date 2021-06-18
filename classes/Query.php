@@ -10,7 +10,6 @@
  **/
 namespace DPL;
 
-use Fandom\Includes\Util\LoggerContextBuilder;
 use MediaWiki\Logger\LoggerFactory;
 
 class Query {
@@ -166,7 +165,7 @@ class Query {
 
 		$this->DB = wfGetDB(DB_REPLICA, 'dpl');
 
-		$this->logger = LoggerFactory::getInstance(__CLASS__);
+		$this->logger = LoggerFactory::getInstance( 'DPL' );
 	}
 
 	/**

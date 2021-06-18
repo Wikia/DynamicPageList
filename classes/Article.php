@@ -198,7 +198,7 @@ class Article {
 	public function __construct($title, $namespace) {
 		$this->mTitle     = $title;
 		$this->mNamespace = $namespace;
-		$this->logger = LoggerFactory::getInstance(__CLASS__);
+		$this->logger = LoggerFactory::getInstance( 'DPL' );
 	}
 
 	private static function getLogger() {
