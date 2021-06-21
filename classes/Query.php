@@ -1782,6 +1782,7 @@ class Query {
 							);
 						}
 						$this->revisionAuxWhereAdded = true;
+						$this->logger->error( "Query::_ordermethod is using outdated column: rev_timestamp in switch (lastedit)" );
 					}
 					break;
 				case 'pagesel':
