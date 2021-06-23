@@ -183,11 +183,6 @@ class Article {
 	static private $headings = [];
 
 	/**
-	 * @var \Psr\Log\LoggerInterface
-	 */
-	private static $logger;
-
-	/**
 	 * Main Constructor
 	 *
 	 * @access	public
@@ -198,11 +193,6 @@ class Article {
 	public function __construct($title, $namespace) {
 		$this->mTitle     = $title;
 		$this->mNamespace = $namespace;
-		$this->logger = LoggerFactory::getInstance( 'DPL' );
-	}
-
-	private static function getLogger() {
-		return self::$logger;
 	}
 
 	/**
@@ -220,6 +210,7 @@ class Article {
 		global $wgLang, $wgContLang;
 
 		$article = new Article($title, $pageNamespace);
+		$logger = LoggerFactory::getInstance( 'DPL' );
 
 		$titleText = $title->getText();
 		if ($parameters->getParameter('shownamespace') === true) {
@@ -293,7 +284,7 @@ class Article {
 				$article->mDate     = $row['rev_timestamp'];
 				$article->mComment  = $row['rev_comment'];
 
-				Article::getLogger()->error( "Article::newFromRow is using outdated column: rev_user_text, rev_timestamp" );
+				$logger->error( "Article::newFromRow is using outdated column: rev_user_text, rev_timestamp" );
 			}
 
 			//SHOW "PAGE_TOUCHED" DATE, "FIRSTCATEGORYDATE" OR (FIRST/LAST) EDIT DATE
@@ -303,7 +294,7 @@ class Article {
 				$article->mDate = $row['cl_timestamp'];
 			} elseif ($parameters->getParameter('addeditdate') && isset($row['rev_timestamp'])) {
 				$article->mDate = $row['rev_timestamp'];
-				Article::getLogger()->error( "Article::newFromRow is using outdated column: rev_timestamp" );
+				$logger->error( "Article::newFromRow is using outdated column: rev_timestamp" );
 			} elseif ($parameters->getParameter('addeditdate') && isset($row['page_touched'])) {
 				$article->mDate = $row['page_touched'];
 			}
@@ -336,7 +327,7 @@ class Article {
 			if ($parameters->getParameter('adduser') || $parameters->getParameter('addauthor') || $parameters->getParameter('addlasteditor')) {
 				$article->mUserLink = '[[User:' . $row['rev_user_text'] . '|' . $row['rev_user_text'] . ']]';
 				$article->mUser     = $row['rev_user_text'];
-				Article::getLogger()->error( "Article::newFromRow is using outdated column: rev_user_text" );
+				$logger->error( "Article::newFromRow is using outdated column: rev_user_text" );
 			}
 
 			//CATEGORY LINKS FROM CURRENT PAGE
@@ -367,7 +358,7 @@ class Article {
 						} else {
 							$article->mParentHLink = '[[User:' . $row['rev_user_text'] . '|' . $row['rev_user_text'] . ']]';
 						}
-						Article::getLogger()->error( "Article::newFromRow is using outdated column: rev_user_text in switch" );
+						$logger->error( "Article::newFromRow is using outdated column: rev_user_text in switch" );
 						break;
 				}
 			}
